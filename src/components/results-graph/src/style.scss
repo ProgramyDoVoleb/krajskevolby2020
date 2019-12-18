@@ -1,0 +1,103 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+li {
+}
+
+.graph-space {
+  position: relative;
+  height: 10rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.graph-icons {
+  width: 1.5rem;
+  display: block;
+  margin: auto;
+
+  @media (min-width: 30rem) {
+    width: 3rem;
+  }
+}
+
+.graph-icon,
+.graph-icon img {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+  margin: auto;
+
+  @media (min-width: 30rem) {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.graph-icon img {
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+
+.graph-icons.multiple {
+
+  .graph-icon img {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  @media (min-width: 30rem) {
+    display: flex;
+    flex-wrap: wrap;
+
+    .graph-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.graph-name {
+  font-size: 7px;
+  text-align: center;
+  word-break: break-all;
+  margin-top: .5em;
+
+  @media (min-width: 30rem) {
+    font-size: 11px;
+  }
+}
+
+.graph-bar {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  background: #ddd;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.graph-bar-value {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+}
+
+li:not(.below) + .below,
+li:not(.below) + li:last-child {
+  border-left: 1px dotted #f00;
+}
+
+.below .graph-bar {
+  opacity: .5;
+  filter: grayscale(.5);
+}

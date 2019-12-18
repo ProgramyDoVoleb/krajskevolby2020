@@ -1,0 +1,60 @@
+.main {
+  @media (min-width: 60rem) {
+    padding-right: 15rem;
+  }
+}
+
+.summary {
+  text-align: left;
+  border-top: 1px dotted #fc0;
+  border-bottom: none;
+  margin-top: 2rem;
+  padding: 1rem 0 0;
+
+  @media (min-width: 60rem) {
+    padding: 1rem 0 1rem 2rem;
+    border-top: none;
+    margin-top: 0;
+  }
+}
+
+.form-label {
+  font-size: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #039;
+}
+
+.email {
+  margin-top: .5rem;
+  display: block;
+  width: 100%;
+  border: 1px solid #fc0;
+  padding: 1rem;
+  font-size: 1rem;
+  max-width: 30rem;
+}
+
+.content__gdprBlock {
+  margin: 2rem 0;
+}
+
+.gdprRequired {
+  background: rgba(255, 204, 0, 0.25);
+  border: none;
+  max-width: 20rem;
+
+  label {
+    font-size: .8em;
+    font-weight: bold;
+  }
+}
+
+.av-checkbox {
+  display: inline-block;
+  margin-right: .5rem;
+}
+
+.content__gdprLegal {
+  margin-top: 2rem;
+}

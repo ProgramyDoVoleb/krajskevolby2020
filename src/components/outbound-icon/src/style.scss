@@ -1,0 +1,15 @@
+a, span {
+  display: inline-block;
+}
+
+.share-local a {
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+}
+
+.icon-double span,
+.icon-double a {
+  width: 2.5rem;
+  height: 2.5rem;
+}

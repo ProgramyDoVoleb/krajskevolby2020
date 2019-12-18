@@ -1,0 +1,7 @@
+<div class="overview">
+  <div class="program" v-if="file">
+    <h1>{{ file.title }} <small>{{ file.subtitle }}</small></h1>
+    <p>Zdroj: <outbound-link :href="file.source" :content="file.title"></outbound-link></p>
+    <program-view :data="file" :showIndex="true" :showFloatingIndex="true" />
+  </div>
+</div>

@@ -1,0 +1,175 @@
+p {
+
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+p + p {
+  margin-top: 1em;
+}
+
+.small {
+  font-size: .7em;
+}
+
+.center {
+  text-align: center;
+}
+
+b, strong {
+
+}
+
+.layout-program .segment strong {
+  white-space: normal;
+  background: none;
+  padding: inherit;
+}
+
+blockquote {
+  font-family: georgia, cursive;
+  font-style: italic;
+  font-size: 1.5em;
+  padding: 1rem 2rem 2rem;
+  margin: 0;
+
+  @media (min-width: 35rem) {
+    padding: 0 6rem 3rem;
+  }
+}
+
+h3 small,
+h4 small {
+  color: #aaa;
+  display: block;
+  font-size: .7em;
+  font-weight: 400;
+  margin-top: .5em;
+}
+
+h1 {
+  margin: 0;
+  line-height: 1.2em;
+  padding: .5em 0;
+}
+
+.dimm {
+  color: #aaa;
+}
+
+h1 .dimm {
+  font-size: .7em;
+  font-weight: 400;
+}
+
+.segment > h4,
+.split-item > h4 {
+  margin: 3rem 0 1rem;
+  font-size: .8em;
+  color: #aaa;
+  font-weight: 400;
+  text-transform: uppercase;
+  display: inline-block;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: .4rem;
+    left: -1rem;
+    width: .4rem;
+    height: .4rem;
+    border-radius: 50%;
+    background: #ddd;
+  }
+}
+
+.grey-note {
+  margin: 2rem -2rem -2rem;
+  background: #f4f4f4;
+  padding: 2rem;
+
+  .column:not(:last-child) {
+    padding-bottom: 2rem
+  }
+
+  @media (min-width: 40rem) {
+    margin: 2rem -2rem 0;
+    padding: 2rem 2rem 0;
+    background: none;
+    border-top: 1px solid #eee;
+
+    .column:not(:last-child) {
+      padding-bottom: 0;
+    }
+  }
+
+  h4 {
+    color: #000;
+    margin: 0;
+  }
+
+  p {
+    color: #555;
+    font-size: .8em;
+  }
+}
+
+.goto {
+  margin: 2rem -2rem -2rem;
+  background: #003399;
+  padding: 2rem;
+  color: #ffcc00;
+  position: relative;
+
+  a {
+    border-bottom-color: transparent;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  @media (min-width: 40rem) {
+    margin: 2rem 0 0;
+    padding: 2rem 2rem;
+    background: #fc0;
+    border-top: 1px solid #eee;
+    color: #003399;
+
+    a {
+      border-bottom-color: #ffcc00;
+      color: #003399;
+    }
+
+    // &:first-of-type {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    // }
+
+    &:last-of-type {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+}
+
+.goto + .goto {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 1px;
+}
+
+.arr {
+}
+
+.layout-program {
+  h5 {
+    font-size: .9rem;
+  }
+  h6 {
+    font-size: .85rem;
+    color: #888;
+    font-style: italic;
+  }
+}

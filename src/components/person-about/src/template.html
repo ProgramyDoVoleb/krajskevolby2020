@@ -1,0 +1,13 @@
+<span class="person-about">
+	<span class="person-party" v-if="partyData">
+		<img :src="'/static/' + (partyData.logo || 'empty.png')" alt="">
+	</span>
+	<span class="person-name">
+		<span v-if="!link">{{ displayName }}</span>
+		<outbound-link v-if="link" :href="link" :content=" displayName"></outbound-link>
+	</span>
+	<span class="person-nominatedBy" v-if="nominatedByData">
+		&middot;
+		<img :src="'/static/' + (nominatedByData.logo || 'empty.png')" alt="">
+	</span>
+</span>

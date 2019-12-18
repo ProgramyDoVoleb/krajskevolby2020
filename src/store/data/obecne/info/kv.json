@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "name": "Středočeský kraj",
+    "short": "stk",
+    "hash": "stredocesky-kraj",
+    "colors": ["#fff", "#031093"],
+    "links": [
+      {"www": "https://www.kr-stredocesky.cz/"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Jihočeský kraj",
+    "hash": "jihocesky-kraj",
+    "short": "jhč",
+    "colors": ["#0a630c", "#b82d22"],
+    "links": [
+      {"www": "http://www.kraj-jihocesky.cz/"}
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Plzeňský kraj",
+    "hash": "plzensky-kraj",
+    "short": "plk",
+    "colors": ["#149417", "#b82d22"],
+    "links": [
+      {"www": "http://www.plzensky-kraj.cz/"}
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Karlovarský kraj",
+    "hash": "karlovarsky-kraj",
+    "short": "kvk",
+    "colors": ["#0d3efb", "#b82d22"],
+    "links": [
+      {"www": "http://www.kr-karlovarsky.cz/"}
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Ústecký kraj",
+    "hash": "ustecky-kraj",
+    "short": "ulk",
+    "colors": ["#063693", "#b82d22"],
+    "links": [
+      {"www": "http://www.kr-ustecky.cz/"}
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Liberecký kraj",
+    "hash": "liberecky-kraj",
+    "short": "lbk",
+    "colors": ["#0d3efb", "#fff"],
+    "links": [
+      {"www": "http://www.kraj-lbc.cz/"}
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Královéhradecký kraj",
+    "hash": "kralovehradecky-kraj",
+    "short": "hkk",
+    "colors": ["#1998fc", "#fec72e"],
+    "links": [
+      {"www": "http://www.kr-kralovehradecky.cz/"}
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Pardubický kraj",
+    "hash": "pardubicky-kraj",
+    "short": "pak",
+    "colors": ["#0e6aac", "#e02037"],
+    "links": [
+      {"www": "https://www.pardubickykraj.cz/"}
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Kraj Vysočina",
+    "hash": "kraj-vysocina",
+    "short": "vys",
+    "colors": ["#fff", "#d82827"],
+    "links": [
+      {"www": "https://www.kr-vysocina.cz/index.asp"}
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Jihomoravský kraj",
+    "hash": "jihomoravsky-kraj",
+    "short": "jhm",
+    "colors": ["#b82d22", "#13548f"],
+    "links": [
+      {"www": "http://www.kr-jihomoravsky.cz/"}
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Olomoucký kraj",
+    "hash": "olomoucky-kraj",
+    "short": "olk",
+    "colors": ["#e8cb30", "#1269fb"],
+    "links": [
+      {"www": "http://www.kr-olomoucky.cz/"}
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Zlínský kraj",
+    "hash": "zlinsky-kraj",
+    "short": "zlk",
+    "colors": ["#fbc52f", "#0b1062"],
+    "links": [
+      {"www": "https://www.kr-zlinsky.cz/"}
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Moravskoslezský kraj",
+    "hash": "moravskoslezsky-kraj",
+    "short": "msk",
+    "colors": ["#13548f", "#e8cb30"],
+    "links": [
+      {"www": "http://www.msk.cz/"}
+    ]
+  }
+]

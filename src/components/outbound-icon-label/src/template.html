@@ -1,0 +1,11 @@
+<div class="icon-label">
+	<div class="icon">
+		<outbound-icon :href="href" :type="type" />
+	</div>
+	<div class="link">
+		<outbound-link :href="href" :content="content" :title="title" />
+	</div>
+	<div class="label" v-if="label">
+		<p>{{ label }}</p>
+	</div>
+</div>

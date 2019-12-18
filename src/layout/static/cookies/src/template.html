@@ -1,0 +1,37 @@
+<div class="layout-static layout-static-impressum">
+	<h1>Osobní údaje a cookies</h1>
+	<p>Tento web nesbírá žádná osobní data. Nikde po vás nebudeme chtít jméno, email, telefonní číslo ani nic podobného. Naším posláním je informovat.</p>
+	<p>Neexistuje žádný způsob podle kterého bychom vás mohli jakkoli identifikovat. Funkce anket a kvízů jsou anonymizované a nevratně zahashované.</p>
+	<p>Tento web také nevyužívá žádného automatizovaného spojení se sociálními sítěmi - Facebookem, Twitterem nebo dalšími platformami a sítěmi. Žádná data nepřichází do FB ani z FB k nám.</p>
+	<h2>Jak používáme cookies</h2>
+	<p>Po celou dobu otevření stránky je použité cookie <b>PHPSESSID</b> pro udržení základní funkčnosti stránky. Toto cookie je smazáno, jakmile stránku zavřete.</p>
+	<h2>Local Storage</h2>
+	<div class="side">
+		<h4>Aktivní cookies a localStorage</h4>
+		<ul class="list">
+			<li v-for="(key, index) in localStorage">
+				{{ key.key }}: {{ key.value }}
+			</li>
+			<li v-for="(key, index) in cookie">
+				{{ key.key }}: {{ key.value }}
+			</li>
+		</ul>
+	</div>
+	<p>Tento web používá <b>localStorage</b> místo cookies. Tento údaj zůstává vždy ve vašem počítači nebo mobilu a k nám se nikdy nedostane. Potřebujeme to pro to, abychom věděli:</p>
+	<ul>
+		<li>který kvíz nebo anketu jste již vyplnili</li>
+		<li>zda chcete zobrazovat kandidáty jako seznam nebo přehledně</li>
+	</ul>
+	<p>Tyto informace se neposílají na server a nejsou využívány mimo účel tohoto projektu. Můžete je kdykoli smazat stejně jako cookies - jak na to, <outbound-link href="http://cs.wondershare.com/recover-data/delete-cookies-from-web-browser.html" content="najdete zde"></outbound-link>. Pokud umíte s konzolí prohlížeče, stačí napsat příkaz <code>localStorage</code> a vypíše se seznam uložených informací.</p>
+	<h2>Google Analytics</h2>
+	<p>Používáme Google Analytics pro anonymní sledování chování na webu, v základním nastavení. To nám umožňuje zlepšovat webové stránky, protože vidíme, co lidi nejvíce zajímá. Více informací se dozvíte <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage" target="_blank">zde</a>.</p>
+	<h2>Proč jsem neviděl cookie lištu?</h2>
+	<p>Řídíme se doporučením a příkladem <a href="https://www.uoou.cz/" target="_blank">Úřadu na ochranu osobních údajů</a>. Ten ji také nepoužívá.</p>
+	<h2>Co když nic z toho nechci?</h2>
+	<p>Všechna cookies můžete kdykoli smazat a nijak to neovlivní chod stránky. Stejně tak můžete stránku používat, pokud máte cookies zakázaná.</p>
+	<p>Prosím najděte si <a href="https://www.google.cz/search?q=jak+smazat+cookies" target="_blank">aktuální postup pro promazání cookies</a></p>
+	<div class="goto">
+		<router-link to="/">Na úvodní stránku</router-link> <span class="arr">&rarr;</span>
+	</div>
+
+</div>

@@ -1,0 +1,24 @@
+<div class="program-view">
+	<div class="program-view-index" v-if="showIndex">
+		<h2>Obsah</h2>
+    <ul>
+      <li v-for="(part, pi) in data.parts">
+        <a :href="'#cast' + pi">{{ part.headline }}</a>
+      </li>
+    </ul>
+	</div>
+	<div class="program-view-floating" v-if="showFloatingIndex">
+		<ul>
+			<li v-for="(part, pi) in data.parts">
+				<a :href="'#cast' + pi" class="button" ref="bullet">
+					<span class="indicate-inactive">&#9675;</span>
+					<span class="indicate-active">&#9679;</span>
+					<span class="indicate-name">{{ part.headline }}</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="program-view-content">
+		<program-block v-for="(part, pi) in data.parts" :depth="2" :data="part" :index="pi" :key="'parts_' + pi" ref="block" />
+	</div>
+</div>

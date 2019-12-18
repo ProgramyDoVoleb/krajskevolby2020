@@ -1,0 +1,94 @@
+h4, h5 {
+  margin: 0;
+}
+
+h5 {
+  font-size: 11px;
+  color: #aaa;
+  padding-bottom: 1.5rem;
+  padding-left: 3rem;
+}
+
+p {
+  margin: 0;
+}
+
+.party-about {
+  padding: 1.5em 0 .5em 0;
+}
+
+.party-primary {
+  display: flex;
+  align-items: flex-start;
+}
+
+.party-primary-logo {
+  width: 4rem;
+  height: 4rem;
+
+  img {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 1px solid #eee;
+  }
+}
+
+.party-primary-data {
+  padding-right: 1rem;
+  flex: 1;
+}
+
+.party-coalition {
+  padding: .5rem 1rem 1.5rem 0rem;
+  border-bottom: 1px dotted #ddd;
+  margin-bottom: -.5rem;
+
+  @media (min-width: 40rem) {
+    padding: .5rem 0 1.5rem 5rem;
+  }
+}
+
+.party-coalition.single {
+  border-bottom: none;
+
+  @media (min-width: 40rem) {
+    padding: .5rem 1rem 1.5rem 0;
+  }
+}
+
+.party-about .party-about {
+  border-top: none;
+  padding-top: 0;
+
+  h4, p {
+    font-size: .8em;
+  }
+
+  .party-primary-logo {
+    width: 2rem;
+    height: 2rem;
+
+    img {
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 1px solid #eee;
+    }
+  }
+}
+
+@media (min-width: 40rem) {
+  div:not(.party-about) .party-about .party-primary.switch {
+    .party-primary-logo {
+      order: -1;
+    }
+
+    .party-primary-data {
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+  }
+}

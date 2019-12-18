@@ -1,0 +1,19 @@
+<div class="party-about">
+	<div class="party-primary" :class="{switch: switchDesktop}">
+		<div class="party-primary-data">
+			<h4>{{ party.name }}</h4>
+			<p v-if="link"><outbound-link content="Webové stránky" :href="link" /></p>
+			<div class="links-icons">
+				<outbound-icon v-for="(link, index) in icons" :href="link.url" :type="link.icon" class="party-link" :key="'link_' + index" />
+			</div>
+		</div>
+		<div class="party-primary-logo">
+			<img :src="'/static/' + (party.logo || 'empty.png')" :alt="party.name">
+		</div>
+	</div>
+	<div class="party-coalition" v-if="coalition.length > 0" :class="{single: single}">
+		<div :class="{columns: !single}">
+			<party-about :reg="reg" v-for="(reg, index) in coalition" :key="'coal_' + index" :switchDesktop="switchDesktop" />
+		</div>
+	</div>
+</div>

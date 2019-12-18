@@ -1,0 +1,101 @@
+<div class="layout-static layout-static-impressum">
+	<blockquote>“A koho tedy budeme volit? Kde má nějaký program? Znám ho? Můžu se ho zeptat? Vždyť já o nich vůbec nic nevím, podle čeho se pak mám rozhodovat?”</blockquote>
+	<p>A tak to je vždy. Buď jsme zahlceni informacemi nebo nemáme žádné. Cílem našeho projektu <b>Programy do voleb</b> je přinést všem voličům  jednoduchý přehled o jednotlivých kandidátech, stranách a jejich programech a usnadnit jim tak snazší rozhodování v letošních volbách do Evropského parlamentu.</p>
+	<div class="segment">
+		<h4>Krátce</h4>
+		<h2>O projektu</h2>
+		<p><b>Programy do voleb</b> jsou soukromou, nezávislou, občanskou iniciativou Štěpána Ryšavého - <a href="https://twitter.com/stepanrysavy">@stepanrysavy</a>. Veškeré náklady na provoz, programování, reklamu atd. hradíme z našich soukromých zdrojů. Chceme být nezávislou iniciativou, proto nepočítáme s žádnou cizí formou financování, nežádáme o evropské granty, státní podporu a na našich stránkách není žádný prostor určený pro reklamu. Pokud se vám můj projekt líbí nebo máte námět na vylepšení, napište mi prosím <outbound-link href="stepan@programydovoleb.cz" content="email: stepan@programydovoleb.cz"></outbound-link>, pojďme se sejít a probrat to. Více než finanční dary <b>oceníme</b> online sdílení našich výstupů, jejich komentování a doporučení na zlepšení.</p>
+		<p>Číselníky a kandidátky pochází z <outbound-link href="https://www.czso.cz/csu/czso/podminky_pro_vyuzivani_a_dalsi_zverejnovani_statistickych_udaju_csu" content="otevřených dat Českého Statistického Úřadu" />.</p>
+		<p>Využíváme volně dostupné informace ze stránek politických stran, hnutí, kandidátů, státních a evropských organizací či úřadů. Mnoho informací ručně dohledáváme, nevyužíváme žádné automatické datové zdroje.</p>
+		<p>Nejsme členy žádné strany ani hnutí, ani nepracujeme pro žádnou státní či nestátní organizaci.</p>
+	</div>
+	<div class="segment">
+		<h4>Chyba?</h4>
+		<p>Je možné, že občas uděláme chybu nebo některé údaje nebudou úplné nebo již aktuální. Když na nějakou narazíte, prosím, <b>dejte nám vědět</b> na <outbound-link href="mailto:info@programydovoleb.cz" content="info@programydovoleb.cz" /></p>
+	</div>
+	<div class="segment" :class="'tick_' + $store.state.tick">
+		<h4>Finance</h4>
+		<p>Veškerý provoz webu hradíme z vlastních zdrojů a práci na projektu věnujeme náš volný čas. Pro maximální transparentnost uvádíme i přehled našich výdajů, které jsem vynaložili na provoz, reklamu atd. Chcete nás podpořit? Napište nám na <outbound-link href="mailto:podpora@programydovoleb.cz" content="podpora@programydovoleb.cz" />. Nejvíc oceníme, pokud budete sdílet odkazy, tweety nebo posty na FB.</p>
+		<p class="small dimm" v-if="$store.state.dynamic.funds">Poslední aktualizace: {{ $store.state.dynamic.funds.date }}</p>
+	</div>
+	<div class="segment" :class="'tick_' + $store.state.tick">
+		<h4>Výdaje</h4>
+		<h2>Náklady na projekt za rok 2018/19</h2>
+		<table v-if="$store.state.dynamic.funds">
+			<tr v-for="(fund, index) in $store.state.dynamic.funds.expenses">
+				<td>
+					<span v-if="!fund.data || !fund.data.link">{{ fund.title }}</span>
+					<outbound-link v-if="fund.data && fund.data.link" :href="fund.data.link" :content="fund.title"></outbound-link>
+					<div v-if="fund.data" class="small dimm">
+						{{ fund.data.view }} zobrazení,
+						{{ fund.data.clicks }} kliknutí,
+						{{ fund.data.engagement }} zapojení
+					</div>
+				</td>
+				<td>
+					{{ fund.value }} Kč
+				</td>
+			</tr>
+			<tr>
+				<th>Celkem nás to stálo</th>
+				<th>
+					{{ total($store.state.dynamic.funds.expenses) }} Kč
+				</th>
+			</tr>
+		</table>
+		<h2>Výdaje v roce 2018:</h2>
+		<p>To jsou náklady, kolik nás stál původně hosting a doména, když jsme dělali komunální a senátní volby. A protože stále využíváme stejný hosting i doménu, jako minule, uvádíme je takto bokem.</p>
+		<table v-if="$store.state.dynamic.funds">
+			<tr v-for="(fund, index) in $store.state.dynamic.funds.legacy">
+				<td>
+					<span v-if="!fund.data || !fund.data.link">{{ fund.title }}</span>
+					<outbound-link v-if="fund.data && fund.data.link" :href="fund.data.link" :content="fund.title"></outbound-link>
+					<div v-if="fund.data" class="small dimm">
+						{{ fund.data.view }} zobrazení,
+						{{ fund.data.clicks }} kliknutí,
+						{{ fund.data.engagement }} zapojení
+					</div>
+				</td>
+				<td>
+					{{ fund.value }} Kč
+				</td>
+			</tr>
+			<tr>
+				<th>Celkem nás to stálo</th>
+				<th>
+					{{ total($store.state.dynamic.funds.legacy) }} Kč
+				</th>
+			</tr>
+		</table>
+	</div>
+	<div class="segment" :class="'tick_' + $store.state.tick">
+		<h4>Příjmy</h4>
+		<h2>Kolik nám kdo přispěl?</h2>
+		<table v-if="$store.state.dynamic.funds">
+			<tr v-for="(fund, index) in $store.state.dynamic.funds.donations">
+				<td>
+					{{ fund.title }}
+				</td>
+				<td>
+					{{ fund.value }} Kč
+				</td>
+			</tr>
+			<tr>
+				<th>Celkem jsme na projekt získali</th>
+				<th>
+					{{ total($store.state.dynamic.funds.donations) }} Kč
+				</th>
+			</tr>
+		</table>
+	</div>
+	<div class="segment">
+		<h4>Transparency report - Facebook</h4>
+		<h2>Přehled výdajů od Facebooku</h2>
+		<p>V rámci politických kampaní vyžaduje Facebook, abychom byli zaregistrovaní a ověření. Poté na této stránce nabízí kompletní přehled našich reklam včetně vydané částky.</p>
+		<p><outbound-link href="https://www.facebook.com/ads/library/?view_all_page_id=1033702273421005" content="Transparentní reklama na Facebooku" /></p>
+	</div>
+	<div class="goto">
+		<router-link to="/">Na úvodní stránku</router-link> <span class="arr">&rarr;</span>
+	</div>
+
+</div>

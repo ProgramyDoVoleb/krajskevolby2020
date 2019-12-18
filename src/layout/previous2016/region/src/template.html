@@ -1,0 +1,40 @@
+<div class="overview">
+  <h1>{{ region.name }}</h1>
+  <div class="part">
+    <results-graph :data="results2016" />
+  </div>
+  <div class="part">
+    <h2>Krajská koalice</h2>
+    <p>
+      <strong>Hejtman:</strong>
+      <template v-for="(party, index) in $store.state.static.previous2016.coalition[index].parties">
+        <template v-for="(person, i) in party.seats">
+          <person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+        </template>
+      </template>
+    </p>
+    <p>
+      <router-link :to="'/2016/' + region.hash + '/programove-prohlaseni'" class="button">Programové prohlášení</router-link>
+    </p>
+    <h3>Strany koalice</h3>
+    <div class="">
+      <party-about v-for="(party, index) in $store.state.static.previous2016.coalition[index].parties" :reg="party.reg" :key="'party_' + index" :switchDesktop="true" />
+    </div>
+    <h3>Radní</h3>
+    <div class="columns">
+        <person-about v-for="(item, i) in gov" :name="item.person.name" :party="item.party.reg" :nominatedBy="item.person.party" :link="item.person.wiki" :key="'person_' + i" />
+    </div>
+  </div>
+  <div class="part">
+    <h2>Zvolení zastupitelé</h2>
+    <div class="columns">
+      <div class="item" v-for="(party, index) in parties" v-if="party.elected.length > 0" :style="{'border-color': partiesGlobal.find(p => p.reg === party.reg).color}">
+        <party-about :reg="party.reg" :single="true" />
+        <h5>Zastupitelé</h5>
+        <div class="people">
+          <person-about v-for="(person, i) in party.elected" :name="person.name.join(' ')" :key="'elected_' + index + '_' + i" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

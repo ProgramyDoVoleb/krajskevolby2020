@@ -1,0 +1,16 @@
+.side {
+  padding: 1rem;
+  background: #eee;
+
+  @media (min-width: 40rem) {
+    width: 20rem;
+    float: right;
+    padding: 0 0 0 2rem;
+    background: none;
+    border-left: 1px dotted #aaa;
+  }
+}
+
+h4 {
+  margin: 0;
+}

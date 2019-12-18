@@ -1,0 +1,25 @@
+.icon-label {
+  width: 6rem;
+  text-align: center;
+
+  .icon {
+    margin: 0 0 .25em;
+  }
+
+  .link {
+    font-size: .8rem;
+  }
+}
+
+.icon-remove-border {
+  border: none;
+
+  img {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    border-radius: 50%;
+    margin: 0 auto .25em;
+    border: 1px solid #eee;
+  }
+}

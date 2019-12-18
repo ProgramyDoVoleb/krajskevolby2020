@@ -1,0 +1,22 @@
+<div class="icon-label">
+	<template v-if="to && to.split('http').length === 1">
+		<div class="icon">
+			<router-link :to="to" class="icon-remove-border">
+				<img :src="img" :alt="label">
+			</router-link>
+		</div>
+		<div class="link">
+			<span v-if="headline">{{ headline }} <br></span>
+			<router-link :to="to" v-html="label" />
+		</div>
+	</template>
+	<template v-if="to && to.split('http').length === 2">
+		<div class="icon">
+			<outbound-icon :href="to" :img="img" :title="label" />
+		</div>
+		<div class="link">
+			<span v-if="headline">{{ headline }} <br></span>
+			<outbound-link :href="to" :content="label" :addon="false" />
+		</div>
+	</template>
+</div>

@@ -1,0 +1,23 @@
+.result a {
+  word-break: break-all;
+}
+
+.link-addon-icon {
+  position: relative;
+  width: 1.1em;
+  display: inline-block;
+  height: 1.2em;
+}
+
+img {
+  position: absolute;
+  width: 1.2em;
+  height: 1.2em;
+  display: block;
+  top: .2em;
+  right: 0;
+}
+
+.button a {
+  border: none;
+}

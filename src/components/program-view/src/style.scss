@@ -1,0 +1,87 @@
+.program-view-floating {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .indicate-name {
+    display: none;
+    opacity: .25;
+  }
+
+  .button {
+    border: none;
+    background: none;
+    padding: .5rem 1rem .5rem .5rem;
+
+    .indicate-active {
+      display: none;
+    }
+  }
+
+  .button.active {
+    .indicate-inactive {
+      display: none;
+    }
+    .indicate-active {
+      display: inline;
+    }
+    .indicate-name {
+      opacity: 1;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      .indicate-name {
+        display: inline-block;
+      }
+
+      .button {
+        background: rgba(#fff, .95);
+      }
+
+      .button.active,
+      .button:hover {
+        background: #eef;
+      }
+    }
+
+    .button:hover {
+      .indicate-inactive {
+        display: none;
+      }
+      .indicate-active {
+        display: inline;
+      }
+      .indicate-name {
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (min-width: 100rem) {
+    max-width: 20rem;
+
+    a {
+      white-space: normal;
+      background: none !important;
+    }
+
+    .indicate-name {
+      display: inline !important;
+    }
+  }
+}

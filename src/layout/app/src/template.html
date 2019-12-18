@@ -1,0 +1,46 @@
+<div id="app">
+	<div class="block">
+		<h1>Krajské volby 2020</h1>
+		<region-menu />
+	</div>
+	<div class="block">
+		<router-view></router-view>
+	</div>
+	<div class="block">
+		<ul class="footer">
+			<li>
+				<div class="footer-content">
+					<h4>Programy do voleb</h4>
+					<p class="small">Projekt “Programy do voleb” je soukromou nezávislou iniciativou Štěpána Ryšavého - <a href="https://www.twitter.com/stepanrysavy" target="_blank">@stepanrysavy</a> - na podporu voleb do Evropského parlamentu. Není vytvořen, objednán ani financován ze strany úřadů ČR ani EU. Neslouží k podpoře konkrétního kandidáta nebo politické strany. Číselníky a kandidátky vycházejí z&nbsp;<a href="https://www.czso.cz/csu/czso/podminky_pro_vyuzivani_a_dalsi_zverejnovani_statistickych_udaju_csu" target="_blank">otevřených dat ČSÚ</a>, stejně tak jako ostatní informace, které pocházejí z veřejně dostupných zdrojů. Fotografie použité na tomto projektu zveřejnujeme v souladu s&nbsp;GDPR, tj. pouze s písemným svolením autorů, portrétovaných osob. V souladu s&nbsp;pravidly použití také zveřejňujeme loga jednotlivých stran a společností.</p>
+				</div>
+			</li>
+			<li>
+				<div class="footer-content">
+					<h4>Krajské volby 2020</h4>
+					<ul class="footer-menu">
+						<li><router-link to="/" class="footer-link">Úvodní stránka</router-link></li>
+						<li><router-link to="/o-projektu" class="footer-link">O projektu</router-link></li>
+						<li><router-link to="/cookies" class="footer-link">Cookies</router-link></li>
+						<li><router-link to="/newsletter" class="footer-link">Newsletter</router-link></li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="footer-content">
+					<h4>Napište nám:</h4>
+					<p><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></p>
+					<p class="small">Nebo se s námi spojte na sociálních sítích. Je to rychlejší.</p>
+					<div class="social-share">
+						<outbound-icon href="https://www.facebook.com/programydovoleb" type="fb" />
+						<outbound-icon href="https://www.twitter.com/programydovoleb" type="tw" />
+						<outbound-icon href="https://www.instagram.com/programydovoleb" type="ig" />
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="footer-content">
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

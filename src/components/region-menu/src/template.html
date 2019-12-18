@@ -1,0 +1,13 @@
+<div class="region-menu">
+	<ul>
+		<li v-for="(region, index) in $store.state.static.regions">
+			<router-link class="region-menu-item" tag="div" :to="'/2016/' + region.hash" :title="region.name">
+				<div class="region-bullet">
+					<div class="region-color region-color-1" :style="{background: region.colors[0]}"></div>
+					<div class="region-color region-color-2" :style="{background: region.colors[1]}"></div>
+				</div>
+				<div class="region-name">{{ region.short }}</div>
+			</router-link>
+		</li>
+	</ul>
+</div>
