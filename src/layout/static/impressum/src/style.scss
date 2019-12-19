@@ -1,28 +1,9 @@
-table {
-  width: 100%;
-}
-
-td, th {
-  vertical-align: baseline;
-  text-align: left;
-  padding: .35em 0;
-
-  &:last-child {
-    text-align: right;
-  }
-}
-
-tr + tr td,
-tr + tr th {
-  border-top: 1px solid #eee;
-}
-
-h2 {
-  max-width: 35rem;
-}
-
 blockquote {
   @media (min-width: 40rem) {
     margin: 3rem;
   }
+}
+
+h2 {
+  text-align: left;
 }

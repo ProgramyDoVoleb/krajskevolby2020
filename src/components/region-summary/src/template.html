@@ -1,0 +1,39 @@
+<div class="region-summary">
+	<h2>
+		<router-link :to="'/2016/' + region.hash">
+			{{ region.name }}
+		</router-link>
+	</h2>
+	<p class="center">
+		<strong>Hejtman:</strong><br>
+		<template v-for="(party, index) in gov">
+			<template v-for="(person, i) in party.seats">
+				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+			</template>
+		</template>
+	</p>
+	<div class="parties">
+		<div class="party" v-for="(party, index2) in parties" v-if="party.elected.length > 0">
+			<div class="party-logo">
+				<img :src="logo(party.reg)" alt="">
+			</div>
+			<div class="party-about">
+				<div class="party-name hide-40rem">
+					{{ party.short }}
+				</div>
+				<div class="party-name show-40rem">
+					{{ party.name }}
+				</div>
+			</div>
+			<div class="party-ptc">
+				{{ party.ptc }} %
+			</div>
+			<div class="party-elected">
+				{{ party.elected.length}}
+			</div>
+			<div class="party-coal">
+				<img src="/static/icon/icon-check.svg" v-if="coal(party.reg)">
+			</div>
+		</div>
+	</div>
+</div>

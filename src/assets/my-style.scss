@@ -174,6 +174,15 @@ button, .button, .btn {
 
 .part + .part {
 	position: relative;
+	padding-top: 4rem;
+
+	@media (min-height: 60rem) {
+		padding-top: 6rem;
+
+		h2 {
+			padding-bottom: 4rem;
+		}
+	}
 }
 
 .columns {
@@ -190,6 +199,19 @@ button, .button, .btn {
 
 	@media (min-width: 60rem) {
 		columns: 3;
+	}
+}
+
+.columns-2 {
+	@media (min-width: 40rem) {
+		columns: 2;
+		column-gap: 4rem;
+
+		& > * {
+	    break-inside: avoid-column;
+			page-break-inside: avoid;
+	    padding-bottom: 2em;
+		}
 	}
 }
 

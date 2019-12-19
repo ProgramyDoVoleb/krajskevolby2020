@@ -7,7 +7,7 @@ export default {
 	components: {},
 	methods: {},
 	mounted: function () {
-    	this.$store.dispatch("ga", {title: "Odebírejte týdenní shrnutí"});
+    this.$store.dispatch("ga", {title: "Odebírejte týdenní shrnutí"});
 		window.scrollTo(0, 0);
 	}
 };

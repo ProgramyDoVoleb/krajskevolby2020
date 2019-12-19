@@ -1,12 +1,15 @@
 export default {
 	name: 'party-about',
-	props: ['reg', 'switchDesktop', 'single'],
+	props: ['reg', 'simple'],
 	computed: {
 		party: function () {
 			return this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);
 		},
 		coalition: function () {
 			return this.party.coalition || [];
+		},
+		partiesGlobal: function () {
+			return this.$store.state.static.previous2016.parties.list;
 		},
 		link: function () {
 

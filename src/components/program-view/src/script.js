@@ -9,7 +9,7 @@ export default {
 	methods: {
 		setBlockActiveVariable: function (position) {
 			this.$refs['block'].forEach((ref, index) => {
-				if (position > ref.$el.offsetTop - window.innerHeight && position < ref.$el.offsetTop + ref.$el.clientHeight) {
+				if (position > ref.$el.offsetTop - window.innerHeight + 200 && position < ref.$el.offsetTop + ref.$el.clientHeight + 200) {
 					this.$refs['bullet'][index].classList.add("active");
 				} else {
 					this.$refs['bullet'][index].classList.remove("active");

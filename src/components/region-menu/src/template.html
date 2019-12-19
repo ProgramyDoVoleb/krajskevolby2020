@@ -1,4 +1,4 @@
-<div class="region-menu">
+<nav class="region-menu">
 	<ul>
 		<li v-for="(region, index) in $store.state.static.regions">
 			<router-link class="region-menu-item" tag="div" :to="'/2016/' + region.hash" :title="region.name">
@@ -10,4 +10,4 @@
 			</router-link>
 		</li>
 	</ul>
-</div>
+</nav>

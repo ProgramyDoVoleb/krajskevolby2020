@@ -19,26 +19,13 @@ export default {
 			return this.$store.state.static.regions.indexOf(this.region);
 		},
 		parties: function () {
-			return this.$store.state.static.previous2016.results[this.index].parties;
+			return this.$store.state.static.previous2016.results[this.index].parties.sort((a, b) => b.elected.length - a.elected.length);
 		},
 		partiesGlobal: function () {
 			return this.$store.state.static.previous2016.parties.list;
 		},
 		gov: function () {
-			var list = [];
-
-			this.$store.state.static.previous2016.coalition[this.index].parties.forEach(party => {
-				party.seats.forEach(seat => {
-					list.push({
-						party: party,
-						person: seat
-					});
-				});
-			});
-
-			list.sort((a, b) => a.person.level - b.person.level);
-
-			return list;
+			return this.$store.state.static.previous2016.coalition[this.index].parties.sort((a, b) => b.seats.length - a.seats.length);
 		},
 		results2016: function () {
 
@@ -63,17 +50,22 @@ export default {
 				if (party.ptc < 3) {
 					rest.ptc += party.ptc;
 				} else {
+
 					var o = {
 						name: party.name,
 						short: party.short,
-						ptc: party.ptc
+						ptc: party.ptc,
+						votes: party.votes,
+						reg: party.reg
 					}
 
-					var partyData = this.$store.state.static.previous2016.parties.list.find(p => p.reg === party.reg);
+					var partyData = this.partiesGlobal.find(p => p.reg === party.reg);
 
 					if (partyData) {
-						o.logo = [partyData.logo || "empty.png"];
+						o.logo = [partyData.logo || 'empty.png'];
 						o.color = partyData.color;
+
+						var hasLogo = partyData.logo;
 
 						if (partyData.coalition) {
 							partyData.coalition.forEach((coal, index) => {
@@ -81,16 +73,9 @@ export default {
 
 								if (coalData) {
 									if (o.color === "#aaa") o.color = coalData.color;
-									if (coalData.logo) {
-										if (index === 0 && o.logo[0] === "empty.png") {
-											o.logo[0] = coalData.logo;
-										} else {
-											o.logo.push(coalData.logo);
-										}
-									} else {
-										if (index > 0) {
-											o.logo.push("empty.png");
-										}
+									if (!partyData.logo && coalData.logo) {
+										if (index === 0) o.logo = [];
+										o.logo.push(coalData.logo);
 									}
 								}
 							});
@@ -114,9 +99,57 @@ export default {
 			data.coef = Math.round(10000 / max) / 100;
 
 			return data;
+		},
+		review: function () {
+
+			var copy = [];
+
+			var winner = this.results2016.list[0];
+
+			copy.push("Vítězem krajských voleb 2016 byli kandidáti " + (winner.coalition ? winner.name : winner.short) + ".");
+			copy.push("Celkem získali " + this.results2016.list[0].ptc + " % hlasů, volilo je " + this.results2016.list[0].votes + " lidí.");
+
+			if (!this.gov.find(p => p.reg === winner.reg)) {
+				copy.push("Přesto nejsou součástí Rady kraje.")
+			}
+
+			var coal = [];
+			var coalID = [];
+			var coalSeats = 0;
+			this.gov.forEach(g => {
+				var party = this.parties.find(p => p.reg === g.reg);
+				coalSeats += g.seats.length;
+				coal.push(party.coalition ? party.name : party.short);
+				coalID.push(g.reg);
+			});
+
+			copy.push("Radu kraje tvoří " + coalSeats + " radních z " + coal.slice(0, coal.length - 1).join(", ") + " a " + coal[coal.length - 1] + ".");
+
+			var seats = 0;
+			var seatsCoal = 0;
+			this.parties.forEach(party => {
+				seats += party.elected.length;
+				if (coalID.indexOf(party.reg) > -1) seatsCoal += party.elected.length;
+			});
+			var majority = Math.round(100 * seatsCoal / seats) > 50 ? "většinu" : "měnšinu";
+
+			copy.push("Tyto strany mají v zastupitelstvu " + seatsCoal + " z celkem " + seats + " křesel, " + majority + " " + (Math.round(100 * seatsCoal / seats)) + " %.");
+
+			return copy.join(" ");
 		}
 	},
-  methods: {},
-  mounted: function () {},
-	watch: {}
+  methods: {
+		ga: function () {
+				this.$store.dispatch("ga", {title: "Detail kraje: " + this.region.name});
+				window.scrollTo(0, 0);
+		}
+	},
+  mounted: function () {
+		this.ga();
+	},
+	watch: {
+		id: function () {
+			this.ga();
+		}
+	}
 };

@@ -1,0 +1,64 @@
+h2 {
+  margin: 0;
+}
+
+img {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+
+.parties {
+  padding: 1rem 0 0 0;
+}
+
+.party {
+  display: flex;
+  align-items: center;
+}
+
+.party + .party {
+  margin-top: .5rem;
+  padding-top: .5rem;
+  border-top: 1px dotted #eee;
+}
+
+.party-logo {
+  width: 2rem;
+}
+
+.party-coal,
+.party-elected {
+  width: 2rem;
+  text-align: right;
+}
+
+.party-ptc {
+  width: 4rem;
+  text-align: right;
+}
+
+.party-about {
+  flex: 1;
+}
+
+.hide-40rem {
+  @media (min-width: 40rem) {
+    display: none;
+  }
+}
+
+.show-40rem {
+  display: none;
+
+  @media (min-width: 40rem) {
+    display: inherit;
+  }
+}
+
+.party-coal img {
+  border: none;
+  transform: translateX(.5em);
+}

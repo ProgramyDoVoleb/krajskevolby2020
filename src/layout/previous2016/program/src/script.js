@@ -33,14 +33,20 @@ export default {
 			};
 			xmlhttp.open("GET", this.program, true);
 			xmlhttp.send();
+		},
+		ga: function () {
+		    this.$store.dispatch("ga", {title: "Program pro " + this.region.name});
+				window.scrollTo(0, 0);
 		}
 	},
   mounted: function () {
 		this.load();
+		this.ga();
 	},
 	watch: {
 		program: function () {
 			this.load();
+			this.ga();
 		}
 	}
 };

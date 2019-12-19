@@ -2,6 +2,9 @@
   <div class="program" v-if="file">
     <h1>{{ file.title }} <small>{{ file.subtitle }}</small></h1>
     <p>Zdroj: <outbound-link :href="file.source" :content="file.title"></outbound-link></p>
-    <program-view :data="file" :showIndex="true" :showFloatingIndex="true" />
+    <program-view :data="file" :showIndex="true" :showFloatingIndex="true">načítám ...</program-view>
   </div>
+	<div class="goto">
+		<router-link :to="'/2016/' + id">Zpět na {{ region.name }}</router-link> <span class="arr">&rarr;</span>
+	</div>
 </div>

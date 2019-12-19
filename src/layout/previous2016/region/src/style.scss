@@ -1,5 +1,7 @@
 h2 {
-  padding: 3rem 0 1rem;
+  padding-bottom: 1em;
+  margin: 0;
+  font-size: 2rem;
 }
 
 .party p {
@@ -27,5 +29,15 @@ small {
 .item {
   border-left: 2px solid #aaa;
   padding-left: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.review {
+  max-width: 40rem;
+  margin: auto;
+  text-align: left;
+
+  @media (min-width: 40rem) {
+    text-align: center;
+  }
 }

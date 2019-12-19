@@ -5,21 +5,10 @@ export default {
 	},
 	computed: {},
 	components: {},
-	methods: {
-		total: function (arr) {
-			var sum = 0;
-
-			arr.forEach(val => {
-				sum += val.value
-			})
-
-			return sum;
-		}
-	},
+	methods: {},
 	mounted: function () {
     this.$store.dispatch("ga", {path: "impressum", title: "Impressum"});
 		window.scrollTo(0, 0);
-		this.$store.dispatch("checkFundsLoaded");
 
 	}
 };
