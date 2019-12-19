@@ -1,6 +1,11 @@
+import LogoItem from "@/components/logo-item/do";
+
 export default {
 	name: 'person-about',
 	props: ['name', 'party', 'nominatedBy', 'link'],
+	components: {
+		LogoItem
+	},
 	computed: {
 		partyData: function () {
 			if (!this.party) return undefined;

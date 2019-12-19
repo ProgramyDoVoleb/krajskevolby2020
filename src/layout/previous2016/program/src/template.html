@@ -1,7 +1,12 @@
 <div class="overview">
   <div class="program" v-if="file">
-    <h1>{{ file.title }} <small>{{ file.subtitle }}</small></h1>
-    <p>Zdroj: <outbound-link :href="file.source" :content="file.title"></outbound-link></p>
+    <h1>{{ file.title }} <small><br>{{ file.subtitle }}</small></h1>
+    <p class="center">Zdroj: <outbound-link :href="file.source" :content="file.title"></outbound-link></p>
+    <p class="center">
+      <template v-for="(coal, index) in gov">
+        {{ $store.state.static.previous2016.parties.list.find(p => p.reg === coal.reg).name }}<span v-if="index < gov.length - 1">, </span>
+      </template>
+    </p>
     <program-view :data="file" :showIndex="true" :showFloatingIndex="true">načítám ...</program-view>
   </div>
 	<div class="goto">

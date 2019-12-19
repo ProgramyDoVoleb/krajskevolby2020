@@ -1,6 +1,11 @@
+import LogoItem from "@/components/logo-item/do";
+
 export default {
 	name: 'party-about',
-	props: ['reg', 'simple'],
+	props: ['reg', 'simple', 'size'],
+	components: {
+		LogoItem
+	},
 	computed: {
 		party: function () {
 			return this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);

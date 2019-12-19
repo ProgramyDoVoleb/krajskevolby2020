@@ -1,9 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Inria+Serif:300i,400|Roboto:400,700&display=swap');
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+}
+
 p {
 
 }
 
 h1, h2 {
   text-align: center;
+  font-family: 'Inria Serif', serif;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 h5 {
@@ -35,9 +47,9 @@ b, strong {
 }
 
 blockquote {
-  font-family: georgia, cursive;
+  font-family: 'Inria Serif', cursive;
   font-style: italic;
-  font-size: 1.5em;
+  font-size:2em;
   padding: 1rem 2rem 2rem;
   margin: 0;
 
@@ -125,28 +137,19 @@ h1 .dimm {
 
 .goto {
   margin: 2rem -2rem -2rem;
-  background: #003399;
+  background: #f4f4f4;
   padding: 2rem;
-  color: #ffcc00;
+  color: #888;
   position: relative;
 
   a {
     border-bottom-color: transparent;
-    color: #fff;
+    color: #888;
     font-weight: bold;
   }
 
   @media (min-width: 40rem) {
     margin: 2rem 0 0;
-    padding: 2rem 2rem;
-    background: #fc0;
-    border-top: 1px solid #eee;
-    color: #003399;
-
-    a {
-      border-bottom-color: #ffcc00;
-      color: #003399;
-    }
 
     // &:first-of-type {
       border-top-left-radius: 4px;

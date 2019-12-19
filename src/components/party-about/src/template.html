@@ -8,13 +8,13 @@
 			</div>
 		</div>
 		<div class="party-primary-logo">
-			<img :src="'/static/' + (party.logo || 'empty.png')" :alt="party.name">
+			<logo-item :reg="party.reg" :size="size || 4" />
 		</div>
 	</div>
 	<h5 v-if="coalition.length > 0 && !simple">Strany koalice</h5>
 	<div class="party-coalition-list" v-if="coalition.length > 0 && !simple">
 		<div class="party-coalition-item" v-for="(reg, index) in coalition" :key="'coal_' + index" :style="{'border-color': partiesGlobal.find(p => p.reg === reg).color}">
-			<party-about :reg="reg" />
+			<party-about :reg="reg" :size="1.5" />
 		</div>
 	</div>
 </div>

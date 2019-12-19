@@ -15,7 +15,7 @@
 	<div class="parties">
 		<div class="party" v-for="(party, index2) in parties" v-if="party.elected.length > 0">
 			<div class="party-logo">
-				<img :src="logo(party.reg)" alt="">
+				<logo-item :reg="party.reg" size="1.5" />
 			</div>
 			<div class="party-about">
 				<div class="party-name hide-40rem">

@@ -20,6 +20,9 @@ export default {
 		},
 		program: function () {
 			return '/static/' + this.$store.state.static.previous2016.coalition[this.index].program;
+		},
+		gov: function () {
+			return this.$store.state.static.previous2016.coalition[this.index].parties.sort((a, b) => b.seats.length - a.seats.length);
 		}
 	},
   methods: {

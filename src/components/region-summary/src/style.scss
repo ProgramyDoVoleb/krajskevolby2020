@@ -27,6 +27,10 @@ img {
 
 .party-logo {
   width: 2rem;
+
+  .logo-item {
+    transform: translateY(.15em);
+  }
 }
 
 .party-coal,

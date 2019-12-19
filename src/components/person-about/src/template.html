@@ -1,6 +1,6 @@
 <span class="person-about">
 	<span class="person-party" v-if="partyData">
-		<img :src="'/static/' + (partyData.logo || 'empty.png')" alt="">
+		<logo-item :reg="partyData.reg" size="1.1" />
 	</span>
 	<span class="person-name">
 		<span v-if="!link">{{ displayName }}</span>
@@ -8,6 +8,6 @@
 	</span>
 	<span class="person-nominatedBy" v-if="nominatedByData">
 		&middot;
-		<img :src="'/static/' + (nominatedByData.logo || 'empty.png')" alt="">
+		<logo-item :reg="nominatedByData.reg" size="1.1" />
 	</span>
 </span>

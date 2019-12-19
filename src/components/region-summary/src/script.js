@@ -1,10 +1,12 @@
 import PersonAbout from "@/components/person-about/do";
+import LogoItem from "@/components/logo-item/do";
 
 export default {
 	name: 'region-summary',
 	props: ['id'],
 	components: {
-		PersonAbout
+		PersonAbout,
+		LogoItem
 	},
 	computed: {
 		region: function () {

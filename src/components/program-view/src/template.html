@@ -1,11 +1,11 @@
 <div class="program-view">
 	<div class="program-view-index" v-if="showIndex">
 		<h2>Obsah</h2>
-    <ul>
+    <ol class="columns">
       <li v-for="(part, pi) in data.parts">
         <a :href="'#cast' + pi">{{ part.headline }}</a>
       </li>
-    </ul>
+    </ol>
 	</div>
 	<div class="program-view-floating" v-if="showFloatingIndex">
 		<ul>
