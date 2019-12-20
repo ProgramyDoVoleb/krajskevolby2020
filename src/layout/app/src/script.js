@@ -1,24 +1,7 @@
 import axios from "axios";
 import RegionMenu from "@/components/region-menu/do";
 
-axios.defaults.baseURL = 'https://eu2019.programydovoleb.cz/lib/app/api.php';
-axios.interceptors.request.use(function (config) {
 
-    if (config.url.indexOf("login.php") > -1) return config;
-
-    var link = config.url.split(axios.defaults.baseURL + "/");
-
-    if (!config.params) config.params = {};
-
-    config.params.action = link[1] || "";
-    config.params.noCache = new Date().getTime();
-    config.url = axios.defaults.baseURL;
-
-    return config;
-}, function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-});
 
 export default {
 	name: 'app',

@@ -223,3 +223,18 @@ button, .button, .btn {
 		margin: 0 .25rem 0 0;
 	}
 }
+
+.max-40rem {
+	@media (min-width: 40rem) {
+		display: none !important;
+	}
+}
+
+.min-40rem {
+
+	display: none !important;
+
+	@media (min-width: 40rem) {
+		display: inherit !important;
+	}
+}

@@ -1,3 +1,7 @@
+export function PDV (url) {
+  return 'https://data.programydovoleb.cz/' + url.split('data/')[1];
+}
+
 export function stripURLintoDomain (url) {
   url = url.replace('https://', '');
   url = url.replace('http://', '');

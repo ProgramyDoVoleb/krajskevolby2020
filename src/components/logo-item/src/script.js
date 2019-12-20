@@ -1,3 +1,5 @@
+import {PDV} from "@/store/helpers";
+
 export default {
 	name: 'logo-item',
 	props: ['reg', 'size'],
@@ -25,5 +27,8 @@ export default {
 
 			return list;
 		}
+	},
+	methods: {
+		PDV
 	}
 };

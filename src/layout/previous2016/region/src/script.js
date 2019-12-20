@@ -62,7 +62,7 @@ export default {
 					var partyData = this.partiesGlobal.find(p => p.reg === party.reg);
 
 					if (partyData) {
-						o.logo = [partyData.logo || 'empty.png'];
+						o.logo = [partyData.reg];
 						o.color = partyData.color;
 
 						var hasLogo = partyData.logo;
@@ -75,7 +75,7 @@ export default {
 									if (o.color === "#aaa") o.color = coalData.color;
 									if (!partyData.logo && coalData.logo) {
 										if (index === 0) o.logo = [];
-										o.logo.push(coalData.logo);
+										o.logo.push(coalData.reg);
 									}
 								}
 							});

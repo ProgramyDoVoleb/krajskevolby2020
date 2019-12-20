@@ -9,7 +9,8 @@
 				</div>
 				<div class="graph-icons" :class="{multiple: item.logo.length > 1}" v-if="item.logo">
 					<div class="graph-icon" v-for="(logo, indexLogo) in item.logo">
-						<img :src="'/static/' + logo">
+						<logo-item :reg="logo" :size="item.logo.length > 1 ? 1.4 : 3" class="min-40rem"  />
+						<logo-item :reg="logo" :size="1.4" class="max-40rem" />
 					</div>
 				</div>
 				<div class="graph-name">

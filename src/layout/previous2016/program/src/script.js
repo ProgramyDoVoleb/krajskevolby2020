@@ -1,4 +1,5 @@
 import ProgramView from '@/components/program-view/do';
+import axios from "axios";
 
 export default {
 	name: 'previous2016program',
@@ -19,7 +20,7 @@ export default {
 			return this.$store.state.static.regions.indexOf(this.region);
 		},
 		program: function () {
-			return '/static/' + this.$store.state.static.previous2016.coalition[this.index].program;
+			return this.$store.state.static.previous2016.coalition[this.index].program.split('data/')[1];
 		},
 		gov: function () {
 			return this.$store.state.static.previous2016.coalition[this.index].parties.sort((a, b) => b.seats.length - a.seats.length);
@@ -27,15 +28,11 @@ export default {
 	},
   methods: {
 		load: function () {
-			var self = this;
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-			  if (this.readyState == 4 && this.status == 200) {
-			    self.file = JSON.parse(this.responseText);
-			  }
-			};
-			xmlhttp.open("GET", this.program, true);
-			xmlhttp.send();
+			axios.get("https://data.programydovoleb.cz/" + this.program).then((response) => {
+				this.file = response.data;
+			}).catch(e => {
+				console.log("File not loaded");
+			});
 		},
 		ga: function () {
 		    this.$store.dispatch("ga", {title: "Program pro " + this.region.name});
