@@ -176,6 +176,15 @@ export default {
 		},
 	},
   methods: {
+		townsFetched: function () {
+			if (location.hash && location.hash.length === 7) {
+				var town = this.numsFlatList.find(t => t.num === Number(location.hash.slice(1, 7)));
+
+				if (town) {
+					this.selectTown(town.num, town.nuts);
+				}
+			}
+		},
 		selectTown: function (num, nuts) {
 			axios.get("https://data.programydovoleb.cz/souhrny/obce/" + nuts + "/" + num + ".json").then((response) => {
 				this.selectedTown = response.data;
@@ -190,7 +199,7 @@ export default {
 		}
 	},
   mounted: function () {
-		this.$store.dispatch('fetchTowns');
+		this.$store.dispatch('fetchTowns', {onComplete: this.townsFetched});
 		this.ga();
 	},
 	watch: {

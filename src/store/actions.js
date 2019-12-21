@@ -38,6 +38,7 @@ actions.fetchTowns = function (context, payload) {
 
   axios.get('https://data.programydovoleb.cz/obecne/obce-struktura.json').then((response) => {
     context.commit('fetchTowns', response.data);
+    if (payload.onComplete) payload.onComplete();
   }).catch(e => {
     console.log('File not loaded');
   });
