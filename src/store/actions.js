@@ -29,4 +29,18 @@ actions.ga = function (context, payload) {
   }
 };
 
+actions.fetchTowns = function (context, payload) {
+
+  if (context.state.dynamic.towns.length > 0) {
+    console.log('Already loaded');
+    return;
+  }
+
+  axios.get('https://data.programydovoleb.cz/obecne/obce-struktura.json').then((response) => {
+    context.commit('fetchTowns', response.data);
+  }).catch(e => {
+    console.log('File not loaded');
+  });
+}
+
 export default actions;

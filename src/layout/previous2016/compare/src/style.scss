@@ -1,0 +1,22 @@
+.district .columns > li {
+  padding: 0 0 .25em 0;
+}
+
+.form-input-text {
+  font-size: 1.5rem;
+  border: 1px solid #eee;
+  padding: .5em 1em;
+  border-radius: 1em;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.small {
+  font-size: 13px;
+}
+
+.results {
+  margin-top: 2rem;
+}

@@ -1,0 +1,51 @@
+<div class="compare">
+  <div class="nav">
+    &larr; <router-link :to="'/2016/' + id">zpět na {{ region.name }}</router-link>
+  </div>
+  <div class="part">
+    <h1>{{ region.name }}</h1>
+    <div class="selected-town" v-if="selectedTown">
+      <p class="center">vs</p>
+      <h2>{{ selectedTown.name }}</h2>
+      <p class="center" v-if="results2016Town">{{ results2016Town.stats.voters }} voličů, účast {{ results2016Town.stats.pct }} %</p>
+      <p class="center red" v-if="!results2016Town">Bohužel tato data chybí.</p>
+    </div>
+  </div>
+  <div class="part part-graph">
+    <results-graph :data="results2016" />
+  </div>
+  <div class="part">
+    <h2>Seznam obcí</h2>
+    <div class="form">
+      <div class="form-input center">
+        <input type="search" v-model="query" class="form-input-text" placeholder="Hledat">
+      </div>
+    </div>
+    <div class="district" v-for="(district, index) in districts" v-if="query === ''">
+      <h3>{{ district.name }}</h3>
+      <ul class="columns">
+        <li v-for="(town, index2) in district.list">
+          <a :href="'#' + town.num" @click="selectTown(town.num, district.nuts)">{{ town.name }}</a>
+
+          <ul v-if="town.list">
+            <li v-for="(part, index3) in town.list">
+              <a :href="'#' + part.num" @click="selectTown(part.num, district.nuts)">{{ part.name }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="results columns">
+      <div class="result" v-for="(result, index) in queryResults">
+        <span class="is-link" @click="selectTown(result.num, result.nuts)">
+          <strong>{{ result.tName }}</strong>
+          <span v-if="result.pName != null">&middot; část {{ result.pName }}</span>
+        </span>
+        <br>
+        <span class="small">
+          <span>okr. {{ result.dName }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

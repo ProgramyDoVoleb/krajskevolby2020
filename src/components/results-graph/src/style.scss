@@ -81,14 +81,31 @@ li {
   background: #ddd;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  transition: 1s height;
+  will-change: height;
+}
+
+.graph-bar.zero {
+  transition: 0s height;
+  transition-delay: 0s !important;
+  height: 0% !important;
+}
+
+.graph-space.compare .graph-bar-primary {
+  right: 40%;
+  opacity: .1;
+}
+
+.graph-space.compare .graph-bar-secondary {
+  left: 30%;
+  opacity: 1;
 }
 
 .graph-bar-value {
   position: absolute;
   bottom: 100%;
-  left: 0;
-  right: 0;
-  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 11px;
 }
 

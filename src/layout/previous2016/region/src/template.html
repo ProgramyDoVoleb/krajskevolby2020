@@ -17,6 +17,9 @@
   <div class="part">
     <h2>Výsledky voleb 2016</h2>
     <results-graph :data="results2016" />
+    <p class="center">
+      <router-link :to="'/2016/' + region.hash + '/porovnani-vysledku-voleb'" class="button">Porovnat výsledky jednotlivých obcí</router-link>
+    </p>
   </div>
   <div class="part">
     <h2>Rada kraje</h2>

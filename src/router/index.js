@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
 import LayoutPrevious2016Program from '@/layout/previous2016/program/do';
+import LayoutPrevious2016Compare from '@/layout/previous2016/compare/do';
 import LayoutStaticImpressum from '@/layout/static/impressum/do';
 import LayoutStaticCookies from '@/layout/static/cookies/do';
 import LayoutStaticNewsletter from '@/layout/static/newsletter/do';
@@ -32,6 +33,12 @@ const router = new Router({
       path: '/2016/:id/programove-prohlaseni',
       name: 'Previous2016Program',
       component: LayoutPrevious2016Program,
+      props: true
+    },
+    {
+      path: '/2016/:id/porovnani-vysledku-voleb',
+      name: 'Previous2016Compare',
+      component: LayoutPrevious2016Compare,
       props: true
     },
     {

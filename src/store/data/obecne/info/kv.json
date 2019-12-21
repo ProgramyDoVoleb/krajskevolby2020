@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "nuts": "CZ020",
     "name": "Středočeský kraj",
     "short": "stk",
     "hash": "stredocesky-kraj",
@@ -11,6 +12,7 @@
   },
   {
     "id": 2,
+    "nuts": "CZ031",
     "name": "Jihočeský kraj",
     "hash": "jihocesky-kraj",
     "short": "jhč",
@@ -21,6 +23,7 @@
   },
   {
     "id": 3,
+    "nuts": "CZ032",
     "name": "Plzeňský kraj",
     "hash": "plzensky-kraj",
     "short": "plk",
@@ -31,6 +34,7 @@
   },
   {
     "id": 4,
+    "nuts": "CZ041",
     "name": "Karlovarský kraj",
     "hash": "karlovarsky-kraj",
     "short": "kvk",
@@ -41,6 +45,7 @@
   },
   {
     "id": 5,
+    "nuts": "CZ042",
     "name": "Ústecký kraj",
     "hash": "ustecky-kraj",
     "short": "ulk",
@@ -51,6 +56,7 @@
   },
   {
     "id": 6,
+    "nuts": "CZ051",
     "name": "Liberecký kraj",
     "hash": "liberecky-kraj",
     "short": "lbk",
@@ -61,6 +67,7 @@
   },
   {
     "id": 7,
+    "nuts": "CZ052",
     "name": "Královéhradecký kraj",
     "hash": "kralovehradecky-kraj",
     "short": "hkk",
@@ -71,6 +78,7 @@
   },
   {
     "id": 8,
+    "nuts": "CZ053",
     "name": "Pardubický kraj",
     "hash": "pardubicky-kraj",
     "short": "pak",
@@ -81,6 +89,7 @@
   },
   {
     "id": 9,
+    "nuts": "CZ063",
     "name": "Kraj Vysočina",
     "hash": "kraj-vysocina",
     "short": "vys",
@@ -91,6 +100,7 @@
   },
   {
     "id": 10,
+    "nuts": "CZ064",
     "name": "Jihomoravský kraj",
     "hash": "jihomoravsky-kraj",
     "short": "jhm",
@@ -101,6 +111,7 @@
   },
   {
     "id": 11,
+    "nuts": "CZ071",
     "name": "Olomoucký kraj",
     "hash": "olomoucky-kraj",
     "short": "olk",
@@ -111,6 +122,7 @@
   },
   {
     "id": 12,
+    "nuts": "CZ072",
     "name": "Zlínský kraj",
     "hash": "zlinsky-kraj",
     "short": "zlk",
@@ -121,6 +133,7 @@
   },
   {
     "id": 13,
+    "nuts": "CZ080",
     "name": "Moravskoslezský kraj",
     "hash": "moravskoslezsky-kraj",
     "short": "msk",

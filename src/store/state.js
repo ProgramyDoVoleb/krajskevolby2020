@@ -12,7 +12,9 @@ const state = {
       coalition: coalition2016
     }
   },
-  dynamic: {},
+  dynamic: {
+    towns: []
+  },
   tick: 0,
   start: new Date().getTime()
 };
