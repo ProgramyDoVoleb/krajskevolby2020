@@ -2,7 +2,7 @@
 	<header class="block">
 		<region-menu />
 	</header>
-	<article class="block">
+	<article class="block" v-if="$store.state.static.previous2016.coalition.length > 0">
 		<router-view></router-view>
 	</article>
 	<footer class="block">

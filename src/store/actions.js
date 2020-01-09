@@ -29,6 +29,20 @@ actions.ga = function (context, payload) {
   }
 };
 
+actions.fetchRada = function (context, payload) {
+  if (context.state.static.previous2016.coalition.length > 0) {
+    console.log('Already loaded');
+    return;
+  }
+
+  axios.get('https://data.programydovoleb.cz/volby/kv/2016/krajska-zastupitelstva.json').then((response) => {
+    context.commit('fetchRada', response.data);
+    if (payload.onComplete) payload.onComplete();
+  }).catch(e => {
+    console.log('File not loaded', e);
+  });
+}
+
 actions.fetchTowns = function (context, payload) {
 
   if (context.state.dynamic.towns.length > 0) {
