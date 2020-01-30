@@ -15,6 +15,8 @@ export default {
     },
     mounted: function () {
 			this.$store.dispatch('fetchRada');
+			this.$store.dispatch('fetchCallout');
+			this.$store.dispatch('fetchParties');
     },
     watch: {
     }

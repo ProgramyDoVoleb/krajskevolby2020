@@ -1,14 +1,14 @@
 <div class="party-about">
 	<div class="party-primary">
 		<div class="party-primary-data">
-			<h4>{{ party.name }}</h4>
+			<h4 v-html=" partyName"></h4>
 			<p v-if="link"><outbound-link content="Webové stránky" :href="link" /></p>
 			<div class="links-icons">
 				<outbound-icon v-for="(link, index) in icons" :href="link.url" :type="link.icon" class="party-link" :key="'link_' + index" />
 			</div>
 		</div>
 		<div class="party-primary-logo">
-			<logo-item :reg="party.reg" :size="size || 4" />
+			<logo-item :reg="party.reg" :data="partyData" :size="size || 4" />
 		</div>
 	</div>
 	<h5 v-if="coalition.length > 0 && !simple">Strany koalice</h5>

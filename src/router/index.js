@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import LayoutCurrent from '@/layout/current/do';
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
 import LayoutPrevious2016Program from '@/layout/previous2016/program/do';
@@ -16,7 +17,7 @@ const router = new Router({
     {
       path: '/',
       name: 'Homepage',
-      component: LayoutPrevious2016
+      component: LayoutCurrent
     },
     {
       path: '/2016',
@@ -40,11 +41,6 @@ const router = new Router({
       name: 'Previous2016Compare',
       component: LayoutPrevious2016Compare,
       props: true
-    },
-    {
-      path: '/2016',
-      name: 'Previous2016',
-      component: LayoutPrevious2016
     },
     {
       path: '/o-projektu',

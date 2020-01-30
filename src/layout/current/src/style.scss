@@ -1,0 +1,43 @@
+.region-holder + .region-holder {
+  margin-top: 3rem;
+}
+
+h1 {
+  max-width: 25rem;
+  margin: auto;
+  padding: 3rem 0 5rem;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+.item {
+  border-left: 2px solid #aaa;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  vertical-align: baseline;
+  text-align: left;
+
+  td, th {
+    padding: .5em 1em;
+  }
+  td {
+    border-top: 1px solid #eee;
+  }
+  th {
+    font-size: 14px;
+  }
+}
+
+.logo-item {
+  margin-right: .5em;
+}
+
+.region {
+  margin-bottom: 4rem;
+}

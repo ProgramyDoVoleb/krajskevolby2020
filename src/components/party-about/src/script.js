@@ -2,13 +2,13 @@ import LogoItem from "@/components/logo-item/do";
 
 export default {
 	name: 'party-about',
-	props: ['reg', 'simple', 'size'],
+	props: ['reg', 'simple', 'size', 'partyData'],
 	components: {
 		LogoItem
 	},
 	computed: {
 		party: function () {
-			return this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);
+			return this.partyData || this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);
 		},
 		coalition: function () {
 			return this.party.coalition || [];
@@ -40,6 +40,19 @@ export default {
 			}
 
 			return list;
+		},
+		partyName: function () {
+			if (!this.partyData) return this.party.name;
+
+			var list = [];
+
+			this.party.coalition.forEach(reg => {
+				var party = this.$store.state.static.previous2016.parties.list.find(p => p.reg === reg);
+
+				if (party) list.push(party.short || party.name);
+			});
+
+			return 'Koalice:<br>' + list.join(', ');
 		}
 	}
 };

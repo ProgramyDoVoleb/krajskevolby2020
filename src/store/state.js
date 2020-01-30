@@ -13,7 +13,9 @@ const state = {
     }
   },
   dynamic: {
-    towns: []
+    towns: [],
+    callout: [],
+    parties: []
   },
   tick: 0,
   start: new Date().getTime()

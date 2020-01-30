@@ -250,3 +250,30 @@ button, .button, .btn {
 	padding: 2rem;
 	border-top: 1px solid #eee;
 }
+
+.show-40rem {
+	display: none;
+}
+
+@media (min-width: 40rem) {
+	.show-40rem {
+		display: inherit;
+	}
+
+	td.show-40rem, th.show-40rem {
+		display: table-cell;
+	}
+}
+
+.box {
+	margin: 1.5rem -1.5rem;
+	box-shadow: 0 5px 15px #ddd;
+	padding: 1.5rem;
+}
+
+.info-box {
+	border: 1px solid #aaa;
+	background: #fafafa;
+	padding: 1rem;
+	margin: 6rem 0;
+}

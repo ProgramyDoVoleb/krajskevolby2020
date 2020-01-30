@@ -1,0 +1,50 @@
+<div class="overview">
+  <h1>Kdo už ohlásil, že půjde do krajských voleb:</h1>
+  <div class="columns-" v-if="$store.state.dynamic.callout.length > 0">
+    <collapsible-element v-for="(region, index) in $store.state.static.regions" v-if="getPartiesInRegion(region).length > 0" :label="region.name" :key="'ce_' + i">
+      <div class="box">
+        <div class="box-content">
+          <table cellspacing="0" cellpadding="0">
+            <thead>
+              <tr>
+                <th width="2rem"></th>
+                <th>Strana nebo koalice</th>
+                <th class="show-40rem">Strany koalice</th>
+                <th>Lídr</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(party, i2) in getPartiesInRegion(region)">
+                <td>
+                  <logo-item :reg="party.reg" :data="party.data" />
+                </td>
+                <td>
+                  {{ party.data.name }}
+                </td>
+                <td class="show-40rem">
+                  <span v-if="party.coalition">
+                    <logo-item :reg="member.reg" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" />
+                  </span>
+                  <span v-if="party.data && party.data.coalition">
+                    <logo-item :reg="member.reg" v-for="(member, i3) in party.data.coalition" :key="'i32_' + i3" />
+                  </span>
+                </td>
+                <td>
+                  {{ party.leader }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </collapsible-element>
+  </div>
+  <div class="info-box center">
+    <h3>Chybí někdo na seznamu?</h3>
+    <p>Prosím, napište na <b>info@programydovoleb.cz</b> nebo přes některou ze sociálních sítí.</p>
+  </div>
+  <h2>Jak dopadly volby v roce 2016?</h2>
+  <div class="btns center">
+    <router-link class="button" to="/2016">Výsledky, zastupitelé, krajské rady, programy</router-link>
+  </div>
+</div>

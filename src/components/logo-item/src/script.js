@@ -2,17 +2,21 @@ import {PDV} from "@/store/helpers";
 
 export default {
 	name: 'logo-item',
-	props: ['reg', 'size'],
+	props: ['reg', 'size', 'data'],
 	computed: {
 		sizeValue: function () {
-			if (this.size < 10) {
-				return this.size + 'rem';
+			if (this.size) {
+				if (this.size < 10) {
+					return this.size + 'rem';
+				} else {
+					return this.size + 'px';
+				}
 			} else {
-				return this.size + 'px';
+				return '2rem';
 			}
 		},
 		party: function () {
-			return this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);
+			return this.data || this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);
 		},
 		coalition: function () {
 			if (!this.party.coalition) return null;
@@ -20,7 +24,7 @@ export default {
 			var list = [];
 
 			this.party.coalition.forEach(reg => {
-				var party = this.$store.state.static.previous2016.parties.list.find(p => p.reg === reg);
+				var party = this.$store.state.dynamic.parties.find(p => p.reg === (reg.reg || reg));
 
 				if (party) list.push(party);
 			});
