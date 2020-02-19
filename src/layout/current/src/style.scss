@@ -28,9 +28,41 @@ table {
   }
   td {
     border-top: 1px solid #eee;
+    vertical-align: baseline;
+    position: relative;
   }
   th {
     font-size: 14px;
+  }
+
+  @media (max-width: 30rem) {
+    table, tr, td, tbody {
+      display: block;
+      border-top: none;
+      position: relative;
+    }
+
+    thead,
+    td:nth-child(3) {
+      display: none;
+    }
+
+    td.td-width-2 {
+      position: absolute;
+      left: -2.5rem;
+    }
+
+    td {
+      padding-left: 2rem;
+    }
+
+    td:last-child {
+      padding-top: 0;
+    }
+
+    tr:not(:first-child) {
+      border-top: 1px solid #eee;
+    }
   }
 }
 
@@ -38,6 +70,20 @@ table {
   margin-right: .5em;
 }
 
+.logo-holder-2 {
+  position: absolute;
+  top: .25em;
+  max-width: 6rem;
+}
+
 .region {
   margin-bottom: 4rem;
+}
+
+.td-width-max {
+  max-width: 25rem;
+}
+
+.td-width-2 {
+  width: 3rem;
 }

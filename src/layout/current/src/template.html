@@ -1,7 +1,7 @@
 <div class="overview">
   <h1>Kdo už ohlásil, že půjde do krajských voleb:</h1>
   <div class="columns-" v-if="$store.state.dynamic.callout.length > 0">
-    <collapsible-element v-for="(region, index) in $store.state.static.regions" v-if="getPartiesInRegion(region).length > 0" :label="region.name" :key="'ce_' + i">
+    <collapsible-element v-for="(region, index) in $store.state.static.regions" v-if="getPartiesInRegion(region).length > 0" :label="region.name" :key="'ce_' + index">
       <div class="box">
         <div class="box-content">
           <table cellspacing="0" cellpadding="0">
@@ -15,17 +15,20 @@
             </thead>
             <tbody>
               <tr v-for="(party, i2) in getPartiesInRegion(region)">
-                <td>
-                  <logo-item :reg="party.reg" :data="party.data" />
+                <td class="td-width-2">
+                  <span class="logo-holder-2">
+                    <logo-item :reg="party.reg" :data="party.data" />
+                  </span>
                 </td>
-                <td>
-                  {{ party.data.name }}
+                <td class="td-width-max">
+                  <div v-html="party.name"></div>
+                  <div class="small dimm" v-if="party.support" v-html="party.support"></div>
                 </td>
                 <td class="show-40rem">
-                  <span v-if="party.coalition">
+                  <span v-if="party.coalition" class="logo-holder-2">
                     <logo-item :reg="member.reg" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" />
                   </span>
-                  <span v-if="party.data && party.data.coalition">
+                  <span v-if="party.data && party.data.coalition" class="logo-holder-2">
                     <logo-item :reg="member.reg" v-for="(member, i3) in party.data.coalition" :key="'i32_' + i3" />
                   </span>
                 </td>
@@ -36,6 +39,10 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="btns">
+        <router-link :to="'/2016/' + region.hash" class="button button-primary">Výsledky v roce 2016</router-link>
+        <outbound-link href="https://polist.cz/vysledky/krajske-volby" class="button">Starší</outbound-link>
       </div>
     </collapsible-element>
   </div>

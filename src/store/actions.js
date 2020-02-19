@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const actions = {};
+const antiCache = 'c=' + Math.round(new Date().getTime() / 1000000000);
 
 actions.demo = function (context, payload) {
   axios.post('/foobar', {
@@ -35,7 +36,7 @@ actions.fetchRada = function (context, payload) {
     return;
   }
 
-  axios.get('https://data.programydovoleb.cz/volby/kv/2016/krajska-zastupitelstva.json').then((response) => {
+  axios.get('https://data.programydovoleb.cz/volby/kv/2016/krajska-zastupitelstva.json?' + antiCache).then((response) => {
     context.commit('fetchRada', response.data);
     if (payload && payload.onComplete) payload.onComplete();
   }).catch(e => {
@@ -49,7 +50,7 @@ actions.fetchCallout = function (context, payload) {
     return;
   }
 
-  axios.get('https://data.programydovoleb.cz/volby/kv/2020/call-out.json').then((response) => {
+  axios.get('https://data.programydovoleb.cz/volby/kv/2020/call-out.json?' + antiCache).then((response) => {
     context.commit('fetchCallOut', response.data);
     if (payload && payload.onComplete) payload.onComplete();
   }).catch(e => {

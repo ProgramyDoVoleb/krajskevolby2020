@@ -18,30 +18,76 @@ export default {
 
 			if (lookup) {
 					lookup.parties.forEach(party => {
+						var item = {};
+
 						if (typeof party.reg === 'number') {
-							var px = this.$store.state.dynamic.parties.find(p => p.reg === party.reg)
-							parties.push({data: px, leader: party.leader, icons: this.getIcons(px)})
+							var px = this.$store.state.dynamic.parties.find(p => p.reg === party.reg);
+
+							item.data = px;
+							item.name = '<a href="https://www.polist.cz/rejstrik/' + party.reg + '-' + px.hash + '" target="_blank">' + px.name + '</a>'
+							item.icons = this.getIcons(px);
 						} else {
-							parties.push({data: {reg: 9999, color: '#aaa', coalition: party.reg ? this.$store.state.dynamic.parties.filter(p => party.reg.indexOf(p.reg) > -1) : [], name: party.name || this.getName(party.reg), icons: this.getIcons(party)}, leader: party.leader})
+							item.data = {
+								reg: 9999,
+								color: '#aaa',
+								coalition: party.reg ? this.$store.state.dynamic.parties.filter(p => party.reg.indexOf(p.reg) > -1) : []
+							};
+
+							if (party.reg && party.name) {
+								item.name = '<b>Koalice:</b> <em>"' + party.name + '"</em><br>' + this.getName(party.reg);
+							} else if (party.name) {
+								item.name = party.name;
+							} else {
+								item.name = '<b>Koalice:</b><br>' + this.getName(party.reg)
+							}
+
+							item.icons = this.getIcons(party);
 						}
+
+						item.leader = party.leader;
+						item.support = this.getSupport(party.support);
+
+						parties.push(item)
 					});
 			}
 
-			console.log(parties);
-
 			return parties;
 		},
-		getName: function (coalition) {
+		getName: function (arr) {
+
+			if (!arr) return;
 
 			var list = [];
 
-			coalition.forEach(reg => {
-				var party = this.$store.state.dynamic.parties.find(p => p.reg === reg);
+			arr.forEach(reg => {
+				if (typeof reg === 'string') list.push(reg);
+				if (typeof reg === 'number') {
+					var party = this.$store.state.dynamic.parties.find(p => p.reg === reg);
 
-				if (party) list.push(party.name);
+					if (party) {
+						var link = '<a href="https://www.polist.cz/rejstrik/' + reg + '-' + party.hash + '" target="_blank">' + party.name + '</a>';
+					} list.push(link);
+				}
 			});
 
-			return 'Koalice: ' + list.join(', ');
+			return list.join('<br>');
+		},
+		getSupport: function (arr) {
+
+			if (!arr) return;
+
+			var list = [];
+
+			arr.forEach(reg => {
+				if (typeof reg === 'string') list.push(reg);
+				if (typeof reg === 'number') {
+					var party = this.$store.state.dynamic.parties.find(p => p.reg === reg);
+
+					if (party) list.push(party.name);
+				}
+			});
+
+			return '<b>Podpora:</b> ' + list.join(', ');
 		},
 		getIcons: function (party) {
 			var list = [];
