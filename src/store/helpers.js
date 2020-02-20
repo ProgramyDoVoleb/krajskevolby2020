@@ -47,3 +47,59 @@ export function betterURL (url) {
 
   return newURL;
 }
+
+String.prototype.hashCode = function () {
+  var hash = 0;
+  if (this.length === 0) {
+    return hash;
+  }
+  for (var i = 0; i < this.length; i++) {
+    var char = this.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+}
+
+function toColor (num) {
+  num >>>= 0;
+  var b = num & 0xFF;
+  var g = (num & 0xFF00) >>> 8;
+  var r = (num & 0xFF0000) >>> 16;
+  return 'rgb(' + [r, g, b].join(',') + ')';
+}
+
+const capitalize = (s) => {
+  if (typeof s !== 'string') return '';
+  if (s === '') return '';
+
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+export function createColorByName (name) {
+  return toColor(name.hashCode());
+}
+
+export function checkCandidateName (name) {
+  var dash = name.split(' - ');
+  var coma = dash[0].split(',');
+  var parts = coma[0].split(' ');
+  var family;
+
+  if (parts.length > 2) {
+    var second = parts.splice(1);
+    if (second[0].length === 1) {
+      family = second.join('');
+    } else {
+      family = second.join(' ');
+    }
+
+  } else {
+    family = parts[1];
+  }
+
+  var case1 = parts[0].toLowerCase();
+  var case2 = family ? family.toLowerCase() : '';
+
+  return capitalize(case1) + ' ' + capitalize(case2);
+}

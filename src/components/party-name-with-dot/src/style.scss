@@ -1,0 +1,29 @@
+i {
+  display: inline-block;
+  width: .5em;
+  height: .5em;
+  margin-right: .5em;
+  border-radius: 50%;
+  transform: translateY(-.15em);
+}
+
+a {
+  border: none;
+}
+
+span {
+}
+
+i + a, i + span {
+  flex: 1;
+}
+
+.party-name-with-dot {
+  position: relative;
+  display: inline-block;
+}
+
+.party-name-with-dot-flex {
+    display: flex;
+    align-items: baseline;
+}

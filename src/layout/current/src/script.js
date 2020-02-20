@@ -46,6 +46,7 @@ export default {
 
 						item.leader = party.leader;
 						item.support = this.getSupport(party.support);
+						item.list = party.list;
 
 						parties.push(item)
 					});

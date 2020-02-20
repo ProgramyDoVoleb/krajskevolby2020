@@ -15,6 +15,8 @@ import ComponentOutboundIconLabel from '@/components/outbound-icon-label/do';
 import ComponentRouterIcon from '@/components/router-icon/do';
 import ComponentIconElement from '@/components/icon-element/do';
 import ComponentCollapsibleElement from '@/components/collapsible-element/do';
+import ComponentPartyNameWithDot from '@/components/party-name-with-dot/do';
+import ComponentModalElement from '@/components/modal-element/do';
 
 Vue.config.productionTip = false;
 
@@ -27,6 +29,8 @@ Vue.component('outbound-icon-label', ComponentOutboundIconLabel);
 Vue.component('router-icon', ComponentRouterIcon);
 Vue.component('icon-element', ComponentIconElement);
 Vue.component('collapsible-element', ComponentCollapsibleElement);
+Vue.component('party-name-with-dot', ComponentPartyNameWithDot);
+Vue.component('modal-element', ComponentModalElement);
 
 /* eslint-disable no-unused-vars */
 const unsync = sync(store, router);

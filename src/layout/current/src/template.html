@@ -9,31 +9,56 @@
               <tr>
                 <th width="2rem"></th>
                 <th>Strana nebo koalice</th>
-                <th class="show-40rem">Strany koalice</th>
                 <th>Lídr</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(party, i2) in getPartiesInRegion(region)">
                 <td class="td-width-2">
-                  <span class="logo-holder-2">
+                  <span class="logo-holder-2" v-if="!party.coalition && !party.data.coalition">
                     <logo-item :reg="party.reg" :data="party.data" />
+                  </span>
+                  <span v-if="party.coalition" class="logo-holder-2 logo-holder-mini">
+                    <logo-item :reg="member.reg" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" />
+                  </span>
+                  <span v-if="party.data && party.data.coalition" class="logo-holder-2 logo-holder-mini">
+                    <logo-item :reg="member.reg" v-for="(member, i3) in party.data.coalition" :key="'i32_' + i3" />
                   </span>
                 </td>
                 <td class="td-width-max">
                   <div v-html="party.name"></div>
                   <div class="small dimm" v-if="party.support" v-html="party.support"></div>
                 </td>
-                <td class="show-40rem">
-                  <span v-if="party.coalition" class="logo-holder-2">
-                    <logo-item :reg="member.reg" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" />
-                  </span>
-                  <span v-if="party.data && party.data.coalition" class="logo-holder-2">
-                    <logo-item :reg="member.reg" v-for="(member, i3) in party.data.coalition" :key="'i32_' + i3" />
-                  </span>
-                </td>
                 <td>
-                  {{ party.leader }}
+                  <template v-if="party.leader">
+                    <span class="hide-40rem dimm">Lídr:</span>
+                    {{ party.leader }}
+                  </template>
+                  <modal-element v-if="party.list">
+                    <template v-slot:init>
+                      <span class="is-link small red">Známí kandidáti &middot; {{ party.list.length + (party.leader ? 1 : 0)}}</span>
+                    </template>
+                    <template v-slot:content>
+                      <h2>Kandidátní listina</h2>
+                      <p class="center" v-html="party.name"></p>
+                      <ul class="columns">
+                        <li v-if="party.leader">
+                          {{ party.leader }}
+                        </li>
+                        <li v-for="(cand, ic) in party.list">
+                          <span v-if="typeof cand === 'string'">
+                            {{ cand }}
+                          </span>
+                          <span v-if="typeof cand === 'object'">
+                            {{ cand.name }}
+                            <div class="small">
+                              <party-name-with-dot :reg="cand.reg" :alwaysShort="true" />
+                            </div>
+                          </span>
+                        </li>
+                      </ul>
+                    </template>
+                  </modal-element>
                 </td>
               </tr>
             </tbody>
