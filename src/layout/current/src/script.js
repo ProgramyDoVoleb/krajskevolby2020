@@ -24,7 +24,7 @@ export default {
 							var px = this.$store.state.dynamic.parties.find(p => p.reg === party.reg);
 
 							item.data = px;
-							item.name = '<a href="https://www.polist.cz/rejstrik/' + party.reg + '-' + px.hash + '" target="_blank">' + px.name + '</a>'
+							item.name =  '<a href="https://www.polist.cz/rejstrik/' + party.reg + '-' + px.hash + '" target="_blank">' + (party.name || px.name) + '</a>'
 							item.icons = this.getIcons(px);
 						} else {
 							item.data = {
