@@ -1,0 +1,8 @@
+<div class="party-name-with-logo">
+	<router-link :to="'https://www.polist.cz/rejstrik/' + link" :title="name">
+		<img :src="PDV(src)" :alt="name">
+		<span>
+			{{ short || name }}
+		</span>
+	</router-link>
+</div>

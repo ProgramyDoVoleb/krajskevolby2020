@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import LayoutCurrent from '@/layout/current/do';
+import LayoutCurrentRegion from '@/layout/current-region/do';
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
 import LayoutPrevious2016Program from '@/layout/previous2016/program/do';
@@ -56,6 +57,12 @@ const router = new Router({
       path: '/newsletter',
       name: 'Newsletter',
       component: LayoutStaticNewsletter
+    },
+    {
+      path: '/:id',
+      name: 'CurrentRegion',
+      component: LayoutCurrentRegion,
+      props: true
     },
     { path: '*', redirect: '/' }
   ]

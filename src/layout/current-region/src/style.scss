@@ -1,34 +1,36 @@
-.region-holder + .region-holder {
-  margin-top: 3rem;
-}
-
-.regions {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -.25rem;
-}
-
-.region-item {
-  width: 50%;
+.party {
+  padding-left: 3rem;
+  padding-bottom: 3rem;
 
   @media (min-width: 40rem) {
-    width: 50%;
-  }
-
-  @media (min-width: 60rem) {
-    width: 33.33%;
+    padding-left: 6rem;
   }
 }
 
-.region {
-  padding: .25rem;
+.party-header {
+  position: relative;
 }
 
-.region img {
-  display: block;
-  width: 100%;
-  border: 1px solid #eee;
-  border-radius: 1rem;
+.party-header-logo {
+  position: absolute;
+  left: -4rem;
+
+  @media (min-width: 40rem) {
+    left: -6rem;
+  }
+}
+
+h3 {
+  margin: 0;
+  padding: 1rem 0 1rem;
+
+  @media (min-width: 40rem) {
+    padding-top: 1.33rem;
+  }
+}
+
+.region-holder + .region-holder {
+  margin-top: 3rem;
 }
 
 h1 {
@@ -43,6 +45,10 @@ h2 + p.center {
 
 h4 {
   margin-top: 0;
+}
+
+.lead {
+  margin-bottom: 2rem;
 }
 
 .item {
@@ -120,18 +126,50 @@ table {
   width: 3rem;
 }
 
-.columns {
-  padding: 0;
-  list-style: none;
-  margin: 0;
-
-  li {
+.columns-2-3 {
+  > .item {
     padding: 0;
+    border: none;
+    margin: 0;
   }
 }
 
 .logo-holder-mini {
   .logo-item + .logo-item {
     margin-top: -1rem;
+
+    @media (min-width: 40rem) {
+      margin-top: -2rem;
+    }
   }
+}
+
+.regions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -.25rem;
+}
+
+.region-item {
+  width: 50%;
+
+  @media (min-width: 40rem) {
+    width: 50%;
+  }
+
+  @media (min-width: 60rem) {
+    width: 33.33%;
+  }
+}
+
+.regions .region {
+  padding: .25rem;
+  margin: 0;
+}
+
+.region img {
+  display: block;
+  width: 100%;
+  border: 1px solid #eee;
+  border-radius: 1rem;
 }

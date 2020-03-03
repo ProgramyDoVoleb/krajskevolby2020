@@ -1,79 +1,13 @@
 <div class="overview">
   <h1>Kdo už ohlásil, že půjde do krajských voleb:</h1>
-  <div class="columns-" v-if="$store.state.dynamic.callout.length > 0">
-    <collapsible-element v-for="(region, index) in $store.state.static.regions" v-if="getPartiesInRegion(region).length > 0" :label="region.name" :key="'ce_' + index">
-      <div class="box">
-        <div class="box-content">
-          <table cellspacing="0" cellpadding="0">
-            <thead>
-              <tr>
-                <th width="2rem"></th>
-                <th>Strana nebo koalice</th>
-                <th>Lídr</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(party, i2) in getPartiesInRegion(region)">
-                <td class="td-width-2">
-                  <span class="logo-holder-2" v-if="!party.coalition && !party.data.coalition">
-                    <logo-item :reg="party.reg" :data="party.data" />
-                  </span>
-                  <span v-if="party.coalition" class="logo-holder-2 logo-holder-mini">
-                    <logo-item :reg="member.reg" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" />
-                  </span>
-                  <span v-if="party.data && party.data.coalition" class="logo-holder-2 logo-holder-mini">
-                    <logo-item :reg="member.reg" v-for="(member, i3) in party.data.coalition" :key="'i32_' + i3" />
-                  </span>
-                </td>
-                <td class="td-width-max">
-                  <div v-html="party.name"></div>
-                  <div class="small dimm" v-if="party.support" v-html="party.support"></div>
-                </td>
-                <td>
-                  <template v-if="party.leader">
-                    <span class="hide-40rem dimm">Lídr:</span>
-                    {{ party.leader }}
-                  </template>
-                  <modal-element v-if="party.list">
-                    <template v-slot:init>
-                      <span class="is-link small red">Známí kandidáti &middot; {{ party.list.length + (party.leader ? 1 : 0)}}</span>
-                    </template>
-                    <template v-slot:content>
-                      <h2>Kandidátní listina</h2>
-                      <p class="center" v-html="party.name"></p>
-                      <ul class="columns">
-                        <li v-if="party.leader">
-                          {{ party.leader }}
-                        </li>
-                        <li v-for="(cand, ic) in party.list">
-                          <span v-if="typeof cand === 'string'">
-                            {{ cand }}
-                          </span>
-                          <span v-if="typeof cand === 'object'">
-                            {{ cand.name }}
-                            <div class="small">
-                              <party-name-with-dot :reg="cand.reg" :alwaysShort="true" />
-                            </div>
-                          </span>
-                        </li>
-                      </ul>
-                    </template>
-                  </modal-element>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="regions">
+    <div class="region-item" v-for="(region, index) in $store.state.static.regions">
+      <div class="region center">
+        <router-link :to="region.hash" tag="img" :src="'https://krajskevolby2020.programydovoleb.cz/social/kraje/' + region.hash + '.png'" :alt="region.name" />
+        <p>Kandidátek: {{ $store.state.dynamic.callout[index].parties.length }}</p>
+        <router-link :to="region.hash" class="btn">Přehled</router-link>
       </div>
-      <div class="btns">
-        <router-link :to="'/2016/' + region.hash" class="button button-primary">Výsledky v roce 2016</router-link>
-        <outbound-link href="https://polist.cz/vysledky/krajske-volby" class="button">Starší</outbound-link>
-      </div>
-    </collapsible-element>
-  </div>
-  <div class="info-box center">
-    <h3>Chybí někdo na seznamu?</h3>
-    <p>Prosím, napište na <b>info@programydovoleb.cz</b> nebo přes některou ze sociálních sítí.</p>
+    </div>
   </div>
   <h2>Jak dopadly volby v roce 2016?</h2>
   <div class="btns center">

@@ -186,3 +186,14 @@ h1 .dimm {
 .red {
   color: #f00;
 }
+
+.lead {
+  max-width: 35rem;
+  margin: 0 auto;
+  text-align: center;
+
+  h1 + &,
+  h2 + & {
+    margin-top: -4rem;
+  }
+}
