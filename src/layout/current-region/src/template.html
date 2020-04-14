@@ -1,8 +1,55 @@
 <div class="overview">
   <h1>{{ region.name }}</h1>
   <p class="lead">Ohlášené strany a koalice, lídři a kandidátky</p>
-
   <div class="part">
+    <div class="split-1-2">
+      <div class="column show-40rem">
+        <map-element :highlight="region.nuts" :zoom="region.nuts" />
+      </div>
+      <div class="column">
+        <div class="stats">
+          <ul>
+            <li>
+              <label>Zastupitelstvo</label>
+              <div>{{ region.seats }} křesel</div>
+            </li>
+            <li>
+              <label>Hejtman</label>
+              <div>
+            		<template v-for="(party, index2) in about.parties">
+            			<template v-for="(person, i) in party.seats">
+            				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+            			</template>
+            		</template>
+              </div>
+            </li>
+            <li>
+              <label>Rada kraje</label>
+              <div>
+                <span v-for="(party, index) in about.parties">
+                  <party-name-with-dot :reg="party.reg" :alwaysShort="true" />
+                  <span class="dimm">&nbsp;&nbsp;&nbsp;</span>
+                </span>
+              </div>
+            </li>
+            <li>
+              <label>Volby 2016</label>
+              <div>
+                <router-link :to="'/2016/' + region.hash">výsledky</router-link>
+                <span class="dimm">
+                  &middot;
+                  účast {{ about.attended }} %
+                </span>
+                </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="part">
+    <h2>Kdo se chystá do voleb?</h2>
+    <p class="center dimm">Tento seznam je průběžně doplňován.</p>
     <div class="parties">
       <div class="party" v-for="(party, i2) in parties" :style="{'border-color': party.color}">
 
@@ -27,7 +74,10 @@
             <ul>
               <li v-if="party.short">
                 <label>Celé jméno</label>
-                <div v-html="party.name" />
+                <div v-html="party.name" v-if="!party.link" />
+                <div v-if="party.link">
+                  <outbound-link :href="party.link" :title="'Polist, ' + party.name">{{ party.name }}</outbound-link>
+                </div>
               </li>
               <li v-if="party.data.coalition && party.data.coalition.length > 0">
                 <label>Koalice</label>
@@ -56,8 +106,8 @@
               <li v-if="party.list && party.list.length > 0">
                 <label>Kandidátka</label>
                 <div>
-                  <div class="columns-2-3">
-                    <div class="item" v-for="(cand, ic) in party.list">
+                  <div class="columns-3">
+                    <div class="item-in-columns" v-for="(cand, ic) in party.list">
                       <span v-if="typeof cand === 'string'">
                         {{ cand }}
                       </span>
@@ -75,7 +125,7 @@
       					<label>Odkazy</label>
       					<div>
       						<div class="columns">
-      							<div v-for="(link, index) in links" class="link">
+      							<div v-for="(link, index) in party.links" class="link">
       								<img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
       								<outbound-link :href="link.link" :content="link.content" :addon="false" />
       							</div>
@@ -90,23 +140,21 @@
   <div class="part">
     <div class="info-box center">
       <h3>Chybí někdo na seznamu?</h3>
-      <p>Prosím, napište na <b>info@programydovoleb.cz</b> nebo přes některou ze sociálních sítí.</p>
+      <p>Prosím, napište na <b><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
     </div>
   </div>
   <div class="part">
     <h2>Vybrat jiný kraj</h2>
-    <div class="regions">
-      <div class="region-item" v-for="(region, index) in $store.state.static.regions" v-if="region.hash != id">
-        <div class="region center">
-          <router-link :to="region.hash" tag="img" :src="'https://krajskevolby2020.programydovoleb.cz/social/kraje/' + region.hash + '.png'" :alt="region.name" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="part">
-    <h2>Jak dopadly volby v roce 2016?</h2>
-    <div class="btns center">
-      <router-link class="button" :to="'/2016/' + id">Výsledky, zastupitelé, krajské rady, programy</router-link>
+    <div class="stats">
+      <ul class="columns-3">
+        <li v-for="(region, index) in $store.state.static.regions" v-if="region.hash != id">
+          <div>
+            <router-link :to="'/' + region.hash">{{ region.name }}</router-link>
+          </div>
+          <label v-if="$store.state.dynamic.callout[index].parties.length < 5">{{ $store.state.dynamic.callout[index].parties.length }} strany</label>
+          <label v-if="$store.state.dynamic.callout[index].parties.length > 4">{{ $store.state.dynamic.callout[index].parties.length }} stran</label>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

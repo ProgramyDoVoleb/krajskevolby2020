@@ -1,4 +1,4 @@
-<span>
-	<a :href="href" :title="title || ''" @click="handle_click" target="_blank">{{ content }}<slot /></a>
+<a :href="href" :title="'otevřít v nové záložce: ' + title" @click="handle_click" target="_blank">
+	<span class="underline">{{ content }}<slot /></span>
 	<span class="link-addon-icon" v-if="hasAddon"><img src="/static/icon/link.svg"></span>
-</span>
+</a>

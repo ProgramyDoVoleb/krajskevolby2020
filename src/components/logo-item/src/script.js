@@ -17,6 +17,8 @@ export default {
 					} else {
 						return this.size.large + 'rem'
 					}
+				} else if (typeof this.size === 'string') {
+					return this.size;
 				} else {
 					if (this.size < 10) {
 						return this.size + 'rem';
@@ -29,7 +31,7 @@ export default {
 			}
 		},
 		party: function () {
-			return this.data || this.$store.state.static.previous2016.parties.list.find(p => p.reg === this.reg);
+			return this.data || this.$store.getters.getPartyByReg(Number(this.reg));
 		},
 		coalition: function () {
 			if (!this.party.coalition) return null;

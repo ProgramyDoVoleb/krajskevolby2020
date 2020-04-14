@@ -46,7 +46,7 @@
 }
 
 .opened > .collapsible-element-header .is-link {
-  color: #f00;
+  // opacity: .1;
 }
 
 .collapsible-element-content {
@@ -91,4 +91,8 @@
   top: -1.5rem;
   border-radius: 50%;
   border: 1px solid #eee;
+}
+
+.red {
+  color: #f00;
 }

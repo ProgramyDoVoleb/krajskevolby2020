@@ -1,6 +1,6 @@
 <span class="logo-item">
-	<span class="logo-outer" :style="{width: sizeValue, height: sizeValue}" v-if="party">
-		<img :src="PDV(party.logo)" v-if="party.logo" class="logo-circle">
+	<span class="logo-outer" :style="{width: sizeValue, height: sizeValue, 'border-color': '#eee'}">
+		<img :src="$store.state.root + party.logo" v-if="party.logo" class="logo-circle">
 		<span v-if="!party.logo && !party.coalition" :style="{background: party.color}" class="logo-circle" />
 		<span v-if="!party.logo && party.coalition" class="logo-circle">
 			<span class="logo-coalition">

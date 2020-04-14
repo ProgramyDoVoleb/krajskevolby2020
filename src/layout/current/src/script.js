@@ -1,14 +1,20 @@
 import LogoItem from '@/components/logo-item/do';
+import MapElement from '@/components/map/do';
+import PartyList from '@/components/party-list/do';
+import PersonAbout from "@/components/person-about/do";
 
 export default {
 	name: 'currentElectionCall',
 	data: function () {
 		return {
-
+			clickableList: ['CZ020', 'CZ031', 'CZ032', 'CZ041', 'CZ042', 'CZ051', 'CZ052', 'CZ053', 'CZ063', 'CZ064', 'CZ071', 'CZ072', 'CZ080']
 		}
 	},
   components: {
-		LogoItem
+		LogoItem,
+		MapElement,
+		PersonAbout,
+		PartyList
 	},
 	methods: {
 		getPartiesInRegion: function (region) {
@@ -94,6 +100,48 @@ export default {
 			var list = [];
 
 			return list;
+		},
+		clicked: function (d, e) {
+			var region = this.$store.state.static.regions.find(r => r.nuts === d.data);
+			this.$router.push('/' + region.hash);
+		},
+		getCalloutPartiesCount: function (region) {
+			var sum = 0;
+
+			this.$store.state.dynamic.callout.forEach((item, i) => {
+				if (!region || region === item.id) {
+					sum += item.parties.length;
+				}
+			});
+
+			return sum;
+		},
+		getCalloutPeopleCount: function () {
+			var sum = 0;
+
+			this.$store.state.dynamic.callout.forEach((item, i) => {
+				item.parties.forEach((party, i2) => {
+					if (party.leader) sum++;
+					if (party.list) sum += party.list.length;
+				});
+			});
+
+			return sum;
+		},
+		gov: function (index) {
+			return this.$store.state.static.previous2016.coalition[index].parties;
+		}
+	},
+	computed: {
+		partyList: function () {
+			return [];
+		},
+		dynamics: function () {
+
+			if (this.$store.state.dynamic.parties.length === 0) return false;
+			if (this.$store.state.dynamic.callout.length === 0) return false;
+
+			return true;
 		}
 	},
 	mounted: function () {

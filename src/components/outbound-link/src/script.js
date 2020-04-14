@@ -14,7 +14,11 @@ export default {
 	components: {},
 	methods: {
 		handle_click: function () {
-			this.$store.dispatch("ga", {path: "out/link/" + encodeURIComponent(this.href), title: "Odchozí odkaz: " + this.content});
+			this.$store.dispatch("ge", {
+				action: "outbound",
+				category: "link",
+				label: this.content || this.title
+			});
 		}
 	},
 	mounted: function () {}

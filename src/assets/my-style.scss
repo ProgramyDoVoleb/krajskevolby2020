@@ -117,6 +117,10 @@ button, .button, .btn {
 	color: #000;
 }
 
+.dark-links a {
+	color: #000;
+}
+
 .btns-switch {
 	display: flex;
 	justify-content: center;
@@ -177,10 +181,10 @@ button, .button, .btn {
 	padding-top: 4rem;
 
 	@media (min-height: 60rem) {
-		padding-top: 6rem;
+		padding-top: 4rem;
 
 		h2 {
-			padding-bottom: 4rem;
+			padding-bottom: 2rem;
 		}
 	}
 }
@@ -199,6 +203,27 @@ button, .button, .btn {
 
 	@media (min-width: 60rem) {
 		columns: 3;
+	}
+}
+
+.columns-3 {
+	@media (min-width: 40rem) {
+		columns: 2;
+		column-gap: 2rem;
+
+		& > * {
+	    break-inside: avoid-column;
+			page-break-inside: avoid;
+	    padding-bottom: .2em;
+		}
+	}
+
+	@media (min-width: 50rem) {
+		columns: 3;
+
+		.stats & li:first-child {
+			border-top: 1px solid #f4f4f4;
+		}
 	}
 }
 
@@ -330,5 +355,58 @@ button, .button, .btn {
 	label + div {
 		flex: 1;
 		padding-right: 1em;
+	}
+
+	div + label {
+		text-align: right;
+		flex: 1;
+	}
+}
+
+.z-1 {
+	position: relative;
+	z-index: 1;
+}
+
+.z-2 {
+	position: relative;
+	z-index: 2;
+}
+
+.split-2-1 {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > * {
+		width: 100%;
+	}
+
+	@media (min-width: 40rem) {
+		& > :first-child {
+			width: 67%;
+		}
+
+		& > :last-child {
+			width: 33%;
+		}
+	}
+}
+
+.split-1-2 {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > * {
+		width: 100%;
+	}
+
+	@media (min-width: 40rem) {
+		& > :first-child {
+			width: 33%;
+		}
+
+		& > :last-child {
+			width: 67%;
+		}
 	}
 }

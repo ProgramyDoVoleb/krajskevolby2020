@@ -1,16 +1,59 @@
 <div class="overview">
-  <h1>Kdo už ohlásil, že půjde do krajských voleb:</h1>
-  <div class="regions">
-    <div class="region-item" v-for="(region, index) in $store.state.static.regions">
-      <div class="region center">
-        <router-link :to="region.hash" tag="img" :src="'https://krajskevolby2020.programydovoleb.cz/social/kraje/' + region.hash + '.png'" :alt="region.name" />
-        <p>Kandidátek: {{ $store.state.dynamic.callout[index].parties.length }}</p>
-        <router-link :to="region.hash" class="btn">Přehled</router-link>
-      </div>
+  <div class="part">
+    <h1>Krajské volby 2020</h1>
+    <p class="lead">V říjnu 2020 se uskuteční krajské volby. Dnes jsme ve fázi, kdy se domlouvají koalice, připravují kandidátky a oznamují jejich lídři. <span v-if="$store.state.dynamic.callout.length > 0">Prozatím je známo {{ getCalloutPartiesCount() }}&nbsp;kandidátek a na nich již {{ getCalloutPeopleCount() }}&nbsp;jmen.</span> Údaje se mohou často měnit, konečnou podobu a oficiální vyhlášení ČSÚ očekáváme v srpnu.</p>
+    <div class="map-holder">
+      <map-element :width="$store.state.width" :clickable="clickableList" @select="clicked" />
+    </div>
+    <h2>Známé kandidátky podle krajů</h2>
+    <div class="stats" v-if="dynamics">
+      <ul class="columns-3">
+        <li v-for="(region, index) in $store.state.static.regions">
+          <div>
+            <router-link :to="'/' + region.hash">{{ region.name }}</router-link>
+          </div>
+          <label v-if="$store.state.dynamic.callout[index].parties.length < 5">{{ $store.state.dynamic.callout[index].parties.length }} strany</label>
+          <label v-if="$store.state.dynamic.callout[index].parties.length > 4">{{ $store.state.dynamic.callout[index].parties.length }} stran</label>
+        </li>
+      </ul>
+    </div>
+    <h2>Strany ve volbách</h2>
+    <party-list />
+  </div>
+  <div class="part">
+    <h1>Výsledky minulých voleb</h1>
+    <p class="lead">Zajímají vás výsledky krajských voleb z roku 2016, kdo vyhrál, kdo se stal zastupitelem, kdo hejtmanem a jak vypadá Rada kraje? Nebo si chcete projít programové prohlášení?</p>
+    <div class="btns center">
+      <router-link class="button" to="/2016">Přehled za rok 2016</router-link>
+    </div>
+    <br><br>
+    <div class="stats">
+      <ul class="columns-3">
+        <li v-for="(region, index) in $store.state.static.regions">
+          <div>
+            <router-link :to="'/2016/' + region.hash">{{ region.name }}</router-link>
+          </div>
+          <label>
+            <router-link :to="'/2016/' + region.hash + '/programove-prohlaseni'" style="color: #888">Program</router-link>
+          </label>
+        </li>
+      </ul>
     </div>
   </div>
-  <h2>Jak dopadly volby v roce 2016?</h2>
-  <div class="btns center">
-    <router-link class="button" to="/2016">Výsledky, zastupitelé, krajské rady, programy</router-link>
+  <div class="part">
+    <h2>Hejtmani</h2>
+    <div class="stats">
+      <ul class="columns-3">
+        <li v-for="(region, index) in $store.state.static.regions">
+          <div>
+        		<template v-for="(party, index2) in gov(index)">
+        			<template v-for="(person, i) in party.seats">
+        				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+        			</template>
+        		</template>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

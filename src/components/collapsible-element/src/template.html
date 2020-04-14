@@ -3,7 +3,7 @@
 		<span class="logo-holder" v-if="logo">
 			<img :src="'/static/icon/' + logo + '.svg'" :alt="label" class="logo">
 		</span>
-		<span class="is-link">{{ label }}</span>
+		<span class="is-link" :class="{red: opened}">{{ label }}</span>
 		<span class="icon red" v-if="opened">&times;</span>
 		<span class="icon blue" v-if="!opened">&plus;</span>
 	</div>

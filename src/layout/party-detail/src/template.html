@@ -1,0 +1,105 @@
+<div class="party-detail">
+  <div class="part" v-if="party">
+    <h1>{{ party.short }}</h1>
+    <p class="lead">{{ party.name }} v krajských volbách 2020</p>
+    <div class="map-holder">
+      <map-element :width="$store.state.width" :areas="areas" :clickable="clickable" @select="clicked" v-on:hover="hovered" />
+      <div class="map-about" v-if="hoveredItem && $store.state.width > 640" :style="{left: hoveredItem.position.x + 'px', top: hoveredItem.position.y + 'px'}" :class="{hoveredItemVisible}">
+        <div class="about-region">
+          <h3>{{ hoveredItem.region.name }}</h3>
+        </div>
+        <div class="about-version" v-if="hoveredItem.data">
+          <span v-if="hoveredItem.data.type === 0">
+            samostatně
+          </span>
+          <span v-if="hoveredItem.data.type > 0">
+            <em>{{ hoveredItem.data.party.name }}</em>
+          </span>
+        </div>
+        <div class="about-logo" v-if="hoveredItem.data">
+          <ul v-if="party.reg">
+            <li v-for="(px, index) in partyList" v-if="hoveredItem.data.party.reg && typeof hoveredItem.data.party.reg != 'number' && hoveredItem.data.party.reg.indexOf(px.reg) > -1">
+              <img :src="$store.state.root + px.logo" v-if="px.logo">
+            </li>
+            <li v-for="(px, index) in partyList" v-if="hoveredItem.data.party.support && hoveredItem.data.party.support.indexOf(px.reg) > -1">
+              <img :src="$store.state.root + px.logo" v-if="px.logo">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="map-legend small">
+        <div class="map-legend-item">
+          <div class="circle" :style="{opacity: .8, background: party.color}"></div>
+          <span>samostatně</span>
+        </div>
+        <div class="map-legend-item">
+          <div class="circle" :style="{opacity: .4, background: party.color}"></div>
+          <span>v koalici</span>
+        </div>
+        <div class="map-legend-item">
+          <div class="circle" :style="{opacity: .1, background: party.color}"></div>
+          <span>podpora</span>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div
+        class="list-item"
+        v-for="(region, index) in $store.state.static.regions"
+        v-if="activity.find(x => x.region === region.id)">
+        <template v-for="(act, index) in activity.filter(x => x.region === region.id)">
+          <div class="flex">
+            <div class="list-region">
+              <router-link :to="'/' + region.hash">
+                <div class="hide-40rem">{{ region.short.toUpperCase() }}</div>
+                <div class="show-40rem">{{ region.name }}</div>
+              </router-link>
+            </div>
+            <div class="list-activity">
+              <span v-if="act.type === 0">
+                <strong>samostatně</strong>
+              </span>
+              <span v-if="act.type === 1">
+                v koalici
+              </span>
+              <span v-if="act.type === 2">
+                podpora
+              </span>
+            </div>
+            <div class="list-info">
+              <em v-if="act.party.name">"{{ act.party.name }}"</em>
+              <ul v-if="act.party.reg && typeof act.party.reg != 'number'">
+                <li v-for="(px, index) in act.party.reg">
+                  <party-name-with-dot :reg="px" v-if="typeof px === 'number'" />
+                  <span v-if="typeof px === 'string'">{{ px }}</span>
+                </li>
+              </ul>
+              <template v-if="act.party.support">
+                <h4>Podpora</h4>
+                <ul>
+                  <li v-for="(px, index) in act.party.support">
+                    <party-name-with-dot :reg="px" v-if="typeof px === 'number'" />
+                    <span v-if="typeof px === 'string'">{{ px }}</span>
+                  </li>
+                </ul>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+  <div class="part">
+    <div class="info-box center">
+      <h3>Našli jste chybu?</h3>
+      <p>Prosím, napište na <b><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
+    </div>
+  </div>
+  <div class="part" v-if="dynamics">
+    <h2>Vybrat jinou stranu</h2>
+    <party-list />
+  </div>
+  <div class="goto">
+    <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
+  </div>
+</div>

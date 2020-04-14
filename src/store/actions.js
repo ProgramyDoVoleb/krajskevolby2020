@@ -30,6 +30,18 @@ actions.ga = function (context, payload) {
   }
 };
 
+actions.ge = function (context, payload) {
+  if (window.gtag) {
+    window.gtag('event', payload.action, {
+      'event_category': payload.category || 'general',
+      'event_label': payload.label || '(not set)',
+      'value': payload.value || 1
+    });
+  } else {
+    console.log('GA Event:', payload);
+  }
+};
+
 actions.fetchRada = function (context, payload) {
   if (context.state.static.previous2016.coalition.length > 0) {
     console.log('Already loaded');

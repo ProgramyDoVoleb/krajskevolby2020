@@ -1,4 +1,6 @@
 import LogoItem from '@/components/logo-item/do';
+import MapElement from '@/components/map/do';
+import PersonAbout from "@/components/person-about/do";
 
 export default {
 	name: 'currentElectionCall',
@@ -9,11 +11,16 @@ export default {
 		}
 	},
   components: {
-		LogoItem
+		LogoItem,
+		MapElement,
+		PersonAbout
 	},
 	computed: {
 		region: function () {
 			return this.$store.state.static.regions.find(r => r.hash === this.id)
+		},
+		about: function () {
+			return this.$store.state.static.previous2016.coalition.find(r => r.id === this.region.id)
 		},
 		parties: function () {
 			var lookup = this.$store.state.dynamic.callout.find(r => r.id === this.region.id);
@@ -29,7 +36,7 @@ export default {
 							item.name = party.name || px.name;
 							item.short = party.short || px.short;
 							item.data = px;
-							item.name =  '<a href="https://www.polist.cz/rejstrik/' + party.reg + '-' + px.hash + '" target="_blank">' + (party.name || px.name) + '</a>'
+							item.link =  'https://www.polist.cz/rejstrik/' + party.reg + '-' + px.hash;
 							item.icons = this.getIcons(px);
 						} else {
 							item.data = {
@@ -92,10 +99,18 @@ export default {
 			var list = [];
 
 			return list;
+		},
+		ga: function () {
+			this.$store.dispatch("ga", {title: "Ohlášené kandidátky"});
+			window.scrollTo(0, 0);
 		}
 	},
 	mounted: function () {
-			this.$store.dispatch("ga", {title: "Ohlášené kandidátky"});
-			window.scrollTo(0, 0);
+		this.ga();
+	},
+	watch: {
+		id: function () {
+			this.ga();
+		}
 	}
 };

@@ -18,4 +18,8 @@ mutations.fetchParties = function (state, payload) {
   payload.list.forEach(item => state.dynamic.parties.push(item));
 }
 
+mutations.setWidth = function (state, payload) {
+  state.width = payload;
+}
+
 export default mutations;

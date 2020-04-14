@@ -9,7 +9,7 @@
   height: 1.2em;
 }
 
-img {
+.addon-icon {
   position: absolute;
   width: 1.2em;
   height: 1.2em;
@@ -20,4 +20,30 @@ img {
 
 .button a {
   border: none;
+}
+
+.underline {
+  border-bottom: 1px solid #eee;
+  transition: border-color .25s;
+}
+
+a:not(.btn):not(.button) {
+  border: none;
+
+  @media (hover: hover) {
+    &:hover .underline {
+      border-color: #003399;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+a.button,
+a.btn {
+  .underline {
+    border: none;
+  }
 }

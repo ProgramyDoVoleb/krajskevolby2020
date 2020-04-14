@@ -1,46 +1,47 @@
 <div id="app">
-	<header class="block">
-		<region-menu />
+	<header class="block2">
+		<h1 class="header-title">
+			<router-link to="/">
+				<img src="/static/icon/logo-programy.svg" alt="Krajské volby 2020">
+			</router-link>
+		</h1>
 	</header>
 	<article class="block" v-if="$store.state.dynamic.parties.length > 0">
 		<router-view></router-view>
+		<div class="content-width"></div>
 	</article>
-	<footer class="block">
-		<ul class="footer">
-			<li>
-				<div class="footer-content">
-					<h4>Programy do voleb</h4>
-					<p class="small"><em>Programy do voleb</em> vytváří <outbound-link href="https://twitter.com/stepanrysavy" content="Štěpán Ryšavý" />. Veškeré náklady na tvorbu webu, grafiky nebo reklamu si hradím sám. <router-link to="/o-projektu">Více o projektu</router-link></p>
-					<p class="small">Číselníky a kandidátky vycházejí z&nbsp;<outbound-link href="https://www.czso.cz/csu/czso/podminky_pro_vyuzivani_a_dalsi_zverejnovani_statistickych_udaju_csu" content="otevřených dat ČSÚ" />.</p>
-					<p class="small">Všechna data jsou také volně dostupná na <outbound-link href="https://github.com/ProgramyDoVoleb/public" content="GitHubu" />.</p>
-				</div>
-			</li>
-			<li>
-				<div class="footer-content">
-					<h4>Krajské volby 2020</h4>
-					<ul class="footer-menu">
-						<li><router-link to="/" class="footer-link">Úvodní stránka</router-link></li>
-						<li><router-link to="/o-projektu" class="footer-link">O projektu</router-link></li>
-						<li><router-link to="/cookies" class="footer-link">Cookies</router-link></li>
-						<li><router-link to="/newsletter" class="footer-link">Newsletter</router-link></li>
-					</ul>
-				</div>
-			</li>
-			<li>
-				<div class="footer-content">
-					<h4>Kontakt:</h4>
-					<p><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></p>
+	<footer>
+		<div class="block">
+			<div class="split-1-2">
+				<div>
 					<div class="social-share">
-						<outbound-icon href="https://www.facebook.com/programydovoleb" type="fb" />
-						<outbound-icon href="https://www.twitter.com/programydovoleb" type="tw" />
-						<outbound-icon href="https://www.instagram.com/programydovoleb" type="ig" />
+						<outbound-icon href="https://www.facebook.com/programydovoleb" type="fb" :title="'Programy do voleb'" />
+						<outbound-icon href="https://www.twitter.com/programydovoleb" type="tw" :title="'Programy do voleb'" />
+						<outbound-icon href="https://www.instagram.com/programydovoleb" type="ig" :title="'Programy do voleb'" />
+						<outbound-icon href="https://www.linkedin.com/company/programydovoleb" type="linkedin" :title="'Programy do voleb'" />
 					</div>
 				</div>
-			</li>
-			<li>
-				<div class="footer-content">
+				<div class="text-right">
+					Našli jste chybu?
+					<br>
+					<a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a>
 				</div>
-			</li>
-		</ul>
+			</div>
+		</div>
+		<div class="block">
+			<div class="split-2-1">
+				<div>
+					<h4>&copy; 2020 <outbound-link href="https://twitter.com/stepanrysavy" content="Štěpán Ryšavý" :title="'twitter Štěpán Ryšavý'" /></h4>
+					<p><em>Programy do voleb</em> jsem vytvořil jako nestranný přehled, kdo kde kandiduje a&nbsp;s&nbsp;jakým volebním programem. Informace čerpám z&nbsp;<outbound-link href="https://www.czso.cz/csu/czso/podminky_pro_vyuzivani_a_dalsi_zverejnovani_statistickych_udaju_csu" content="otevřených dat ČSÚ" :title="'ČSÚ'" /> a&nbsp;veřejně dostupných zdrojů. Veškeré náklady na tvorbu webu, grafiky nebo reklamu či sociální sítě si hradím sám.</p>
+				</div>
+				<div class="text-right">
+					<h4><outbound-link href="https://programydovoleb.cz" :addon="false" title="Programy do voleb">Programy do voleb</outbound-link></h4>
+					<ul class="footer-menu dark-links">
+						<li><outbound-link href="https://programydovoleb.cz" :addon="false" title="Doplňovací senátní volby v Teplicích">Senátní volby</outbound-link></li>
+						<li><outbound-link href="https://polist.cz" :addon="false" title="Politika, Statistika">Polist</outbound-link></li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</footer>
 </div>

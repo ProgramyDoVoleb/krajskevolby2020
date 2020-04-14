@@ -8,7 +8,8 @@
     "colors": ["#fff", "#031093"],
     "links": [
       {"www": "https://www.kr-stredocesky.cz/"}
-    ]
+    ],
+    "seats": 65
   },
   {
     "id": 2,
@@ -19,7 +20,8 @@
     "colors": ["#0a630c", "#b82d22"],
     "links": [
       {"www": "http://www.kraj-jihocesky.cz/"}
-    ]
+    ],
+    "seats": 55
   },
   {
     "id": 3,
@@ -30,7 +32,8 @@
     "colors": ["#149417", "#b82d22"],
     "links": [
       {"www": "http://www.plzensky-kraj.cz/"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 4,
@@ -41,7 +44,8 @@
     "colors": ["#0d3efb", "#b82d22"],
     "links": [
       {"www": "http://www.kr-karlovarsky.cz/"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 5,
@@ -52,7 +56,8 @@
     "colors": ["#063693", "#b82d22"],
     "links": [
       {"www": "http://www.kr-ustecky.cz/"}
-    ]
+    ],
+    "seats": 55
   },
   {
     "id": 6,
@@ -63,7 +68,8 @@
     "colors": ["#0d3efb", "#fff"],
     "links": [
       {"www": "http://www.kraj-lbc.cz/"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 7,
@@ -74,7 +80,8 @@
     "colors": ["#1998fc", "#fec72e"],
     "links": [
       {"www": "http://www.kr-kralovehradecky.cz/"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 8,
@@ -85,7 +92,8 @@
     "colors": ["#0e6aac", "#e02037"],
     "links": [
       {"www": "https://www.pardubickykraj.cz/"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 9,
@@ -96,7 +104,8 @@
     "colors": ["#fff", "#d82827"],
     "links": [
       {"www": "https://www.kr-vysocina.cz/index.asp"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 10,
@@ -107,7 +116,8 @@
     "colors": ["#b82d22", "#13548f"],
     "links": [
       {"www": "http://www.kr-jihomoravsky.cz/"}
-    ]
+    ],
+    "seats": 65
   },
   {
     "id": 11,
@@ -118,7 +128,8 @@
     "colors": ["#e8cb30", "#1269fb"],
     "links": [
       {"www": "http://www.kr-olomoucky.cz/"}
-    ]
+    ],
+    "seats": 55
   },
   {
     "id": 12,
@@ -129,7 +140,8 @@
     "colors": ["#fbc52f", "#0b1062"],
     "links": [
       {"www": "https://www.kr-zlinsky.cz/"}
-    ]
+    ],
+    "seats": 45
   },
   {
     "id": 13,
@@ -140,6 +152,7 @@
     "colors": ["#13548f", "#e8cb30"],
     "links": [
       {"www": "http://www.msk.cz/"}
-    ]
+    ],
+    "seats": 65
   }
 ]

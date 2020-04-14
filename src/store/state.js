@@ -18,7 +18,9 @@ const state = {
     parties: []
   },
   tick: 0,
-  start: new Date().getTime()
+  start: new Date().getTime(),
+  width: 0,
+  root: 'https://data.polist.cz/'
 };
 
 export default state;

@@ -1,10 +1,10 @@
 <span class="person-about">
 	<span class="person-party" v-if="partyData">
-		<logo-item :reg="partyData.reg" size="1.1" />
+		<logo-item :reg="partyData.reg" size="1.1em" />
 	</span>
 	<span class="person-name">
 		<span v-if="!link">{{ displayName }}</span>
-		<outbound-link v-if="link" :href="link" :content=" displayName"></outbound-link>
+		<outbound-link v-if="link" :href="link" :content=" displayName" :title="'Wikipedia: ' + displayName"></outbound-link>
 	</span>
 	<span class="person-nominatedBy" v-if="nominatedByData">
 		&middot;

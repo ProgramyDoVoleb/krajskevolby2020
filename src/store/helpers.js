@@ -1,5 +1,5 @@
 export function PDV (url) {
-  return 'https://data.programydovoleb.cz/' + url.split('data/')[1];
+  return 'https://data.polist.cz/' + url;
 }
 
 export function stripURLintoDomain (url) {

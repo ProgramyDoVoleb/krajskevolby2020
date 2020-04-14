@@ -9,6 +9,13 @@ export default {
 	methods: {
 		toggleVisible: function () {
 			this.opened = !this.opened;
+
+			this.$store.dispatch("ge", {
+				action: "collapsible_state_change",
+				category: "engagement",
+				label: "Změna zobrazení: " + this.label,
+				value: this.opened ? 1 : 0
+			});
 		}
 	},
 	mounted: function () {
