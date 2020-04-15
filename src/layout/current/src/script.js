@@ -129,6 +129,8 @@ export default {
 			return sum;
 		},
 		gov: function (index) {
+			if (!this.$store.state.static.previous2016.coalition[index]) return [];
+
 			return this.$store.state.static.previous2016.coalition[index].parties;
 		}
 	},

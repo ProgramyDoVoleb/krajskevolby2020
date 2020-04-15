@@ -1,4 +1,4 @@
 export default {
 	name: 'icon-element',
-	props: ['src']
+	props: ['src', 'size']
 };

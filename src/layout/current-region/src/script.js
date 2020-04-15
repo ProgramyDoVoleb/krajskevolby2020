@@ -2,6 +2,8 @@ import LogoItem from '@/components/logo-item/do';
 import MapElement from '@/components/map/do';
 import PersonAbout from "@/components/person-about/do";
 
+import {betterURL, beautifyDate, stripURLintoDomain, processLinks} from "@/store/helpers";
+
 export default {
 	name: 'currentElectionCall',
 	props: ['id'],
@@ -16,6 +18,9 @@ export default {
 		PersonAbout
 	},
 	computed: {
+		width: function () {
+			return this.$store.state.width;
+		},
 		region: function () {
 			return this.$store.state.static.regions.find(r => r.hash === this.id)
 		},
@@ -30,6 +35,8 @@ export default {
 			if (lookup) {
 					lookup.parties.forEach(party => {
 						var item = {};
+						var links = [];
+
 						if (typeof party.reg === 'number') {
 							var px = this.$store.state.dynamic.parties.find(p => p.reg === party.reg);
 
@@ -62,6 +69,18 @@ export default {
 						item.leader = party.leader;
 						item.support = this.getSupport(party.support);
 						item.list = party.list;
+						item.program = party.program;
+
+						var links = party.links || [];
+
+						item.links = {
+							primary: [],
+							secondary: []
+						};
+
+						if (links.length > 0) {
+							processLinks(links, item.links.primary);
+						}
 
 						parties.push(item)
 					});
@@ -71,6 +90,7 @@ export default {
 		}
 	},
 	methods: {
+		processLinks,
 		getName: function (arr) {
 
 			if (!arr) return;
@@ -101,8 +121,15 @@ export default {
 			return list;
 		},
 		ga: function () {
-			this.$store.dispatch("ga", {title: "Ohlášené kandidátky"});
+			this.$store.dispatch("ga", {title: "Ohlášené kandidátky: " + this.region.name});
 			window.scrollTo(0, 0);
+		},
+		openModal: function (party) {
+			this.$store.dispatch("ge", {
+				action: "open",
+				category: "list_of_candidates",
+				label: "Kandidátka " + party.name + " v " + this.region.short.toUpperCase()
+			});
 		}
 	},
 	mounted: function () {

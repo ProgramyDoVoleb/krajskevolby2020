@@ -1,7 +1,7 @@
 <span class="party-name-with-dot">
 	<span class="party-name-with-dot-flex">
 		<i :style="{background: color}" />
-		<outbound-link :href="'https://www.polist.cz/rejstrik/' + link" :title="name2" v-if="party.hash && party.reg != 90 && !noLink" :addon="false">
+		<outbound-link :href="'https://www.polist.cz/rejstrik/' + link" :title="'Polist, ' + name2" v-if="party.hash && party.reg != 90 && !noLink" :addon="false">
 			<span class="show-40rem">{{ name }}</span>
 			<span class="hide-40rem">{{ short || name }}</span>
 		</outbound-link>

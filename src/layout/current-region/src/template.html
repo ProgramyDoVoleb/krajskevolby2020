@@ -4,14 +4,14 @@
   <div class="part">
     <div class="split-1-2">
       <div class="column show-40rem">
-        <map-element :highlight="region.nuts" :zoom="region.nuts" />
+        <map-element :highlight="region.nuts" :zoom="region.nuts" :width="500" />
       </div>
       <div class="column">
         <div class="stats">
           <ul>
             <li>
-              <label>Zastupitelstvo</label>
-              <div>{{ region.seats }} křesel</div>
+              <label>Volí se</label>
+              <div>{{ region.seats }} zastupitelů</div>
             </li>
             <li>
               <label>Hejtman</label>
@@ -24,7 +24,7 @@
               </div>
             </li>
             <li>
-              <label>Rada kraje</label>
+              <label>Rada</label>
               <div>
                 <span v-for="(party, index) in about.parties">
                   <party-name-with-dot :reg="party.reg" :alwaysShort="true" />
@@ -33,7 +33,7 @@
               </div>
             </li>
             <li>
-              <label>Volby 2016</label>
+              <label>2016</label>
               <div>
                 <router-link :to="'/2016/' + region.hash">výsledky</router-link>
                 <span class="dimm">
@@ -51,7 +51,7 @@
     <h2>Kdo se chystá do voleb?</h2>
     <p class="center dimm">Tento seznam je průběžně doplňován.</p>
     <div class="parties">
-      <div class="party" v-for="(party, i2) in parties" :style="{'border-color': party.color}">
+      <div class="party" v-for="(party, i2) in parties" :style="{'border-color': party.data.color}">
 
           <div class="party-header">
             <div class="party-header-logo">
@@ -70,10 +70,10 @@
             </div>
           </div>
 
-          <div class="stats">
+          <div class="stats heavy">
             <ul>
               <li v-if="party.short">
-                <label>Celé jméno</label>
+                <label>Jméno</label>
                 <div v-html="party.name" v-if="!party.link" />
                 <div v-if="party.link">
                   <outbound-link :href="party.link" :title="'Polist, ' + party.name">{{ party.name }}</outbound-link>
@@ -97,17 +97,31 @@
                   </div>
                 </div>
               </li>
+              <li v-if="party.program">
+                <label>Program</label>
+                <div>
+                  <outbound-link :to="party.program.url" :title="'Program ' + party.name + ' v ' + region.short.toUpperCase()" class="button">{{ party.program.label || 'Zobrazit program'}}</outbound-link>
+                </div>
+              </li>
               <li v-if="party.leader">
                 <label>Lídr</label>
                 <div>
-                  {{ party.leader }}
+                  {{ party.leader.name || party.leader }}
+                  <span v-if="party.leader.links" class="leader-links">
+      							<span v-for="(link, index) in processLinks(party.leader.links)" class="leader-link">
+      								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + '' + link.content" :type="link.icon.name" :size="width < 640 ? '1.5em' : '1em'" />
+      							</span>
+                  </span>
+                  <div v-if="party.leader.reg" class="small">
+                    <party-name-with-dot :reg="party.leader.reg" :alwaysShort="true" />
+                  </div>
                 </div>
               </li>
               <li v-if="party.list && party.list.length > 0">
-                <label>Kandidátka</label>
+                <label>Lidé</label>
                 <div>
                   <div class="columns-3">
-                    <div class="item-in-columns" v-for="(cand, ic) in party.list">
+                    <div class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
                       <span v-if="typeof cand === 'string'">
                         {{ cand }}
                       </span>
@@ -118,16 +132,53 @@
                         </div>
                       </span>
                     </div>
+                    <modal-element v-if="party.list.length > 5">
+                      <template #init>
+                        <div @click="openModal(party)">
+                          <strong class="show-40rem">
+                            <span class="is-link">celý seznam</span>
+                            &rarr;
+                          </strong>
+                          <span class="hide-40rem">
+                            <button class="modal-init-button">Celý seznam</button>
+                          </span>
+                        </div>
+                      </template>
+                      <template #content>
+                        <h3 v-html="party.name"></h3>
+                        <div class="columns-3">
+                          <div class="item-in-columns" v-if="party.leader">
+                            <strong>{{ party.leader.name || party.leader }}</strong>
+                            <em class="dimm">&middot; lídr</em>
+                            <div v-if="party.leader.reg && party.leader.reg === party.reg" class="small">
+                              <party-name-with-dot :reg="party.leader.reg" :alwaysShort="true" />
+                            </div>
+                          </div>
+                          <div class="item-in-columns" v-for="(cand, ic) in party.list">
+                            <span v-if="typeof cand === 'string'">
+                              {{ cand }}
+                            </span>
+                            <span v-if="typeof cand === 'object'">
+                              {{ cand.name }}
+                              <div class="small">
+                                <party-name-with-dot :reg="cand.reg" :alwaysShort="true" />
+                              </div>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="note small red"><br>Kandidátky ještě nejsou kompletní a mohou se měnit.</div>
+                      </template>
+                    </modal-element>
                   </div>
                 </div>
               </li>
-      				<li v-if="party.links">
+      				<li v-if="party.links.primary.length > 0">
       					<label>Odkazy</label>
-      					<div>
-      						<div class="columns">
-      							<div v-for="(link, index) in party.links" class="link">
+      					<div class="links">
+      						<div class="columns-3">
+      							<div v-for="(link, index) in party.links.primary" class="link">
       								<img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
-      								<outbound-link :href="link.link" :content="link.content" :addon="false" />
+      								<outbound-link :href="link.link" :content="link.content" :addon="false" :title="link.icon.name.toUpperCase() + '' + link.content" />
       							</div>
       						</div>
       					</div>
@@ -156,5 +207,8 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div class="goto">
+    <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
   </div>
 </div>

@@ -91,7 +91,7 @@ actions.fetchParties = function (context, payload) {
     return;
   }
 
-  axios.get('https://data.programydovoleb.cz/obecne/strany.json').then((response) => {
+  axios.get('https://data.programydovoleb.cz/obecne/strany.json?' + antiCache).then((response) => {
     context.commit('fetchParties', response.data);
     if (payload && payload.onComplete) payload.onComplete();
   }).catch(e => {

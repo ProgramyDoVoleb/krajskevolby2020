@@ -103,3 +103,43 @@ export function checkCandidateName (name) {
 
   return capitalize(case1) + ' ' + capitalize(case2);
 }
+
+export function processLinks (source, target) {
+
+  var t = target || [];
+
+  if (source.length > 0) {
+
+    source.forEach(link => {
+      var o = {
+        content: stripURLintoDomain(link.url),
+        link: link.url,
+        icon: {
+          src: '/static/icon/link.svg',
+          name: 'WWW: '
+        }
+      }
+
+      if (link.icon) {
+        o.icon.name = link.icon;
+        o.icon.src = '/static/icon/' + link.icon + '.svg';
+      }
+
+      if (link.icon === 'wiki') {
+        o.content = 'Wikipedia';
+      }
+
+      ['wikipedia.org', 'facebook.com', 'youtube.com', 'instagram.com', 'twitter.com'].forEach(s => {
+        if (o.content.split(s).length > 1) {
+          o.content = o.content.split(s)[1]
+        }
+      });
+
+      if (link.label) o.content = link.label;
+
+      t.push(o);
+    });
+  }
+
+  return t;
+}

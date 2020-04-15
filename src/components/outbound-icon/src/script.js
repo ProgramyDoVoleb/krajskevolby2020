@@ -1,6 +1,6 @@
 export default {
 	name: 'outbound-icon',
-	props: ['href', 'type', 'title', 'img'],
+	props: ['href', 'type', 'title', 'img', 'size'],
 	data: function () {
 		return {}
 	},
