@@ -3,6 +3,7 @@
 		<slot name="init"></slot>
 	</div>
 	<div class="modal-element" v-if="opened">
+		<div class="modal-bg"></div>
 		<div class="box">
 			<div class="modal-content">
 				<slot v-on:close="hide" name="content"></slot>

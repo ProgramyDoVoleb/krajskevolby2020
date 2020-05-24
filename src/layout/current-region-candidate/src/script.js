@@ -7,7 +7,7 @@ import {betterURL, beautifyDate, stripURLintoDomain, processLinks} from "@/store
 
 export default {
 	name: 'currentElectionCall',
-	props: ['id'],
+	props: ['id', 'hash'],
 	data: function () {
 		return {
 
@@ -15,44 +15,40 @@ export default {
 	},
   components: {
 		LogoItem,
-		MapElement,
 		PersonAbout,
 		UpdateForm
 	},
 	computed: {
-		width: function () {
-			return this.$store.state.width;
-		},
 		region: function () {
 			return this.$store.state.static.regions.find(r => r.hash === this.id)
 		},
-		about: function () {
-			return this.$store.state.static.previous2016.coalition.find(r => r.id === this.region.id)
-		},
 		parties: function () {
 			return this.$store.getters.getRegionPartyList(this.region.id);
+		},
+		party: function () {
+			return this.parties.find(p => betterURL(p.originalName || p.name) === this.hash);
 		}
 	},
 	methods: {
 		processLinks,
 		betterURL,
 		ga: function () {
-			this.$store.dispatch("ga", {title: "Ohlášené kandidátky: " + this.region.name});
-			window.scrollTo(0, 0);
-		},
-		openModal: function (party) {
-			this.$store.dispatch("ge", {
-				action: "open",
-				category: "list_of_candidates",
-				label: "Kandidátka " + party.name + " v " + this.region.short.toUpperCase()
-			});
+			this.$store.dispatch("ga", {title: (this.party.originalName || this.party.name) + ", " + this.region.name});
+			// window.scrollTo(0, 0);
 		}
 	},
 	mounted: function () {
-		this.ga();
+		window.scrollTo(0, 0);
+		setTimeout(() => this.ga(), 2500);
 	},
 	watch: {
 		id: function () {
+			this.ga();
+		},
+		hash: function () {
+			this.ga();
+		},
+		party: function () {
 			this.ga();
 		}
 	}

@@ -28,6 +28,7 @@ export function betterURL (url) {
   newURL = newURL.toLowerCase();
   newURL = newURL.replaceAll(' ', '-');
   newURL = newURL.replaceAll('.', '');
+  newURL = newURL.replaceAll(',', '');
   newURL = newURL.replaceAll('á', 'a');
   newURL = newURL.replaceAll('č', 'c');
   newURL = newURL.replaceAll('ď', 'd');
@@ -108,7 +109,7 @@ export function processLinks (source, target) {
 
   var t = target || [];
 
-  if (source.length > 0) {
+  if (source && source.length > 0) {
 
     source.forEach(link => {
       var o = {
@@ -116,7 +117,7 @@ export function processLinks (source, target) {
         link: link.url,
         icon: {
           src: '/static/icon/link.svg',
-          name: 'WWW: '
+          name: 'WWW'
         }
       }
 

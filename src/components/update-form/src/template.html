@@ -1,0 +1,54 @@
+<div class="update-form">
+	<modal-element>
+		<template #init>
+			<slot></slot>
+		</template>
+		<template #content>
+			<div class="state-form" v-if="!sent">
+				<h1 v-if="!notes">Přidat či upravit</h1>
+				<h1 v-if="notes">Odkaz na {{ notes }}</h1>
+				<p v-if="showHints">Pomožte a zašlete tip na stranu nebo koalici, kdo stranu či koalici podporuje; kdo je lídr, z jaké strany, jaké používá sociální sítě, webové stránky, kde má medailonek; kdo jsou další kandidáti, případně z jaké strany; odkazy na webové stránky a sociální sítě pro stranu či strany v koalici; a kde je uveřejněný program do voleb.</p>
+				<p v-if="showHints">Protože je nutné každý údaj ověřit, stačí, pokud pošlete pouze odkaz. Může jít o status na FB, tweet, článek na serveru nebo webové stránky. Případně můžete dopsat i poznámku.</p>
+				<div class="form stats">
+					<ul>
+						<li>
+							<label>Odkaz</label>
+							<div>
+								<div class="form-item">
+									<div class="form-input">
+										<input type="url" required v-model="url" class="form-input-text" placeholder="např. https://facebook.com/zdroj-zpravy">
+									</div>
+								</div>
+								<div class="form-note"></div>
+							</div>
+						</li>
+						<li v-if="!notes">
+							<label>Poznámka</label>
+							<div>
+								<div class="form-item">
+									<div class="form-input">
+										<textarea v-model="note" class="form-input-text" placeholder="např. nové webovky, seznam kandidátů, zpráva o podpoře. Ale klidně ponechte prázdné."></textarea>
+									</div>
+								</div>
+								<div class="form-note"></div>
+							</div>
+						</li>
+						<li>
+							<label></label>
+							<div>
+								<button class="button-primary" :disabled="!valid || sending" @click="send">Odeslat tip</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="state-sent" v-if="sent">
+				<h1>Děkujeme</h1>
+				<p class="center">Zaslaný odkaz zkontrolujeme a přidáme.</p>
+				<div class="center">
+					<button @click="another">Další tip</button>
+				</div>
+			</div>
+		</template>
+	</modal-element>
+</div>

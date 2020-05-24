@@ -14,7 +14,7 @@
         box-shadow: 0 0 30px #ddd;
         z-index: 2;
         background: #fff;
-        transform: translateY(-2px);
+        // transform: translateY(-2px);
       }
     }
   }
@@ -216,11 +216,7 @@ table {
 }
 
 .leader-links {
-  display: block;
-
-  @media (min-width: 40rem) {
-    display: inline-block;
-  }
+  display: inline;
 }
 
 .leader-link {
@@ -244,4 +240,23 @@ table {
   width: 200%;
   height: 200%;
   pointer-events: none;
+}
+
+.update-proposal {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  button {
+    font-size: 11px;
+
+    @media (hover: hover) {
+      opacity: .5;
+
+      &:hover {
+        color: #003399 !important;
+        opacity: 1;
+      }
+    }
+  }
 }

@@ -1,0 +1,25 @@
+.form-input-text {
+  background: #eef;
+  padding: 1em 1em;
+  border: none;
+  display: block;
+  width: 100%;
+  font-size: .8rem;
+}
+
+textarea {
+  min-height: 5rem;
+  min-width: 100%;
+  max-width: 20rem;
+}
+
+p {
+  max-width: 40rem;
+  font-size: 13px;
+}
+
+.state-form {
+  text-align: left;
+  color: #000;
+  font-size: 1rem;
+}

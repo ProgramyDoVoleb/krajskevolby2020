@@ -66,7 +66,11 @@
               </span>
             </div>
             <div class="party-header-name">
-              <h3>{{ party.short || (party.originalName || party.name) }}</h3>
+              <h3>
+                <router-link :to="'/' + region.hash + '/' + betterURL(party.originalName || party.name)" class="is-span">
+                  {{ party.short || (party.originalName || party.name) }}
+                </router-link>
+              </h3>
             </div>
           </div>
 
@@ -100,7 +104,7 @@
               <li v-if="party.program">
                 <label>Program</label>
                 <div>
-                  <outbound-link :to="party.program.url" :title="'Program ' + party.name + ' v ' + region.short.toUpperCase()" class="button">{{ party.program.label || 'Zobrazit program'}}</outbound-link>
+                  <outbound-link :href="party.program.url || party.program" :title="'Program ' + party.name + ' v ' + region.short.toUpperCase()" class="button">{{ party.program.label || 'Zobrazit program'}}</outbound-link>
                 </div>
               </li>
               <li v-if="party.leader">
@@ -109,7 +113,7 @@
                   {{ party.leader.name || party.leader }}
                   <span v-if="party.leader.links" class="leader-links">
       							<span v-for="(link, index) in processLinks(party.leader.links)" class="leader-link">
-      								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + '' + link.content" :type="link.icon.name" :size="width < 640 ? '1.5em' : '1em'" />
+      								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + '' + link.content" :type="link.icon.name" :size="'1em'" />
       							</span>
                   </span>
                   <div v-if="party.leader.reg" class="small">
@@ -185,13 +189,32 @@
       				</li>
             </ul>
           </div>
+          <div class="update-proposal">
+            <update-form :region="region" :party="party" :index="i2">
+              <button class="button-plain" :style="{color: party.data.color}">Doplnit nebo upravit</button>
+            </update-form>
+          </div>
+      </div>
+      <div class="party">
+        <div class="stats">
+          <ul>
+            <li>
+              <label>Přidat</label>
+              <div>
+                <update-form :region="region" :party="null">
+                  <button>Další strana nebo koalice</button>
+                </update-form>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
   <div class="part">
     <div class="info-box center">
-      <h3>Chybí někdo na seznamu?</h3>
-      <p>Prosím, napište na <b><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
+      <h3>Něco chybí nebo je špatně?</h3>
+      <p>Prosím, napište na <b><a mailto="tip@programydovoleb.cz" class="footer-link">tip@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
     </div>
   </div>
   <div class="part">

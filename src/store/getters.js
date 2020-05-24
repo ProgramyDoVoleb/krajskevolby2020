@@ -1,4 +1,4 @@
-import {createColorByName, checkCandidateName, betterURL} from './helpers';
+import {createColorByName, checkCandidateName, betterURL, processLinks} from './helpers';
 
 const getters = {
   vuexState: state => state,
@@ -167,5 +167,100 @@ getters.getPartyActivityByRegion = (state, getters) => (item) => {
 
   return list;
 }
+
+getters.getRegionPartyList = (state, getters) => (id) => {
+
+  function getName (arr, parties) {
+
+    if (!arr) return;
+
+    var list = [];
+
+    arr.forEach(reg => {
+      if (typeof reg === 'string') list.push(reg);
+      if (typeof reg === 'number') {
+        var party = parties.find(p => p.reg === reg);
+
+        if (party) {
+          var link = party.short || party.name;
+        } list.push(link);
+      }
+    });
+
+    return list.join(', ');
+  };
+
+  function getSupport (arr) {
+
+    if (!arr) return;
+    return arr;
+  };
+
+  function getIcons (party) {
+    var list = [];
+
+    return list;
+  };
+
+  var lookup = state.dynamic.callout.find(r => r.id === id);
+
+  var parties = [];
+
+  if (lookup) {
+    lookup.parties.forEach(party => {
+      var item = {};
+      var links = [];
+
+      if (typeof party.reg === 'number') {
+        var px = state.dynamic.parties.find(p => p.reg === party.reg);
+
+        item.name = party.name || px.name;
+        item.short = party.short || px.short;
+        item.data = px;
+        item.link = 'https://www.polist.cz/rejstrik/' + party.reg + '-' + px.hash;
+        item.icons = getIcons(px);
+      } else {
+        item.data = {
+          reg: 9999,
+          color: party.color || '#aaa',
+          coalition: party.reg,
+          logo: party.logo
+        };
+
+        if (party.reg && party.name) {
+          item.name = 'Koalice ' + getName(party.reg, state.dynamic.parties);
+        } else if (party.name) {
+          item.name = party.name;
+        } else {
+          item.name = 'Koalice ' + getName(party.reg, state.dynamic.parties);
+        }
+
+        item.originalName = party.name;
+
+        item.icons = getIcons(party);
+      }
+
+      item.leader = party.leader;
+      item.support = getSupport(party.support);
+      item.list = party.list;
+      item.program = party.program;
+
+      links = party.links || [];
+
+      item.links = {
+        primary: [],
+        secondary: []
+      };
+
+      if (links.length > 0) {
+        processLinks(links, item.links.primary);
+      }
+
+      parties.push(item)
+    });
+  }
+
+  return parties;
+};
 
 export default getters;
