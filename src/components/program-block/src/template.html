@@ -1,10 +1,10 @@
 <div class="program-block">
 	<span v-if="typeof data === 'string'">{{ data }}</span>
 	<div v-if="typeof data === 'object'">
-		<h2 v-if="data.headline && depth === 2">
+		<!-- <h2 v-if="data.headline && depth === 2">
 			<a :name="'cast' + index"></a>
 			{{ data.headline }}
-		</h2>
+		</h2> -->
 		<h3 v-if="data.headline && depth === 3">{{ data.headline }}</h3>
 		<h4 v-if="data.headline && depth === 4">{{ data.headline }}</h4>
 		<p v-if="data.copy">{{ data.copy }}</p>

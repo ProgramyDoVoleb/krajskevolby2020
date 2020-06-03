@@ -1,0 +1,13 @@
+<div class="program-view">
+	<div class="loading" v-if="!data">
+		Načítám program ...
+	</div>
+	<div class="loaded" v-if="data">
+		<blockquote :cite="source" v-if="data.motto">
+			{{ data.motto }}
+		</blockquote>
+		<collapsible-element v-for="(part, pi) in data.parts" :key="'parts_' + pi" :label="part.headline" :seo="{action: hash, category: 'program', label: 'Část: '}">
+			<program-block :depth="2" :data="part" :index="pi"  ref="block" />
+		</collapsible-element>
+	</div>
+</div>

@@ -1,0 +1,186 @@
+<div class="overview">
+  <h1>{{ region.name }}</h1>
+  <p class="lead">Ohlášené strany a koalice, lídři a kandidátky</p>
+  <div class="part">
+    <div class="split-1-2">
+      <div class="column show-40rem">
+        <map-element :highlight="region.nuts" :zoom="region.nuts" :width="500" />
+      </div>
+      <div class="column">
+        <div class="stats">
+          <ul>
+            <li>
+              <label>Volí se</label>
+              <div>{{ region.seats }} zastupitelů</div>
+            </li>
+            <li>
+              <label>Hejtman</label>
+              <div>
+            		<template v-for="(party, index2) in about.parties">
+            			<template v-for="(person, i) in party.seats">
+            				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+            			</template>
+            		</template>
+              </div>
+            </li>
+            <li>
+              <label>Rada</label>
+              <div>
+                <span v-for="(party, index) in about.parties">
+                  <party-name-with-dot :reg="party.reg" :alwaysShort="true" />
+                  <span class="dimm">&nbsp;&nbsp;&nbsp;</span>
+                </span>
+              </div>
+            </li>
+            <li>
+              <label>2016</label>
+              <div>
+                <router-link :to="'/2016/' + region.hash">výsledky</router-link>
+                <span class="dimm">
+                  &middot;
+                  účast {{ about.attended }} %
+                </span>
+                </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="part">
+    <h2>Kdo se chystá do voleb?</h2>
+    <p class="center dimm">Tento seznam je průběžně doplňován.</p>
+    <div class="parties">
+      <div class="party" v-for="(party, i2) in parties" :style="{'border-color': party.color}">
+          <div class="party-header">
+            <div class="party-header-logo">
+              <div class="logo-holder-2" v-if="party.logo">
+                <logo-item :data="party" :size="{small: 3, large: 4, breakpoint: 40}" />
+              </div>
+              <div class="logo-holder-2" v-if="!party.logo && party.coalition">
+                <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i2 + '_' + i3" :size="{small: 3, large: 4, breakpoint: 40}" />
+              </div>
+              <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
+                <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i2 + '_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
+              </div>
+            </div>
+            <div class="party-header-name">
+              <h3>
+                <router-link :to="party.link" class="is-span">
+                  <responsive-label :long="party.name" :short="party.short" />
+                </router-link>
+              </h3>
+            </div>
+          </div>
+          <div class="stats heavy">
+            <ul>
+              <li v-if="party.coalition && party.coalition.length > 0">
+                <label>Koalice</label>
+      					<div class="coalition">
+      						<div v-for="(coal, index) in party.coalition" class="coalition-member">
+      							<party-link :data="coal" />
+      						</div>
+      					</div>
+              </li>
+              <li v-if="party.support">
+                <label>Podpora</label>
+                <div>
+                  <div v-for="(support, ix) in party.support">
+                    <party-link :data="support" />
+                  </div>
+                </div>
+              </li>
+              <li v-if="party.program">
+                <label>Program</label>
+                <div v-if="!party.program.local">
+                  <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name + ' v ' + region.short.toUpperCase()" class="button">{{ party.program.label || 'Zobrazit program'}}</outbound-link>
+                </div>
+                <div v-if="party.program.local">
+                  <router-link :to="'/' + region.hash + '/' + betterURL(party.originalName || party.name) + '#program'" class="button">{{ party.program.label || 'Zobrazit program'}}</router-link>
+                </div>
+              </li>
+              <li v-if="party.leader">
+                <label>Lídr</label>
+                <div>
+                  {{ party.leader.name }}
+                  <span v-if="party.leader.links" class="leader-links">
+      							<span v-for="(link, index) in party.leader.links" class="leader-link">
+      								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + '' + link.content" :type="link.icon.name" :size="'1em'" />
+      							</span>
+                  </span>
+                  <div v-if="party.leader.party" class="small">
+                    <party-link :data="party.leader.party" :breakpoint="1000" />
+                  </div>
+                </div>
+              </li>
+              <li v-if="party.list && party.list.length > 0">
+                <label>Lidé</label>
+                <div>
+                  <div class="columns-3">
+                    <div class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
+                      {{ cand.name }}
+                      <div class="small" v-if="cand.party && cand.party.reg != (party ? party.reg : -1)">
+                        <party-link :data="cand.party" :breakpoint="1000" />
+                      </div>
+                    </div>
+                    <div class="item-in-columns" v-if="party.list.length > 5">
+                      <router-link :to="party.link + '#lide'">
+                        <span>celý seznam</span>
+                        &rarr;
+                      </router-link>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <router-link :to="party.link" :style="{color: party.color}" class="small">
+              <strong>Více informací</strong>
+              &rarr;&nbsp;
+            </router-link>
+          </div>
+      </div>
+      <div class="party">
+        <div class="stats">
+          <ul>
+            <li>
+              <div>
+                <update-form :region="region" :party="null">
+                  <button>Přidat stranu nebo koalici</button>
+                </update-form>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="part">
+    <div class="info-box center">
+      <h3>Něco chybí nebo je špatně?</h3>
+      <p>Prosím, napište na <b><a mailto="tip@programydovoleb.cz" class="footer-link">tip@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
+    </div>
+  </div>
+  <share-block />
+  <div class="part">
+    <h2>Vybrat jiný kraj</h2>
+    <div class="stats">
+      <ul class="columns-3">
+        <li v-for="(region, index) in $store.state.static.regions" v-if="region.hash != id">
+          <div>
+            <router-link :to="'/' + region.hash">{{ region.name }}</router-link>
+          </div>
+          <label v-if="$store.state.dynamic.callout[index].parties.length < 5">{{ $store.state.dynamic.callout[index].parties.length }} strany</label>
+          <label v-if="$store.state.dynamic.callout[index].parties.length > 4">{{ $store.state.dynamic.callout[index].parties.length }} stran</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="part">
+    <router-link to="/dotaznik-ke-krajskym-volbam">
+      <img src="/static/banner.png" alt="Dotazník" width="100%">
+    </router-link>
+  </div>
+  <div class="goto">
+    <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
+  </div>
+</div>

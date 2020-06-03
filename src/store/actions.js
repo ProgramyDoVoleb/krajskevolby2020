@@ -99,4 +99,27 @@ actions.fetchParties = function (context, payload) {
   });
 }
 
+actions.fetchSource = function (context, payload) {
+  var lookup = context.state.dynamic.source.find(item => item.source === payload.source);
+
+  if (lookup) {
+    // console.log('Town', lookup.name, 'is known');
+    if (payload && payload.onComplete) payload.onComplete();
+  } else {
+    try {
+      axios.get('https://data.programydovoleb.cz/' + payload.source + '.json?' + antiCache).then(response => {
+        context.commit('fetchSource', {
+          source: payload.source,
+          content: response.data,
+          to: payload.to
+        });
+
+        if (payload && payload.onComplete) payload.onComplete();
+      });
+    } catch (e) {
+      if (payload && payload.onError) payload.onError();
+    }
+  }
+}
+
 export default actions;

@@ -10,7 +10,7 @@ export default {
 		listProminent: function () {
 			var list = [];
 
-			this.$store.getters.getPartyList().forEach(party => {
+			this.$store.getters.allParties().forEach(party => {
 				if (party.reg && this.prominent.indexOf(party.reg) > -1) {
 					list.push(party);
 				}
@@ -21,11 +21,12 @@ export default {
 		listOthers: function () {
 			var list = [];
 
-			this.$store.getters.getPartyList().forEach(party => {
+			this.$store.getters.allParties().forEach(party => {
 				if (!party.reg || this.prominent.indexOf(party.reg) === -1) {
 					list.push(party);
 				}
 			});
+
 			return list;
 		}
 	},

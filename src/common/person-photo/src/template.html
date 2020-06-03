@@ -1,0 +1,4 @@
+<div class="person-photo">
+	<img src="/static/missing.jpg" alt="fotka chybí" v-if="!data.photo">
+	<img :src="data.photo" :alt="data.name" v-if="data.photo">
+</div>

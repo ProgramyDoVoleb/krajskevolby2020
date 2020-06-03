@@ -1,0 +1,43 @@
+footer {
+  background: #fafafa;
+  padding: 3rem 0;
+  margin-top: 3rem;
+  border-top: 1px solid #f4f4f4;
+}
+
+.text-right {
+  font-weight: bold;
+
+  @media (min-width: 40rem) {
+    text-align: right;
+  }
+}
+
+.social-share {
+  font-size: 1.5rem;
+
+  span {
+    filter: grayscale(100%);
+    opacity: .3;
+
+    @media (hover:hover) {
+
+      transition: .3s all;
+
+      &:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.footer-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.split-2-1 p {
+  max-width: 35rem;
+}

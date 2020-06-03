@@ -417,6 +417,44 @@ button, .button, .btn {
 	z-index: 2;
 }
 
+.split-1-1 {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > * {
+		width: 100%;
+	}
+
+	@media (min-width: 40rem) {
+		& > :first-child {
+			width: 50%;
+		}
+
+		& > :last-child {
+			width: 50%;
+		}
+	}
+}
+
+.split-2-3 {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > * {
+		width: 100%;
+	}
+
+	@media (min-width: 40rem) {
+		& > :first-child {
+			width: 40%;
+		}
+
+		& > :last-child {
+			width: 60%;
+		}
+	}
+}
+
 .split-2-1 {
 	display: flex;
 	flex-wrap: wrap;

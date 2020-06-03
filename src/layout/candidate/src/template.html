@@ -1,0 +1,228 @@
+<div class="overview">
+  <div class="part center" v-if="party">
+    <div class="party-header-logo">
+      <div class="logo-holder-2" v-if="party.logo">
+        <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
+      </div>
+      <div class="logo-holder-2" v-if="!party.logo && party.coalition">
+        <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 4, large: 6, breakpoint: 40}" />
+      </div>
+      <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
+        <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 2, large: 3, breakpoint: 40}" />
+      </div>
+    </div>
+  </div>
+  <h1 v-if="party">
+    {{ party.name }}
+    <div class="dimm small">{{ region.name }}</div>
+  </h1>
+  <div class="part center quick-links" v-if="party && party.links">
+    <outbound-icon v-for="(link, index) in party.links" :key="'c_' + index" :href="link.link" :type="link.icon.type" :size="'2rem'" :title="link.content" />
+  </div>
+  <div class="part" v-if="party">
+    <div class="party">
+      <div class="stats heavy">
+        <ul class="columns-2">
+          <li v-if="!party.coalition">
+            <label>Jméno</label>
+            <party-link :data="party">
+              {{ party.name }}
+            </party-link>
+          </li>
+          <li v-if="party.coalition">
+            <label>Koalice</label>
+            <div class="coalition">
+              <div v-for="(coal, index) in party.coalition" class="coalition-member">
+                <party-link :data="coal" />
+              </div>
+            </div>
+          </li>
+          <li v-if="party.support">
+            <label>Podpora</label>
+            <div>
+              <div v-for="(support, ix) in party.support">
+                <party-link :data="support"  />
+              </div>
+            </div>
+          </li>
+          <li>
+            <label>Program</label>
+            <div v-if="party.program">
+              <a href="#program" class="page-anchor">Zobrazit</a>
+            </div>
+            <div v-if="!party.program" class="red">chybí</div>
+          </li>
+          <li>
+            <label>Lídr</label>
+            <div v-if="party.leader">
+              <a href="#lidr" class="page-anchor">{{ party.leader.name }}</a>
+            </div>
+            <div v-if="!party.leader" class="red">prozatím neurčen</div>
+          </li>
+          <li>
+            <label>Lidé</label>
+            <div v-if="party.list">
+              <a href="#lide" class="page-anchor">{{ party.list.length }} kandidát<span v-if="party.list.length > 1 && party.list.length < 5">i</span><span v-if="party.list.length > 4">ů</span></a>
+            </div>
+            <div v-if="!party.list || party.list.length === 0" class="red">neznámá kandidátka</div>
+          </li>
+          <li v-if="party.links">
+            <label>Odkazy</label>
+            <div v-if="party.links.length > 0">
+              <a href="#odkazy" class="page-anchor">{{ party.links.length }} odkaz<span v-if="party.links.length > 1 && party.links.length < 5">y</span><span v-if="party.links.length > 4">ů</span></a>
+            </div>
+            <div v-if="party.links.length === 0" class="red">chybí</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="part" v-if="party && party.leader"><a name="lidr"></a>
+    <h2>
+      {{ party.leader.name }}
+      <div class="dimm small">lídr kandidátky</div>
+    </h2>
+    <div class="split-2-1">
+      <div>
+        <h4>Představení lídra</h4>
+        <p v-if="party.leader.about" v-html="party.leader.about.content"></p>
+        <div v-if="!party.leader.about" class="dimm">
+          <p>Zde je prostor pro představení kandidáta. Pokud víte o osobní stránce, blogu, profilu na stránce strany nebo stránce na wikipedii, prosím, zašlete odkaz. Stačí kliknout na tlačítko níže.</p>
+          <update-form :region="region" :party="party" :index="-1" :hints="false" notes="medailonek lídra">
+            <button class="button-plain yellow">Poslat odkaz na medialonek</button>
+          </update-form>
+        </div>
+        <h4>4 otázky pro lídra</h4>
+        <em>Připravuje se</em>
+      </div>
+      <div class="split-order-1">
+        <div class="leader-split">
+          <div class="profile">
+            <person-photo :data="party.leader" />
+          </div>
+          <div class="links">
+            <div class="stats stats-icon">
+              <ul>
+                <li v-if="party.leader.party">
+                  <label>Člen</label>
+                  <div>
+                    <party-link :data="party.leader.party" :breakpoint="1000" />
+                  </div>
+                </li>
+                <li v-if="party.leader.work">
+                  <label>Nyní</label>
+                  <div>
+                    {{ party.leader.work }}
+                  </div>
+                </li>
+                <li v-if="party.leader.age">
+                  <label>Věk</label>
+                  <div>
+                    {{ party.leader.age }} let
+                  </div>
+                </li>
+                <li v-for="(link, index) in party.leader.links" v-if="party.leader.links">
+                  <label>
+                    <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
+                  </label>
+                  <div class="link-with-icon">
+                    <outbound-link :href="link.link" :addon="false" :title="link.link">
+                      {{ link.content.length > 20 ? link.icon.name : link.content }}
+                    </outbound-link>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <update-form :region="region" :party="party" :index="-1" :hints="false" notes="web či sociální sítě lídra">
+                      <button class="button-plain yellow">Přidat odkaz</button>
+                    </update-form>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="part" v-if="party"><a name="lide"></a>
+    <h2>
+      Kandidátka
+      <div class="small dimm">
+        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="kandidátku strany">
+          <button class="button-plain yellow">Poslat odkaz na kandidátku</button>
+        </update-form>
+      </div>
+    </h2>
+    <div class="columns-2-3" v-if="party.list">
+      <div class="item-in-columns" v-if="party.leader">
+        <span>{{ party.leader.name }}</span>
+        <div v-if="party.leader.party" class="small">
+          <party-link :data="party.leader.party" :breakpoint="1000" />
+        </div>
+      </div>
+      <div class="item-in-columns" v-for="(cand, ic) in party.list">
+        {{ cand.name }}
+        <div class="small" v-if="cand.party">
+          <party-link :data="cand.party" :breakpoint="1000" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="part" v-if="party && party.links && party.links.length > 0"><a name="odkazy"></a>
+    <h2>
+      Odkazy
+      <div class="small dimm">
+        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="webové stránky a sociální sítě">
+          <button class="button-plain yellow">Přidat odkaz</button>
+        </update-form>
+      </div>
+    </h2>
+    <div class="stats stats-icon">
+      <ul class="columns-2">
+        <li v-for="(link, index) in party.links">
+          <label>
+            <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
+          </label>
+          <div class="link-with-icon">
+            <outbound-link :href="link.link" :addon="false" :title="link.link">
+              {{ link.content }}
+            </outbound-link>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="part"><a name="program"></a>
+    <h2>Program</h2>
+    <div v-if="party && party.program">
+      <program-element :source="party.program.source" :local="party.program.local" :hash="region.short + '/' + hash" />
+      <p class="center">
+        <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name">Zdroj</outbound-link>
+      </p>
+    </div>
+    <div v-if="party && !party.program" class="center">
+      <update-form :region="region" :party="party" :index="-1" :hints="false" notes="program">
+        <button class="button-plain yellow">Poslat odkaz na program</button>
+      </update-form>
+    </div>
+  </div>
+  <div class="part">
+    <div class="info-box center">
+      <h3>Chcete něco upravit nebo doplnit?</h3>
+      <p>Prosím, napište na <b><a mailto="tip@programydovoleb.cz" class="footer-link">tip@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
+    </div>
+  </div>
+  <div class="part">
+    <router-link to="/dotaznik-ke-krajskym-volbam">
+      <img src="/static/banner.png" alt="Dotazník" width="100%">
+    </router-link>
+  </div>
+  <share-block />
+  <div class="goto">
+    <router-link :to="'/' + region.hash">&larr; {{ region.name }}</router-link>
+  </div>
+  <div class="goto">
+    <router-link to="/">&larr; Vybrat jiný kraj</router-link>
+  </div>
+</div>

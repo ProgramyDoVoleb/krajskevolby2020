@@ -1,0 +1,109 @@
+<div class="party-detail">
+  <div class="part" v-if="party">
+    <h1>{{ party.short }}</h1>
+    <p class="lead">{{ party.name }} v krajských volbách 2020</p>
+    <div class="map-holder">
+      <map-element :width="$store.state.width" :areas="areas" :clickable="clickable" @select="clicked" v-on:hover="hovered" />
+      <div class="map-about" v-if="hoveredItem && $store.state.width > 640" :style="{left: hoveredItem.position.x + 'px', top: hoveredItem.position.y + 'px'}" :class="{hoveredItemVisible}">
+        <div class="about-region">
+          <h3>{{ hoveredItem.region.name }}</h3>
+        </div>
+        <div class="about-version" v-if="hoveredItem.data">
+          <span v-if="hoveredItem.data.type === 0">
+            samostatně
+          </span>
+          <span v-if="hoveredItem.data.type > 0">
+            <em>{{ hoveredItem.data.party.name }}</em>
+          </span>
+        </div>
+        <div class="about-logo" v-if="hoveredItem.data">
+          <ul v-if="hoveredItem.data.party.coalition">
+            <li v-for="(coal, ix) in hoveredItem.data.party.coalition" v-if="coal.logo">
+              <img :src="$store.state.root + coal.logo" alt="">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="map-legend small">
+        <div class="map-legend-item">
+          <div class="circle" :style="{opacity: .8, background: party.color}"></div>
+          <span>samostatně</span>
+        </div>
+        <div class="map-legend-item">
+          <div class="circle" :style="{opacity: .4, background: party.color}"></div>
+          <span>v koalici</span>
+        </div>
+        <div class="map-legend-item">
+          <div class="circle" :style="{opacity: .1, background: party.color}"></div>
+          <span>podpora</span>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div
+        class="list-item"
+        v-for="(act, index) in activity">
+          <div class="flex">
+            <div class="list-region">
+              <router-link :to="'/' + act.region.hash">
+                {{ act.region.name }}
+              </router-link>
+            </div>
+            <div class="list-activity">
+              <span v-if="act.type === 0">
+                <strong>samostatně</strong>
+              </span>
+              <span v-if="act.type === 1">
+                v koalici
+              </span>
+              <span v-if="act.type === 2">
+                podpora
+              </span>
+            </div>
+            <div class="list-info">
+              <div v-if="act.party.reg != party.reg && act.party.reg">
+                <party-link :data="act.party" :breakpoint="1000" />
+              </div>
+              <em v-if="!act.party.reg">"{{ act.party.name }}"</em>
+              <ul v-if="act.party.coalition">
+                <li v-for="(px, index) in act.party.coalition">
+                  <party-link :data="px" :breakpoint="1000" />
+                </li>
+              </ul>
+              <template v-if="act.party.support">
+                <h4>Podpora</h4>
+                <ul>
+                  <li v-for="(px, index) in act.party.support">
+                    <party-link :data="px" :breakpoint="1000" />
+                  </li>
+                </ul>
+              </template>
+              <h4><router-link :to="act.party.link">Podrobnosti &rarr;</router-link></h4>
+            </div>
+            <div class="list-leader">
+              <div v-if="act.party.leader">
+                {{ act.party.leader.name }}
+                <div class="small" v-if="act.party.leader.party">
+                  <party-link :data="act.party.leader.party" :breakpoint="1000" />
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <share-block />
+  <div class="part">
+    <div class="info-box center">
+      <h3>Našli jste chybu?</h3>
+      <p>Prosím, napište na <b><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
+    </div>
+  </div>
+  <div class="part" v-if="dynamics">
+    <h2>Vybrat jinou stranu</h2>
+    <party-list />
+  </div>
+  <div class="goto">
+    <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
+  </div>
+</div>

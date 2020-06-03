@@ -12,10 +12,15 @@ const state = {
       coalition: []
     }
   },
+  data: {
+    candidates: [],
+    parties: []
+  },
   dynamic: {
     towns: [],
     callout: [],
-    parties: []
+    parties: [],
+    source: []
   },
   tick: 0,
   start: new Date().getTime(),

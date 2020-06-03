@@ -1,0 +1,13 @@
+<div class="modal">
+	<div class="modal-initiator" v-if="!opened" @click="show">
+		<slot name="init"></slot>
+	</div>
+	<div class="modal-element" v-if="opened">
+		<div class="box">
+			<div class="modal-content">
+				<slot v-on:close="hide" name="content"></slot>
+			</div>
+			<span class="icon red" @click="hide">&times;</span>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,286 @@
+.party {
+  padding: 3rem 0 3rem 3rem;
+  position: relative;
+
+  @media (min-width: 40rem) {
+    padding: 2rem 0 2rem 7rem;
+    box-shadow: 0 10px 20px #fff;
+    background: rgba(255, 255, 255, 0);
+
+    @media (hover: hover) {
+      transition: box-shadow 1s, background 1s, transform .3s;
+
+      &:hover {
+        box-shadow: 0 0 30px #ddd;
+        z-index: 2;
+        background: #fff;
+        // transform: translateY(-2px);
+      }
+    }
+  }
+
+  @media (min-width: 60rem) {
+    padding: 2rem 0 2rem 8rem;
+  }
+}
+
+.party {
+  border-bottom: 2px solid #ccc;
+
+  @media (min-width: 40rem) {
+    // border-bottom-width: 1px;
+  }
+}
+
+.party-header {
+  position: relative;
+}
+
+.party-header-logo {
+  position: absolute;
+  left: -4rem;
+
+  @media (min-width: 40rem) {
+    left: -6rem;
+  }
+}
+
+h3 {
+  margin: 0;
+  padding: 1rem 0 1rem;
+
+  @media (min-width: 40rem) {
+    padding-top: 1.33rem;
+  }
+}
+
+.region-holder + .region-holder {
+  margin-top: 3rem;
+}
+
+h1 {
+  max-width: 25rem;
+  margin: auto;
+  padding: 3rem 0 5rem;
+}
+
+h2 + p.center {
+  margin: -1.5rem 0 2rem;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+.lead {
+  margin-bottom: 2rem;
+}
+
+.item {
+  border-left: 2px solid #aaa;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  vertical-align: baseline;
+  text-align: left;
+
+  td, th {
+    padding: .5em 1em;
+  }
+  td {
+    border-top: 1px solid #eee;
+    vertical-align: baseline;
+    position: relative;
+  }
+  th {
+    font-size: 14px;
+  }
+
+  @media (max-width: 40rem) {
+    table, tr, td, tbody {
+      display: block;
+      border-top: none;
+      position: relative;
+    }
+
+    thead {
+      display: none;
+    }
+
+    td.td-width-2 {
+      position: absolute;
+      left: -2.5rem;
+    }
+
+    td {
+      padding-left: 2rem;
+    }
+
+    td:last-child {
+      padding-top: 0;
+    }
+
+    tr:not(:first-child) {
+      border-top: 1px solid #eee;
+    }
+  }
+}
+
+.logo-item {
+  margin-right: .5em;
+}
+
+.logo-holder-2 {
+  position: absolute;
+  top: .25em;
+  max-width: 6rem;
+}
+
+.region {
+  margin-bottom: 4rem;
+}
+
+.td-width-max {
+  max-width: 25rem;
+}
+
+.td-width-2 {
+  width: 3rem;
+}
+
+.columns-2-3 {
+  > .item {
+    padding: 0;
+    border: none;
+    margin: 0;
+  }
+}
+
+.logo-holder-2 {
+  .logo-item + .logo-item {
+    margin-top: -1rem;
+
+    @media (min-width: 40rem) {
+      margin-top: -2rem;
+    }
+  }
+}
+
+.logo-holder-tiny {
+  padding-top: 3.5rem;
+  width: 4rem;
+  font-size: 1rem;
+  line-height: 1em;
+
+  @media (min-width: 40rem) {
+    padding-top: 4.5rem;
+    width: 5rem;
+  }
+
+  .logo-item {
+    margin-right: .2em;
+  }
+
+  .logo-item + .logo-item:nth-child(even) {
+    margin-left: -.1em;
+
+    @media (min-width: 40rem) {
+      margin-left: -.2em;
+    }
+  }
+}
+
+.regions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -.25rem;
+}
+
+.region-item {
+  width: 50%;
+
+  @media (min-width: 40rem) {
+    width: 50%;
+  }
+
+  @media (min-width: 60rem) {
+    width: 33.33%;
+  }
+}
+
+.regions .region {
+  padding: .25rem;
+  margin: 0;
+}
+
+.region img {
+  display: block;
+  width: 100%;
+  border: 1px solid #eee;
+  border-radius: 1rem;
+}
+
+.links {
+  img {
+    display: inline-block;
+    margin-right: .25em;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    transform: translateY(.2em);
+  }
+}
+
+.modal-init-button {
+  margin-top: 1em;
+  display: block;
+}
+
+.leader-links {
+  display: inline;
+}
+
+.leader-link {
+  display: inline-block;
+  margin: .3em .3em .3em 0;
+
+  @media (min-width: 40rem) {
+    transform: scale(1.3, 1.3) translateY(.15em);
+    margin: 0 0 0 .5em;
+  }
+}
+
+.column.show-40rem {
+  position: relative;
+}
+
+.map-element {
+  position: absolute;
+  left: -50%;
+  top: -100%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+}
+
+.update-proposal {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  button {
+    font-size: 11px;
+
+    @media (hover: hover) {
+      opacity: .5;
+
+      &:hover {
+        color: #003399 !important;
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+<div class="overview">
+  <h1>SEO</h1>
+  <div v-for="(region, index) in $store.state.static.regions">
+    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+      if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}") meta(<br>
+    		"{{ party.short || party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
+        "<span v-if="party.coalition">Koalice stran
+          <span v-for="(member, index3) in party.coalition">
+            <span v-if="index3 > 0"> +</span>
+            <span>{{ member.short || member.name }}</span>
+          </span>.
+        </span><span v-if="party.leader">Lídrem je {{ party.leader.name }}.</span><span v-if="!party.leader">Lídr ještě nebyl vybrán.</span>
+        <span v-if="party.program">Program již byl uveřejněn.</span>
+        <span v-if="party.list">
+          <span v-if="party.list.length === 1">Známe jednoho dalšího kandidáta.</span>
+          <span v-if="party.list.length > 1 && party.list.length < 5">Známe {{ party.list.length }} kandidáty.</span>
+          <span v-if="party.list.length > 4">Známe již {{ party.list.length }} kandidátů.</span>
+        </span>
+        <span v-if="!party.program">Program ještě není znám.</span>
+        Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
+        ",<br>
+    		"/social/kraje/{{ region.hash }}-2.jpg"<br>
+    	);
+    </div>
+  </div>
+  <h2>Sitemap</h2>
+  <div v-for="(region, index) in $store.state.static.regions">
+    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+      <code>
+        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-04&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+      </code>
+    </div>
+  </div>
+</div>

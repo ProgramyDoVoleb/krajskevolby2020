@@ -1,0 +1,98 @@
+.collapsible-element {
+  border-top: 1px solid #eee;
+
+  &.opened {
+    padding-bottom: 4rem;
+  }
+}
+
+.collapsible-element-header {
+  padding: 1rem 3rem 1rem 1rem;
+  position: relative;
+  margin-left: -1rem;
+  margin-right: -1rem;
+
+  @media (hover: hover) {
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .collapsible-element:not(.opened) > &:hover {
+      z-index: 2;
+      box-shadow: 0 4px 12px #eee;
+    }
+  }
+
+  > .icon {
+    position: absolute;
+    right: 2rem;
+    font-size: 2rem;
+    line-height: 1;
+    top: .3em;
+    font-family: sans-serif;
+    font-weight: 100;
+  }
+}
+
+.box.collapsible-element {
+  .collapsible-element-header {
+    margin-left: 0;
+  }
+
+  &.opened {
+    padding-bottom: 0;
+  }
+}
+
+.opened > .collapsible-element-header .is-link {
+  // opacity: .1;
+}
+
+.collapsible-element-content {
+  padding-top: 2rem;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  transform-origin: 51% 62%;
+  animation: rotate 2s infinite;
+  animation-timing-function: linear;
+  // top: -.4em !important;
+}
+
+.logo-holder {
+  display: inline-block;
+  width: 3.25rem;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  top: -1.5rem;
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+
+.red {
+  color: #f00;
+}

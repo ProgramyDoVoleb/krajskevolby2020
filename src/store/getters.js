@@ -1,4 +1,5 @@
-import {createColorByName, checkCandidateName, betterURL, processLinks} from './helpers';
+import {PDV, createColorByName, betterURL, processLinks} from '@/common/helpers';
+import store from './store';
 
 const getters = {
   vuexState: state => state,
@@ -8,7 +9,16 @@ const getters = {
 };
 
 getters.getPartyByReg = (state, getters) => (reg) => {
-  return state.dynamic.parties.find(party => party.reg === reg) || state.dynamic.partyList.find(party => party.reg === reg);
+  var found = state.dynamic.parties.find(party => party.reg === reg);
+
+  if (!found) {
+    found = {
+      name: 'nezávislí',
+      color: '#aaa'
+    }
+  }
+
+  return found;
 }
 
 getters.getGradientForCoalition = (state, getters) => (party, name) => {
@@ -42,7 +52,7 @@ getters.getGradientForCoalition = (state, getters) => (party, name) => {
   }
 
   if (typeof party === 'number' && party === 80) {
-    color = createColorByName(checkCandidateName(name))
+    // color = createColorByName(checkCandidateName(name))
   }
 
   return color;
@@ -116,49 +126,30 @@ getters.getPartyList = (state, getters) => () => {
   return list;
 }
 
-getters.getPartyActivityByRegion = (state, getters) => (item) => {
-  if (state.dynamic.callout.length === 0) return [];
+getters.getPartyActivityByRegion = (state, getters) => (hash) => {
+  if (getters.allCandidates().length === 0) return [];
 
   var list = [];
 
-  state.dynamic.callout.forEach(region => {
+  state.static.regions.forEach(region => {
     var obj = {
-      region: region.id,
+      region,
       party: undefined,
       type: -1, // -1: nekandiduje, 0: samostatně, 1: v koalici, 2: podpora, 3: koalice
-      meta: {}
     }
 
-    region.parties.forEach((party, i) => {
-      if (party.reg) {
-        if (typeof party.reg === 'number') {
-          if (party.reg === item) {
-            obj.party = party;
-            obj.type = 0;
-          }
-        } else {
-          if (party.reg.indexOf(item) > -1) {
-            obj.party = party;
-            obj.type = 1;
-          }
-        }
+    getters.candidatesInRegion(region.hash).forEach(cand => {
+      if (cand.hash === hash) {
+        obj.party = cand;
+        obj.type = 0;
       }
-      if (party.support) {
-        if (party.support.indexOf(item) > -1) {
-          obj.party = party;
-          obj.type = 2;
-        }
+      if (cand.coalition && cand.coalition.find(x => x.hash === hash)) {
+        obj.party = cand;
+        obj.type = 1;
       }
-      if (party.name) {
-        if (party.name === item) {
-          obj.party = party;
-
-          if (party.reg) {
-            obj.type = 3;
-          } else {
-            obj.type = 0;
-          }
-        }
+      if (cand.support && cand.support.find(x => x.hash === hash)) {
+        obj.party = cand;
+        obj.type = 2;
       }
     });
 
@@ -168,27 +159,28 @@ getters.getPartyActivityByRegion = (state, getters) => (item) => {
   return list;
 }
 
+function getName (arr, parties) {
+
+  if (!arr) return;
+
+  var list = [];
+
+  arr.forEach(reg => {
+    if (typeof reg === 'string') list.push(reg);
+    if (typeof reg === 'number') {
+      var party = parties.find(p => p.reg === reg);
+
+      if (party) {
+        var link = party.short || party.name;
+      } list.push(link);
+    }
+    if (typeof reg === 'object') list.push(reg.name);
+  });
+
+  return list.join(', ');
+};
+
 getters.getRegionPartyList = (state, getters) => (id) => {
-
-  function getName (arr, parties) {
-
-    if (!arr) return;
-
-    var list = [];
-
-    arr.forEach(reg => {
-      if (typeof reg === 'string') list.push(reg);
-      if (typeof reg === 'number') {
-        var party = parties.find(p => p.reg === reg);
-
-        if (party) {
-          var link = party.short || party.name;
-        } list.push(link);
-      }
-    });
-
-    return list.join(', ');
-  };
 
   function getSupport (arr) {
 
@@ -245,6 +237,8 @@ getters.getRegionPartyList = (state, getters) => (id) => {
       item.list = party.list;
       item.program = party.program;
 
+      if (party.logo) item.logo = party.logo;
+
       links = party.links || [];
 
       item.links = {
@@ -262,5 +256,298 @@ getters.getRegionPartyList = (state, getters) => (id) => {
 
   return parties;
 };
+
+getters.party = (state, getters) => (id) => {
+  var parties = getters.allParties();
+
+  if (parties.length === 0) return undefined;
+
+  if (typeof id === 'number') {
+    return parties.find(x => x.reg === id);
+  }
+
+  if (typeof id === 'string') {
+    return parties.find(x => x.hash === id);
+  }
+
+  return undefined;
+}
+
+getters.allParties = (state, getters) => () => {
+  if (state.data.parties.length > 0) return state.data.parties;
+  if (state.dynamic.parties.length === 0) return [];
+
+  var list = [];
+
+  function checkAndAdd (obj) {
+    if (!list.find(x => x.hash === obj.hash)) {
+      list.push(obj);
+    }
+  }
+
+  function add (reg, data) {
+    var obj = {reg};
+    var party = getters.getPartyByReg(reg);
+
+    obj.name = data.name || (party.name || 'neznámé');
+    obj.hash = betterURL(obj.name);
+    obj.short = data.short || (party.short || obj.name);
+    obj.color = data.color || (party.color || '#aaa');
+    obj.logo = data.logo || (party.logo || undefined);
+
+    checkAndAdd(obj);
+  }
+
+  state.dynamic.callout.forEach(region => {
+    region.parties.forEach(cand => {
+      if (cand.reg) {
+        add(cand.reg, {name: cand.name, color: cand.color, logo: cand.logo});
+      }
+
+      if (cand.coalition) {
+        cand.coalition.forEach((member, i) => {
+          var reg = typeof member === 'number' ? member : undefined;
+          var obj = {};
+
+          if (typeof member === 'string') {
+            obj.name = member;
+          }
+
+          if (member.name) obj = member;
+
+          add(reg, obj);
+        });
+      }
+
+      if (cand.support) {
+        cand.support.forEach((member, i) => {
+          var reg = typeof member === 'number' ? member : undefined;
+          var obj = {};
+
+          if (typeof member === 'string') {
+            obj.name = member;
+          }
+
+          if (member.name) obj = member;
+
+          add(reg, obj);
+        });
+      }
+    });
+  });
+
+  list.sort((a, b) => a.name.localeCompare(b.name, 'cs'))
+
+  state.data.parties = list;
+
+  return list;
+}
+
+function processName (cand, party, getters) {
+  if (cand.name) return cand.name;
+  if (cand.coalition) {
+    var s = [];
+
+    cand.coalition.forEach(member => {
+      if (typeof member === 'string') {
+        s.push(member)
+      } else if (typeof member === 'number') {
+        var m = getters.party(member);
+        s.push(m.short || m.name);
+      } else if (member.name) {
+        s.push(member.name);
+      }
+    });
+
+    return 'Koalice ' + s.join(', ');
+  }
+  if (party) return party.name;
+}
+
+function processShort (cand, party) {
+  if (cand.short) return cand.short;
+  if (party) {
+    return party.short || party.name;
+  }
+  return undefined;
+}
+
+function processLogo (cand, party) {
+  if (cand.logo) return cand.logo;
+  if (party && party.logo) return party.logo;
+  return undefined;
+}
+
+function processColor (cand, party) {
+  if (cand.color) return cand.color;
+  if (party && party.color) return party.color;
+  if (party && party.name) createColorByName(party.name);
+  if (cand.name) createColorByName(cand.name);
+
+  return createColorByName('neznámé');
+}
+
+function processCoalition (cand, getters) {
+  var list = [];
+
+  cand.forEach((item, i) => {
+    if (typeof item === 'number') {
+      list.push(getters.party(item));
+    }
+    if (typeof item === 'string') {
+      list.push(getters.party(betterURL(item)));
+    }
+    if (typeof item === 'object' && item.name) {
+      list.push(getters.party(betterURL(item.name)));
+    }
+  });
+
+  return list;
+}
+
+function processImage (link) {
+  if (link) {
+    return PDV(link);
+  } else {
+    return undefined;
+  }
+}
+
+function processContent (content, key) {
+  var obj = {}
+
+  if (typeof content === 'string') {
+    obj.content = content;
+  }
+
+  if (typeof content === 'object') {
+    obj.content = content[(key || 'content')];
+    if (obj.source) obj.source = processLinks([content.source]);
+  }
+
+  return obj;
+}
+
+function processPerson (source, party, getters) {
+
+  var obj = {};
+  var person;
+
+  if (typeof source === 'string') {
+    person = {
+      name: source
+    }
+  } else {
+    person = source;
+  }
+
+  obj.name = person.name;
+  obj.hash = betterURL(obj.name);
+
+  if (person.reg) obj.party = getters.party(person.reg);
+  if (!person.reg && party && party.reg) obj.party = getters.party(party.reg);
+
+  if (person.links) obj.links = processLinks(person.links);
+
+  obj.photo = processImage(person.photo);
+
+  if (person.about) obj.about = processContent(person.about);
+
+  return obj;
+}
+
+getters.allCandidates = (state, getters) => () => {
+  if (state.data.candidates.length > 0) return state.data.candidates;
+  if (state.dynamic.callout.length === 0) return [];
+
+  var list = [];
+
+  state.dynamic.callout.forEach(region => {
+    region.parties.forEach(cand => {
+      var obj = {
+        region: state.static.regions.find(x => x.id === region.id)
+      };
+
+      var party = getters.party(cand.reg);
+
+      obj.name = processName(cand, party, getters);
+      obj.short = processShort(cand, party);
+      obj.logo = processLogo(cand, party);
+      obj.color = processColor(cand, party);
+
+      if (cand.reg) obj.reg = cand.reg;
+      if (party && party.coalition) obj.coalition = processCoalition(party.coalition, getters);
+      if (cand.coalition) obj.coalition = processCoalition(cand.coalition, getters);
+      if (cand.support) obj.support = processCoalition(cand.support, getters);
+
+      if (cand.links) obj.links = processLinks(cand.links);
+      if (cand.program) obj.program = cand.program;
+
+      if (cand.leader) obj.leader = processPerson(cand.leader, party, getters);
+
+      if (cand.selected) {
+        obj.selected = [];
+
+        cand.selected.forEach((person, i) => {
+          obj.selected.push(processPerson(person, party, getters));
+        });
+      }
+
+      if (cand.list) {
+        obj.list = [];
+
+        cand.list.forEach((person, i) => {
+          obj.list.push(processPerson(person, party, getters));
+        });
+      }
+
+      obj.hash = betterURL(obj.name);
+
+      obj.link = '/' + obj.region.hash + '/' + obj.hash;
+
+      list.push(obj);
+    });
+  });
+
+  state.data.candidates = list;
+
+  return list;
+}
+
+getters.candidatesInRegion = (state, getters) => (hash) => {
+  return getters.allCandidates().filter(x => x.region.hash === hash);
+}
+
+getters.candidate = (state, getters) => (region, hash) => {
+  return getters.allCandidates().find(x => x.region.hash === region && x.hash === hash);
+}
+
+getters.loaded = (state, getters) => () => {
+  return state.dynamic.source.length === 2;
+}
+
+getters.getSource = (state, getters) => (source, to) => {
+  var lookup = state.dynamic.source.find(s => s.source === source);
+
+  if (lookup) {
+    return lookup.content;
+  } else {
+    new Promise((resolve, reject) => {
+      store.dispatch('fetchSource', {
+        source: source,
+        to: to,
+        onComplete: () => resolve(),
+        onError: () => reject(new Error('load fail'))
+      });
+    }).then((resolver, rejected) => {
+      if (rejected) {
+        return undefined;
+      } else {
+        lookup = state.dynamic.source.find(s => s.source === source);
+        return lookup.content;
+      }
+    });
+  }
+}
 
 export default getters;

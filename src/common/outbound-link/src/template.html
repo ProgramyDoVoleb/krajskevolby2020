@@ -1,0 +1,4 @@
+<a :href="href" :title="'otevřít v nové záložce: ' + (title || stripURLintoDomain(href))" @click="handle_click" target="_blank" :style="look">
+	<span class="underline">{{ content }}<slot /></span>
+	<span class="link-addon-icon" v-if="hasAddon">&nbsp;<img src="/static/icon/link.svg" class="addon-icon"></span>
+</a>

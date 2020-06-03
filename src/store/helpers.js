@@ -117,7 +117,7 @@ export function processLinks (source, target) {
         link: link.url,
         icon: {
           src: '/static/icon/link.svg',
-          name: 'WWW'
+          name: 'WWW '
         }
       }
 
@@ -136,7 +136,7 @@ export function processLinks (source, target) {
         }
       });
 
-      if (link.label) o.content = link.label;
+      if (link.label) o.content = '/' + link.label;
 
       t.push(o);
     });

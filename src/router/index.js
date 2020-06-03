@@ -1,13 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import LayoutCurrent from '@/layout/current/do';
-import LayoutCurrentRegion from '@/layout/current-region/do';
-import LayoutCurrentRegionCandidate from '@/layout/current-region-candidate/do';
-import LayoutPartyDetail from '@/layout/party-detail/do';
+
+import LayoutHomepage from '@/layout/homepage/do';
+import LayoutRegion from '@/layout/region/do';
+import LayoutCandidate from '@/layout/candidate/do';
+import LayoutParty from '@/layout/party/do';
+
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
 import LayoutPrevious2016Program from '@/layout/previous2016/program/do';
 import LayoutPrevious2016Compare from '@/layout/previous2016/compare/do';
+
+import LayoutHelper from '@/layout/helper-2020/do';
+import LayoutQ1 from '@/layout/quiz-1/do';
 
 Vue.use(Router);
 
@@ -17,12 +22,22 @@ const router = new Router({
     {
       path: '/',
       name: 'Homepage',
-      component: LayoutCurrent
+      component: LayoutHomepage
+    },
+    {
+      path: '/dotaznik-ke-krajskym-volbam',
+      name: 'Q1',
+      component: LayoutQ1
     },
     {
       path: '/2016',
       name: 'Previous2016',
       component: LayoutPrevious2016
+    },
+    {
+      path: '/helper-2020',
+      name: 'Helper2020',
+      component: LayoutHelper
     },
     {
       path: '/2016/:id',
@@ -32,8 +47,8 @@ const router = new Router({
     },
     {
       path: '/rejstrik/:hash',
-      name: 'PartyDetail',
-      component: LayoutPartyDetail,
+      name: 'Party',
+      component: LayoutParty,
       props: true
     },
     {
@@ -50,14 +65,14 @@ const router = new Router({
     },
     {
       path: '/:id',
-      name: 'CurrentRegion',
-      component: LayoutCurrentRegion,
+      name: 'Region',
+      component: LayoutRegion,
       props: true
     },
     {
       path: '/:id/:hash',
-      name: 'CurrentRegionCandidate',
-      component: LayoutCurrentRegionCandidate,
+      name: 'Candidate',
+      component: LayoutCandidate,
       props: true
     },
     { path: '*', redirect: '/' }
