@@ -8,8 +8,8 @@ import TwitterFeed from "@/components/twitter/do";
 import {betterURL, beautifyDate, stripURLintoDomain, processLinks, truncate, personData} from "@/common/helpers";
 
 export default {
-	name: 'Candidate',
-	props: ['id', 'hash'],
+	name: 'Person',
+	props: ['regionHash', 'candidateHash', 'personHash'],
 	data: function () {
 		return {
 
@@ -24,13 +24,13 @@ export default {
 	},
 	computed: {
 		region: function () {
-			return this.$store.state.static.regions.find(r => r.hash === this.id)
+			return this.$store.state.static.regions.find(r => r.hash === this.regionHash)
 		},
 		parties: function () {
-			return this.$store.getters.candidatesInRegion(this.region.hash);
+			return this.$store.getters.candidatesInRegion(this.regionHash);
 		},
 		party: function () {
-			return this.$store.getters.candidate(this.id, this.hash);
+			return this.$store.getters.candidate(this.regionHash, this.candidateHash);
 		},
 		data: function () {
 			if (!this.party) return undefined;
@@ -44,17 +44,37 @@ export default {
 			var list = [];
 
 			this.data.people.forEach((item, i) => {
-				list.push(personData(item, i, this.party, this.$route.fullPath))
+				list.push(personData(item, i, this.party, this.party.link))
 			});
 
 			return list;
 		},
+		person: function () {
+			if (!this.lead) {
+				if (this.party) {
+					return this.party.leader;
+				} else {
+					return undefined;
+				}
+			}
+
+			var p;
+
+			this.lead.forEach((item, i) => {
+				if (item.hash === this.personHash) {
+					p = item;
+					if (i === 0) p.links = this.party.leader.links;
+				}
+			});
+
+			return p;
+		},
 		links: function () {
-			if (!this.party || !this.party.links) return undefined;
+			if (!this.person || !this.person.links) return undefined;
 
 			var obj = {
-				facebook: this.party.links.find(x => x.icon.type === 'fb'),
-				twitter: this.party.links.find(x => x.icon.type === 'tw')
+				facebook: this.person.links.find(x => x.icon.type === 'fb'),
+				twitter: this.person.links.find(x => x.icon.type === 'tw')
 			}
 
 			return obj;
@@ -67,8 +87,8 @@ export default {
 		processLinks,
 		betterURL,
 		ga: function (top) {
-			this.$store.dispatch("ga", {title: this.party.name + ", " + this.region.name});
-		 	if (top) window.scrollTo(0, 0);
+			this.$store.dispatch("ga", {title: this.person.name + ', ' + this.party.name + ", " + this.region.name});
+			if (top) window.scrollTo(0, 0);
 			this.tw();
 		},
 		tw: function () {
@@ -105,13 +125,13 @@ export default {
 		}, 1000);
 	},
 	watch: {
-		id: function () {
+		regionHash: function () {
 			this.ga(true);
 		},
-		hash: function () {
+		candidateHash: function () {
 			this.ga(true);
 		},
-		party: function () {
+		personHash: function () {
 			this.ga(true);
 		}
 	}

@@ -161,6 +161,14 @@ h1 .dimm {
       border-bottom-right-radius: 4px;
     }
   }
+
+  &.goto-dimm {
+    background: #fafafa;
+
+    a {
+      font-weight: normal;
+    }
+  }
 }
 
 .goto + .goto {

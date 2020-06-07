@@ -6,7 +6,7 @@ import UpdateForm from "@/components/update-form/do";
 import {betterURL, beautifyDate, stripURLintoDomain, processLinks} from "@/common/helpers";
 
 export default {
-	name: 'currentElectionCall',
+	name: 'Region',
 	props: ['id'],
 	data: function () {
 		return {

@@ -1,29 +1,31 @@
-<div class="party-list">
-	<div class="party-list---prominent">
-		<ul class="flex-list">
-			<li v-for="(party, index) in listProminent">
-				<div class="party-list---prominent-item">
-					<router-link :to="'/rejstrik/' + party.hash" class="as-span">
-						<div class="logo-holder">
-							<img :src="$store.state.root + party.logo" :alt="party.name">
-						</div>
-						<div class="name-holder">
-							<span class="is-link">{{ party.short }}</span>
-						</div>
-					</router-link>
+<div class="goto goto-dimm">
+	<div class="party-list">
+		<div class="party-list---prominent">
+			<ul class="flex-list">
+				<li v-for="(party, index) in listProminent">
+					<div class="party-list---prominent-item">
+						<router-link :to="'/rejstrik/' + party.hash" class="as-span">
+							<div class="logo-holder">
+								<img :src="$store.state.root + party.logo" :alt="party.name">
+							</div>
+							<div class="name-holder">
+								<span class="is-link">{{ party.short }}</span>
+							</div>
+						</router-link>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="party-list---select" >
+			<collapsible-element label="Další strany a hnutí">
+				<div class="columns-2-3">
+					<div class="item" v-for="(party, index) in listOthers">
+						<router-link :to="'/rejstrik/' + party.hash">
+							{{ party.name }}
+						</router-link>
+					</div>
 				</div>
-			</li>
-		</ul>
-	</div>
-	<div class="party-list---select" >
-		<collapsible-element label="Další strany a hnutí">
-			<div class="columns-2-3">
-				<div class="item" v-for="(party, index) in listOthers">
-					<router-link :to="'/rejstrik/' + party.hash">
-						{{ party.name }}
-					</router-link>
-				</div>
-			</div>
-		</collapsible-element>
+			</collapsible-element>
+		</div>
 	</div>
 </div>

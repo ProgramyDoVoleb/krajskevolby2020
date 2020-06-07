@@ -100,6 +100,17 @@ button, .button, .btn {
 	&.button-plain {
 		border: 1px solid transparent;
 
+		&.blue {
+			background: rgba(#003399, .1);
+
+			@media (hover: hover) {
+				&:hover {
+					background: rgba(#003399, .2);
+				}
+
+			}
+		}
+
 		&.yellow {
 			background: #f6ecdd;
 			color: #ca7c0d;
@@ -128,12 +139,17 @@ button, .button, .btn {
 
 }
 
-.is-span {
-	border-bottom: 1px solid #eee;
-	color: #000;
+.no-link {
+	border-bottom: none;
 }
 
-.dark-links a {
+.image-as-link {
+	border: none;
+	padding: 0;
+}
+
+.dark-links a,
+.as-span {
 	color: #000;
 }
 
@@ -329,6 +345,20 @@ button, .button, .btn {
 	}
 }
 
+.show-60rem {
+	display: none;
+}
+
+@media (min-width: 60rem) {
+	.show-60rem {
+		display: inherit;
+	}
+
+	.hide-60rem {
+		display: none;
+	}
+}
+
 .box {
 	margin: 1.5rem -1.5rem;
 	box-shadow: 0 5px 15px #ddd;
@@ -360,7 +390,7 @@ button, .button, .btn {
 		padding: 1em 0;
 	}
 
-	ul > li+li {
+	ul > li {
 		border-top: 1px solid #f4f4f4;
 	}
 

@@ -482,6 +482,7 @@ getters.allCandidates = (state, getters) => () => {
 
       if (cand.links) obj.links = processLinks(cand.links);
       if (cand.program) obj.program = cand.program;
+      if (cand.data) obj.data = 'volby/kv/2020/data/' + cand.data;
 
       if (cand.leader) obj.leader = processPerson(cand.leader, party, getters);
 
@@ -504,6 +505,10 @@ getters.allCandidates = (state, getters) => () => {
       obj.hash = betterURL(obj.name);
 
       obj.link = '/' + obj.region.hash + '/' + obj.hash;
+
+      if (cand.leader) {
+        obj.leader.link = obj.link + '/' + obj.leader.hash;
+      }
 
       list.push(obj);
     });

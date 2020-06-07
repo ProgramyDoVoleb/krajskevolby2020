@@ -41,8 +41,10 @@
     </div>
     <div class="list">
       <div
-        class="list-item"
-        v-for="(act, index) in activity">
+        class="party"
+        v-for="(act, index) in activity"
+        :style="{'border-color': act.party.leader ? act.party.leader.party.color : act.party.color}"
+        >
           <div class="flex">
             <div class="list-region">
               <router-link :to="'/' + act.region.hash">
@@ -82,7 +84,9 @@
             </div>
             <div class="list-leader">
               <div v-if="act.party.leader">
-                {{ act.party.leader.name }}
+                <router-link class="as-span" :to="act.party.link + '/' + betterURL(act.party.leader.name)">
+                  {{ act.party.leader.name }}
+                </router-link>
                 <div class="small" v-if="act.party.leader.party">
                   <party-link :data="act.party.leader.party" :breakpoint="1000" />
                 </div>
@@ -99,10 +103,7 @@
       <p>Prosím, napište na <b><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
     </div>
   </div>
-  <div class="part" v-if="dynamics">
-    <h2>Vybrat jinou stranu</h2>
-    <party-list />
-  </div>
+  <party-list v-if="dynamics" />
   <div class="goto">
     <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
   </div>

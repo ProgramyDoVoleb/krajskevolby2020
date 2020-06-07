@@ -1,7 +1,7 @@
 <span class="party-link">
 	<label-with-dot :color="color">
-		<router-link :to="link">
-			<responsive-label :long="party.name" :short="party.short || party.name" :breakpoint="breakpoint" />
+		<router-link :to="link" class="no-link">
+			<responsive-label :long="party.name" :short="party.short || party.name" :breakpoint="breakpoint" class="is-link" />
 		</router-link>
 	</label-with-dot>
 </span>

@@ -1,7 +1,15 @@
 import store from '@/store/store';
 
 export function PDV (url) {
-  return 'https://data.programydovoleb.cz/' + url.split('data/')[1];
+
+  var root = store.state.root || store.state.server;
+
+  if (url.split('data/').length > 1) {
+    return root + url.split('data/')[1];
+  } else {
+    return root + url;
+  }
+
 }
 
 export function stripURLintoDomain (url) {
@@ -13,6 +21,14 @@ export function stripURLintoDomain (url) {
 
   return url;
 };
+
+export function truncate (str, count) {
+  var limit = count || 20;
+  var words = str.split(' ');
+  var add = str.length > limit ? '...' : '';
+
+  return words.splice(0, limit).join(' ') + add;
+}
 
 /* eslint-disable no-extend-native */
 Array.prototype.move = function (from, to) {
@@ -167,47 +183,65 @@ export function processLinks (links) {
       link.content = stripURLintoDomain(item);
     } else {
       link.link = item.url;
-      link.content = item.label || stripURLintoDomain(item.url);
+      link.content = stripURLintoDomain(item.url);
     }
 
-    if (link.link.indexOf('facebook.com') > -1) {
-      link.icon.type = 'fb';
-      link.icon.name = 'Facebook'
+    function checkDomains (domain, type, label) {
+      if (link.link.indexOf(domain) > -1) {
+        link.icon.type = type;
+        link.icon.name = label;
+        link.content = link.content.split(domain)[1];
+      }
     }
 
-    if (link.link.indexOf('twitter.com') > -1) {
-      link.icon.type = 'tw';
-      link.icon.name = 'Twitter'
-    }
-
-    if (link.link.indexOf('youtube.com') > -1) {
-      link.icon.type = 'yt';
-      link.icon.name = 'Youtube'
-    }
-
-    if (link.link.indexOf('instagram.com') > -1) {
-      link.icon.type = 'ig';
-      link.icon.name = 'Instagram'
-    }
-
-    if (link.link.indexOf('wikipedia.org') > -1) {
-      link.icon.type = 'wiki';
-      link.icon.name = 'Wikipedia'
-    }
-
-    if (link.link.indexOf('hlidac-statu.cz') > -1) {
-      link.icon.type = 'hs';
-      link.icon.name = 'Hlídač státu'
-    }
+    checkDomains('facebook.com', 'fb', 'Facebook');
+    checkDomains('twitter.com', 'tw', 'Twitter');
+    checkDomains('youtube.com', 'yt', 'Youtube');
+    checkDomains('instagram.com', 'ig', 'Instagram');
+    checkDomains('wikipedia.org', 'wiki', 'Wikipedia');
+    checkDomains('hlidac-statu.cz', 'hlidac-statu', 'Hlídač státu');
 
     if (item.icon) {
       link.icon.type = item.icon;
     }
 
-    link.icon.src = '/static/icon/' + link.icon.type + '.svg'
+    link.icon.src = '/static/icon/' + link.icon.type + '.svg';
+
+    if (item.label) link.content = item.label;
 
     list.push(link);
   });
 
   return list;
+}
+
+export function personData (item, i, party, route) {
+  var obj = {};
+
+  obj.name = item.name;
+  obj.party = item.reg ? store.getters.party(item.reg) : undefined;
+  if (item.about) {
+    obj.about = {
+      full: item.about,
+      mid: truncate(item.about, 40),
+      short: truncate(item.about)
+    };
+  }
+  if (item.quote) {
+    obj.quote = {
+      full: item.quote,
+      mid: truncate(item.quote, 40),
+      short: truncate(item.quote)
+    };
+  }
+  obj.photo = item.photo ? PDV('lide/fotky/' + item.photo) : '/static/missing.jpg';
+  obj.hash = betterURL(obj.name);
+  obj.link = route + '/' + obj.hash;
+  obj.links = item.links ? processLinks(item.links) : [];
+
+  if (party && party.leader && party.leader.links && i === 0) {
+    obj.links = party.leader.links;
+  }
+
+  return obj;
 }

@@ -5,6 +5,7 @@ import LayoutHomepage from '@/layout/homepage/do';
 import LayoutRegion from '@/layout/region/do';
 import LayoutCandidate from '@/layout/candidate/do';
 import LayoutParty from '@/layout/party/do';
+import LayoutPerson from '@/layout/person/do';
 
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
@@ -73,6 +74,12 @@ const router = new Router({
       path: '/:id/:hash',
       name: 'Candidate',
       component: LayoutCandidate,
+      props: true
+    },
+    {
+      path: '/:regionHash/:candidateHash/:personHash',
+      name: 'Person',
+      component: LayoutPerson,
       props: true
     },
     { path: '*', redirect: '/' }

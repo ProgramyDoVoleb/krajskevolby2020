@@ -66,9 +66,11 @@
             </div>
             <div class="party-header-name">
               <h3>
-                <router-link :to="party.link" class="is-span">
-                  <responsive-label :long="party.name" :short="party.short" />
-                </router-link>
+                <div class="party-name-holder">
+                  <router-link :to="party.link" class="is-span">
+                    <responsive-label :long="party.name" :short="party.short" />
+                  </router-link>
+                </div>
               </h3>
             </div>
           </div>
@@ -102,10 +104,12 @@
               <li v-if="party.leader">
                 <label>Lídr</label>
                 <div>
-                  {{ party.leader.name }}
+                  <router-link :to="party.link + '/' + betterURL(party.leader.name)" class="as-span">
+                    {{ party.leader.name }}
+                  </router-link>
                   <span v-if="party.leader.links" class="leader-links">
       							<span v-for="(link, index) in party.leader.links" class="leader-link">
-      								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + '' + link.content" :type="link.icon.name" :size="'1em'" />
+      								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + ' ' + link.content" :type="link.icon.name" :size="'1em'" />
       							</span>
                   </span>
                   <div v-if="party.leader.party" class="small">
@@ -133,10 +137,19 @@
                 </div>
               </li>
             </ul>
-            <router-link :to="party.link" :style="{color: party.color}" class="small">
-              <strong>Více informací</strong>
-              &rarr;&nbsp;
-            </router-link>
+            <div class="party-footer">
+              <router-link :to="party.link" :style="{color: party.color}" class="small">
+                <strong>Více informací</strong>
+                &rarr;&nbsp;
+              </router-link>
+              <span v-if="party.links" class="leader-links">
+                <span class="leader-links-holder">
+                  <span v-for="(link, index) in party.links" class="leader-link">
+                    <outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + ' ' + link.content" :type="link.icon.name" :size="'1em'" />
+                  </span>
+                </span>
+              </span>
+            </div>
           </div>
       </div>
       <div class="party">
@@ -161,8 +174,14 @@
     </div>
   </div>
   <share-block />
+  <br>
   <div class="part">
-    <h2>Vybrat jiný kraj</h2>
+    <router-link to="/dotaznik-ke-krajskym-volbam">
+      <img src="/static/banner.png" alt="Dotazník" width="100%">
+    </router-link>
+  </div>
+  <div class="goto goto-dimm">
+    <h4>Vybrat jiný kraj</h4>
     <div class="stats">
       <ul class="columns-3">
         <li v-for="(region, index) in $store.state.static.regions" v-if="region.hash != id">
@@ -174,11 +193,6 @@
         </li>
       </ul>
     </div>
-  </div>
-  <div class="part">
-    <router-link to="/dotaznik-ke-krajskym-volbam">
-      <img src="/static/banner.png" alt="Dotazník" width="100%">
-    </router-link>
   </div>
   <div class="goto">
     <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
