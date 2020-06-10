@@ -19,6 +19,14 @@
 		</ul>
 	</div>
 	<div class="program-view-content">
+    <div class="goto goto-dimm dimm" v-if="data.parts && party">
+      Následující program je převzat ze stránek "{{ party.short || party.name }}" a jeho obsah není nijak upravován.
+    </div>
+    <h2 v-if="data.motto">
+      <em>{{ data.motto }}</em>
+      <br>
+      <div class="small dimm">motto kampaně</div>
+    </h2>
 		<program-block v-for="(part, pi) in data.parts" :depth="2" :data="part" :index="pi" :key="'parts_' + pi" ref="block" />
 	</div>
 </div>

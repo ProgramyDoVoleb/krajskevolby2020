@@ -132,6 +132,21 @@ export default {
 			if (!this.$store.state.static.previous2016.coalition[index]) return [];
 
 			return this.$store.state.static.previous2016.coalition[index].parties;
+		},
+		resize: function () {
+			var mapHeight = 0;
+
+			if (window.innerWidth > 960) {
+				mapHeight = 522;
+			} else {
+				mapHeight = (window.innerWidth - 64) / 960 * 522;
+			}
+
+			var el = document.querySelector(".map-holder");
+
+			if (el) {
+				el.style.height = mapHeight + "px";
+			}
 		}
 	},
 	computed: {
@@ -149,5 +164,7 @@ export default {
 	mounted: function () {
 			this.$store.dispatch("ga", {title: "Krajské volby 2020"});
 			window.scrollTo(0, 0);
+			this.resize();
+			window.addEventListener("resize", () => this.resize());
 	}
 };

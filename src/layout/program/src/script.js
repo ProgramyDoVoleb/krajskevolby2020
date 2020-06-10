@@ -3,14 +3,14 @@ import MapElement from '@/components/map/do';
 import PersonAbout from "@/components/person-about/do";
 import UpdateForm from "@/components/update-form/do";
 import ProgramElement from "@/components/program-element/do";
+import ProgramView from "@/components/program-view/do";
 import TwitterFeed from "@/components/twitter/do";
 import CopyrightElement from "@/components/copyright/do";
-import NotFound from "@/components/not-found/do";
 
 import {betterURL, beautifyDate, stripURLintoDomain, processLinks, truncate, personData} from "@/common/helpers";
 
 export default {
-	name: 'Candidate',
+	name: 'Program',
 	props: ['id', 'hash'],
 	data: function () {
 		return {
@@ -21,10 +21,9 @@ export default {
 		LogoItem,
 		PersonAbout,
 		UpdateForm,
-		ProgramElement,
+		ProgramElement, ProgramView,
 		TwitterFeed,
-		CopyrightElement,
-		NotFound
+		CopyrightElement
 	},
 	computed: {
 		region: function () {
@@ -71,35 +70,11 @@ export default {
 		processLinks,
 		betterURL,
 		ga: function (top) {
-			if (this.party) {
-				this.$store.dispatch("ga", {title: this.party.name + ", " + this.region.name});
-			}
+			this.$store.dispatch("ga", {title: 'Program "' + this.party.name + '", ' + this.region.name});
 		 	if (top) window.scrollTo(0, 0);
 			this.tw();
 		},
-		tw: function () {
-			var q = document.querySelector('#twscriptloader');
-
-			if (q) {
-				q.parentNode.removeChild(q);
-			}
-
-			this.$nextTick();
-
-			if (!document.querySelector('#twscriptloader')) {
-				var el = document.createElement('div');
-						el.setAttribute('id', 'twscriptloader');
-
-				document.querySelector('body').appendChild(el);
-
-				var script = document.createElement('script');
-						script.setAttribute('async', 'async');
-						script.setAttribute('charset', 'utf-8');
-						script.src = "https://platform.twitter.com/widgets.js";
-
-				el.appendChild(script);
-			}
-		}
+		tw: function () {}
 	},
 	mounted: function () {
 		window.scrollTo(0, 0);

@@ -147,7 +147,11 @@ export default {
 		window.addEventListener("resize", () => this.resize());
 
 		setTimeout(() => this.resize(), 100);
+		setTimeout(() => this.resize(), 250);
+		setTimeout(() => this.resize(), 500);
 		setTimeout(() => this.resize(), 1000);
+		setTimeout(() => this.resize(), 1500);
+		setTimeout(() => this.resize(), 2000);
 		setTimeout(() => this.resize(), 2500);
 	},
 	watch: {

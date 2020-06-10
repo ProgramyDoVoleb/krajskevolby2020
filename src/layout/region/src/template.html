@@ -19,6 +19,7 @@
             		<template v-for="(party, index2) in about.parties">
             			<template v-for="(person, i) in party.seats">
             				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+                    <span v-if="person.level === 4" class="dimm">{{ person.name }}, odvolán 8. 6. 2020</span>
             			</template>
             		</template>
               </div>
@@ -94,8 +95,10 @@
               </li>
               <li v-if="party.program">
                 <label>Program</label>
-                <div v-if="!party.program.local">
-                  <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name + ' v ' + region.short.toUpperCase()" class="button">{{ party.program.label || 'Zobrazit program'}}</outbound-link>
+                <div v-if="party.program">
+                  <router-link :to="party.link + '/volebni-program'" class="button">
+                    Volební program
+                  </router-link>
                 </div>
                 <div v-if="party.program.local">
                   <router-link :to="'/' + region.hash + '/' + betterURL(party.originalName || party.name) + '#program'" class="button">{{ party.program.label || 'Zobrazit program'}}</router-link>

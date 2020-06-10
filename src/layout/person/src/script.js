@@ -4,6 +4,7 @@ import PersonAbout from "@/components/person-about/do";
 import UpdateForm from "@/components/update-form/do";
 import ProgramElement from "@/components/program-element/do";
 import TwitterFeed from "@/components/twitter/do";
+import CopyrightElement from "@/components/copyright/do";
 
 import {betterURL, beautifyDate, stripURLintoDomain, processLinks, truncate, personData} from "@/common/helpers";
 
@@ -20,7 +21,8 @@ export default {
 		PersonAbout,
 		UpdateForm,
 		ProgramElement,
-		TwitterFeed
+		TwitterFeed,
+		CopyrightElement
 	},
 	computed: {
 		region: function () {
@@ -80,7 +82,7 @@ export default {
 			return obj;
 		},
 		width: function () {
-			return (window.innerWidth > 450 ? 410 : window.innerWidth - 64)
+			return (window.innerWidth > 450 ? 378 : window.innerWidth - (16 * 4))
 		}
 	},
 	methods: {

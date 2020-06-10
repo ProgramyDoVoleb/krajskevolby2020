@@ -1,7 +1,10 @@
 <span class="party-link">
 	<label-with-dot :color="color">
-		<router-link :to="link" class="no-link">
+		<router-link :to="link" class="no-link" v-if="party && party.short != 'BEZPP'">
 			<responsive-label :long="party.name" :short="party.short || party.name" :breakpoint="breakpoint" class="is-link" />
 		</router-link>
+		<span v-if="party && party.short === 'BEZPP'">
+			BEZPP
+		</span>
 	</label-with-dot>
 </span>

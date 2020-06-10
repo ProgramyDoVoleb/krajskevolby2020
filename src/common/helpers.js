@@ -68,6 +68,7 @@ export function betterURL (url) {
   newURL = newURL.replaceAll(' ', '-');
   newURL = newURL.replaceAll('.', '-');
   newURL = newURL.replaceAll(',', '-');
+  newURL = newURL.replaceAll('–', '-');
   newURL = newURL.replaceAll('?', '');
   newURL = newURL.replaceAll('!', '');
   newURL = newURL.replaceAll('(', '');

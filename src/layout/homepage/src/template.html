@@ -1,7 +1,7 @@
 <div class="overview">
   <div class="part">
     <h1>Krajské volby 2020</h1>
-    <p class="lead">V říjnu 2020 se uskuteční krajské volby. Dnes jsme ve fázi, kdy se domlouvají koalice, připravují kandidátky a oznamují jejich lídři. <span v-if="$store.getters.allCandidates().length > 0">Prozatím je známo {{ getCalloutPartiesCount() }}&nbsp;kandidátek a na nich již {{ getCalloutPeopleCount() }}&nbsp;jmen.</span> Údaje se mohou často měnit, konečnou podobu a oficiální vyhlášení ČSÚ očekáváme v srpnu.</p>
+    <p class="lead">2. a 3. října se uskuteční krajské volby. Dnes jsme ve fázi, kdy se domlouvají koalice, připravují kandidátky a oznamují jejich lídři. <span v-if="$store.getters.allCandidates().length > 0">Prozatím je známo {{ getCalloutPartiesCount() }}&nbsp;kandidátek a na nich již {{ getCalloutPeopleCount() }}&nbsp;jmen.</span> Údaje se mohou často měnit, konečnou podobu a oficiální vyhlášení ČSÚ očekáváme v srpnu.</p>
     <div class="map-holder">
       <map-element :width="$store.state.width" :clickable="clickableList" @select="clicked" />
     </div>
@@ -56,6 +56,7 @@
         		<template v-for="(party, index2) in gov(index)">
         			<template v-for="(person, i) in party.seats">
         				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+                <span v-if="person.level === 4" class="dimm">{{ person.name }}, odvolán 8. 6. 2020</span>
         			</template>
         		</template>
           </div>

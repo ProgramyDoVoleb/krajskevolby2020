@@ -47,10 +47,17 @@
           </li>
           <li>
             <label>Program</label>
-            <div v-if="party.program">
-              <a href="#program" class="page-anchor">Zobrazit</a>
+            <div v-if="party.program && data && data.program">
+              <router-link :to="party.link + '/volebni-program'" class="button button-primary"><strong>Zobrazit program</strong></router-link>
             </div>
-            <div v-if="!party.program" class="red">chybí</div>
+            <div v-if="party.program && (!data || (data && !data.program))">
+              <img src="/static/icon/icon-check.svg" class="incidator">
+              <outbound-link :href="party.program">Zobrazit</outbound-link>
+            </div>
+            <div v-if="!party.program" class="red">
+              <img src="/static/icon/icon-against.svg" class="incidator">
+              prozatím nezveřejněn
+            </div>
           </li>
           <li>
             <label>Lídr</label>
@@ -82,19 +89,28 @@
       Lídr kandidátky
     </h2>
     <div class="leader-layout">
-      <div class="leaders-photo">
+      <div class="leaders-photo show-60rem">
         <router-link :to="party.leader.link" class="image-as-link">
           <person-photo :data="party.leader" />
         </router-link>
       </div>
       <div class="leaders-content">
-        <div class="leaders-name">
-          <router-link :to="party.leader.link">
-            {{ party.leader.name }}
-          </router-link>
-        </div>
-        <div class="leaders-party small">
-          <party-link :data="party.leader.party" :breakpoint="1000" />
+        <div class="leader-layout">
+          <div class="leaders-photo hide-60rem">
+            <router-link :to="party.leader.link" class="image-as-link">
+              <person-photo :data="party.leader" />
+            </router-link>
+          </div>
+          <div class="leaders-content">
+            <div class="leaders-name">
+              <router-link :to="party.leader.link">
+                {{ party.leader.name }}
+              </router-link>
+            </div>
+            <div class="leaders-party small">
+              <party-link :data="party.leader.party" :breakpoint="1000" />
+            </div>
+          </div>
         </div>
         <div class="leader-copy" v-if="lead">
           <p v-if="lead[0].quote">
@@ -171,25 +187,6 @@
       </div>
     </div>
   </div>
-  <div class="part"><a name="program"></a>
-    <h2>
-      Program
-      <div class="small dimm" v-if="party && !party.program">
-        Program zatím nebyl zveřejněn nebo o něm nevíme.
-      </div>
-    </h2>
-    <div v-if="party && party.program">
-      <program-element :data="data.program" :hash="region.short + '/' + hash" v-if="data && data.program" />
-      <p class="center">
-        <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name" class="button">Program na webu &rarr;</outbound-link>
-      </p>
-    </div>
-    <div v-if="party && !party.program" class="center">
-      <update-form :region="region" :party="party" :index="-1" :hints="false" notes="program">
-        <button class="button-plain yellow">Poslat odkaz na program</button>
-      </update-form>
-    </div>
-  </div>
   <div class="part" v-if="party"><a name="lide"></a>
     <h2>
       Celá kandidátka
@@ -217,6 +214,26 @@
       Kandidátka není kompletní a pořadí se může měnit.
     </p>
   </div>
+  <div class="part" v-if="party"><a name="program"></a>
+    <h2>
+      Program
+      <div class="small dimm" v-if="party && !party.program">
+        Program zatím nebyl zveřejněn nebo o něm nevíme.
+      </div>
+    </h2>
+    <div v-if="party && party.program">
+      <program-element :data="data.program" :hash="region.short + '/' + hash" v-if="data && data.program" />
+      <p class="center">
+        <router-link :to="party.link + '/volebni-program'" class="button button-primary">Celý program</router-link>
+        <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name" class="button">Program na webu &rarr;</outbound-link>
+      </p>
+    </div>
+    <div v-if="party && !party.program" class="center">
+      <update-form :region="region" :party="party" :index="-1" :hints="false" notes="program">
+        <button class="button-plain yellow">Poslat odkaz na program</button>
+      </update-form>
+    </div>
+  </div>
   <div class="part" v-if="party && party.links && party.links.length > 0"><a name="odkazy"></a>
     <h2>
       Odkazy
@@ -227,6 +244,14 @@
       </div>
     </h2>
     <div v-if="party.links" :class="{'split-1-1': (links.facebook && !links.twitter) || (!links.facebook && links.twitter)}">
+      <div :class="{flow: links.facebook && links.twitter}">
+        <div class="flow-item" v-if="links.twitter">
+          <twitter-feed :link="links.twitter.link + '?ref_src=twsrc%5Etfw'" :name="party.name" :key="party.hash"></twitter-feed>
+        </div>
+        <div class="flow-item" v-if="links.facebook">
+          <iframe :src="'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(links.facebook.link) + '&tabs=timeline&width=' + width + '&height=500&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true'" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        </div>
+      </div>
       <div class="stats stats-icon">
         <ul :class="{'columns-2': (links.facebook && links.twitter) || (!links.facebook && !links.twitter)}">
           <li v-for="(link, index) in party.links">
@@ -241,28 +266,11 @@
           </li>
         </ul>
       </div>
-      <div :class="{flow: links.facebook && links.twitter}">
-        <div class="flow-item" v-if="links.twitter">
-          <twitter-feed :link="links.twitter.link + '?ref_src=twsrc%5Etfw'" :name="party.name" :key="party.hash"></twitter-feed>
-        </div>
-        <div class="flow-item" v-if="links.facebook">
-          <iframe :src="'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(links.facebook.link) + '&tabs=timeline&width=' + width + '&height=500&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true'" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-        </div>
-      </div>
     </div>
   </div>
-  <div class="part">
-    <div class="info-box center">
-      <h3>Chcete něco upravit nebo doplnit?</h3>
-      <p>Prosím, napište na <b><a mailto="tip@programydovoleb.cz" class="footer-link">tip@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
-    </div>
-  </div>
-  <div class="part">
-    <router-link to="/dotaznik-ke-krajskym-volbam">
-      <img src="/static/banner.png" alt="Dotazník" width="100%">
-    </router-link>
-  </div>
-  <share-block />
+  <copyright-element :data="party" v-if="party" />
+  <not-found v-if="!party" :region="region" :parties="parties" />
+  <share-block v-if="party" />
   <div class="goto goto-dimm">
     <h4>Vybrat jinou stranu či koalici</h4>
     <div class="stats">

@@ -7,7 +7,7 @@
 			{{ data.motto }}
 		</blockquote>
 		<collapsible-element v-for="(part, pi) in data.parts" :key="'parts_' + pi" :label="part.headline" :seo="{action: hash, category: 'program', label: 'Část: '}">
-			<program-block :depth="2" :data="part" :index="pi"  ref="block" />
+			<program-block :depth="2" :data="part" :index="pi"  ref="block" :avoidHeadline="true" />
 		</collapsible-element>
 	</div>
 </div>

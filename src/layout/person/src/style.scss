@@ -1,5 +1,5 @@
 .person-photo {
-  max-width: 14rem;
+  // max-width: 14rem;
   margin: auto;
 }
 
@@ -97,6 +97,14 @@
   }
 }
 
+.quick-links {
+  margin-top: 1em;
+
+  span + span {
+    margin-left: .2em;
+  }
+}
+
 .leader-action .update-form {
   display: inline-block;
 }
@@ -120,7 +128,7 @@
 .flow {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 4rem;
+  margin: 4rem 0
 }
 
 .flow-item {
@@ -155,4 +163,49 @@ h4:first-child {
   .logo-holder-tiny {
     margin-top: -2rem;
   }
+}
+
+.quote {
+  font-size: 1.5em;
+  font-family: georgia;
+}
+
+.fb-content {
+  @media (min-width: 60rem) {
+    padding-right: 2rem;
+  }
+
+  .fb-content-area {
+    background: #fafafa;
+    position: relative;
+
+    &:before {
+      content: "Pokouším se načíst obsah z Facebooku. Pokud jde ale o osobní profil kandidáta a ne stránku, zůstane tato plocha prázdná.";
+      max-width: 60%;
+      position: absolute;
+      color: #aaa;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      font-size: 12px;
+    }
+
+    iframe {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.leaders-photo {
+  display: none;
+
+  @media (min-width: 40rem) {
+    display: block;
+  }
+}
+
+.logo-photo .person-photo {
+  max-width: 14rem;
 }

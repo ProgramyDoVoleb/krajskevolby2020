@@ -7,25 +7,32 @@ export default {
 		}
 	},
 	computed: {
+		parties: function () {
+			return this.$store.getters.allParties();
+		},
 		listProminent: function () {
 			var list = [];
 
-			this.$store.getters.allParties().forEach(party => {
-				if (party.reg && this.prominent.indexOf(party.reg) > -1) {
-					list.push(party);
-				}
-			});
+			if (this.parties) {
+				this.parties.forEach(party => {
+					if (party.reg && this.prominent.indexOf(party.reg) > -1) {
+						list.push(party);
+					}
+				});
+			}
 
 			return list;
 		},
 		listOthers: function () {
 			var list = [];
 
-			this.$store.getters.allParties().forEach(party => {
-				if (!party.reg || this.prominent.indexOf(party.reg) === -1) {
-					list.push(party);
-				}
-			});
+			if (this.parties) {
+				this.parties.forEach(party => {
+					if (!party.reg || this.prominent.indexOf(party.reg) === -1) {
+						list.push(party);
+					}
+				});
+			}
 
 			return list;
 		}

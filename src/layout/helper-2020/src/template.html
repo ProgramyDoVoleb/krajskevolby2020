@@ -56,24 +56,46 @@
     </div>
   </div>
   </collapsible-element>
+  <collapsible-element label="Programy">
+  <div v-for="(region, index) in $store.state.static.regions">
+    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+      <div v-if="party.program">
+        if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "volebni-program") meta(<br>
+      		"Volební program &middot; {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+          "Projděte si program '{{ party.short || party.name}}' pro {{ region.name }} do krajských voleb 2020 a porovnejte ho s ostatními. V kraji kandiduje dalších {{ $store.getters.candidatesInRegion(region.hash).length - 1 }} stran nebo koalic.
+          Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
+          ",<br>
+      		"/social/kraje/{{ region.hash }}-2.jpg"<br>
+      	);
+      </div>
+    </div>
+  </div>
+  </collapsible-element>
   <h2>Sitemap</h2>
-  <collapsible-element label="vše">
+  <collapsible-element label="Vše">
   <div v-for="(region, index) in $store.state.static.regions">
     <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
       <code>
-        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-08&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
       </code>
     </div>
   </div>
   <div v-for="(party, index) in $store.getters.allParties()">
     <code>
-      &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz/rejstrik/{{ party.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-08&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+      &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz/rejstrik/{{ party.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
     </code>
   </div>
   <div v-for="(region, index) in $store.state.static.regions">
     <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
       <code v-if="party.leader && party.leader.name">
-        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link + '/' + betterURL(party.leader.name) }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-08&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link + '/' + betterURL(party.leader.name) }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+      </code>
+    </div>
+  </div>
+  <div v-for="(region, index) in $store.state.static.regions">
+    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+      <code v-if="party.program">
+        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link}}/volebni-program&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
       </code>
     </div>
   </div>

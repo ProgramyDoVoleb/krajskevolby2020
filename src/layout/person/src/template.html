@@ -1,8 +1,13 @@
 <div class="person">
   <div class="loading part" v-if="!person">Načítám...</div>
-  <div class="loaded part" v-if="person">
+  <div class="loaded part logo-photo" v-if="person">
     <div class="part">
-      <person-photo :data="person" class="hide-40rem"></person-photo>
+      <div class="hide-40rem">
+        <person-photo :data="person" class="hide-40rem"></person-photo>
+        <div class="part center quick-links" v-if="person && person.links">
+          <outbound-icon v-for="(link, index) in person.links" :key="'c_' + index" :href="link.link" :type="link.icon.type" :size="'2rem'" :title="link.content" />
+        </div>
+      </div>
       <div class="party-header-logo show-40rem">
         <div class="logo-holder-2" v-if="party.logo">
           <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
@@ -32,19 +37,22 @@
     </div>
     <div class="part">
       <div class="leader-layout">
-        <div class="leaders-photo show-40rem">
+        <div class="leaders-photo">
           <router-link :to="person.link" class="image-as-link">
             <person-photo :data="person" />
           </router-link>
+          <div class="part center quick-links" v-if="person && person.links">
+            <outbound-icon v-for="(link, index) in person.links" :key="'c_' + index" :href="link.link" :type="link.icon.type" :size="'2rem'" :title="link.content" />
+          </div>
         </div>
         <div class="leaders-content">
           <div class="leader-copy" v-if="lead">
-            <p v-if="lead[0].quote">
-              <em v-html="lead[0].quote.full"></em>
+            <p v-if="person.quote" class="quote">
+              <em v-html="person.quote.full"></em>
             </p>
             <h4>Z webu kandidáta:</h4>
-            <p v-if="lead[0].about" >
-              <span v-html="lead[0].about.full"></span>
+            <p v-if="person.about" >
+              <span v-html="person.about.full"></span>
             </p>
           </div>
           <div class="leader-placeholder" v-if="!lead || !person.about">
@@ -72,6 +80,16 @@
         </div>
       </h2>
       <div v-if="person.links" :class="{'split-1-1': (links.facebook && !links.twitter) || (!links.facebook && links.twitter)}">
+        <div :class="{flow: links.facebook && links.twitter}">
+          <div class="flow-item" v-if="links.twitter">
+            <twitter-feed :link="links.twitter.link + '?ref_src=twsrc%5Etfw'" :name="person.name" :key="person.hash"></twitter-feed>
+          </div>
+          <div class="flow-item fb-content" v-if="links.facebook">
+            <div class="fb-content-area">
+              <iframe :src="'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(links.facebook.link) + '&tabs=timeline&width=' + width + '&height=500&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true'" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+            </div>
+          </div>
+        </div>
         <div class="stats stats-icon">
           <ul :class="{'columns-2': (links.facebook && links.twitter) || (!links.facebook && !links.twitter)}">
             <li v-for="(link, index) in person.links">
@@ -85,14 +103,6 @@
               </div>
             </li>
           </ul>
-        </div>
-        <div :class="{flow: links.facebook && links.twitter}">
-          <div class="flow-item" v-if="links.twitter">
-            <twitter-feed :link="links.twitter.link + '?ref_src=twsrc%5Etfw'" :name="person.name" :key="person.hash"></twitter-feed>
-          </div>
-          <div class="flow-item" v-if="links.facebook">
-            <iframe :src="'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(links.facebook.link) + '&tabs=timeline&width=' + width + '&height=500&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true'" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-          </div>
         </div>
       </div>
     </div>
@@ -139,14 +149,12 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="part">
-    <div class="info-box center">
-      <h3>Chcete něco upravit nebo doplnit?</h3>
-      <p>Prosím, napište na <b><a mailto="tip@programydovoleb.cz" class="footer-link">tip@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
-    </div>
+    <copyright-element :data="party" />
   </div>
   <share-block />
+  <div class="goto" v-if="party && data && data.program">
+    <router-link :to="party.link + '/volebni-program'" class="red">Zobrazit volební program &rarr;</router-link>
+  </div>
   <div class="goto" v-if="party">
     <router-link :to="party.link">&larr; {{ party.name }}</router-link>
   </div>

@@ -211,14 +211,6 @@ button, .button, .btn {
 .part + .part {
 	position: relative;
 	padding-top: 4rem;
-
-	@media (min-height: 60rem) {
-		padding-top: 4rem;
-
-		h2 {
-			padding-bottom: 2rem;
-		}
-	}
 }
 
 .columns {

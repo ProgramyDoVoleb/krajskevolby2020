@@ -6,6 +6,7 @@ import LayoutRegion from '@/layout/region/do';
 import LayoutCandidate from '@/layout/candidate/do';
 import LayoutParty from '@/layout/party/do';
 import LayoutPerson from '@/layout/person/do';
+import LayoutProgram from '@/layout/program/do';
 
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
@@ -77,12 +78,21 @@ const router = new Router({
       props: true
     },
     {
+      path: '/:id/:hash/volebni-program',
+      name: 'Program',
+      component: LayoutProgram,
+      props: true
+    },
+    {
       path: '/:regionHash/:candidateHash/:personHash',
       name: 'Person',
       component: LayoutPerson,
       props: true
     },
-    { path: '*', redirect: '/' }
+    {
+      path: '*',
+      redirect: '/'
+    }
   ]
 });
 

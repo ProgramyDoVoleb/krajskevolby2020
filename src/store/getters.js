@@ -336,6 +336,14 @@ getters.allParties = (state, getters) => () => {
     });
   });
 
+  add(99, {
+    'name': 'bez politické příslušnosti',
+    'short': 'BEZPP',
+    'hash': 'bezpp',
+    'color': '#aaa',
+    'logo': '/static/empty.png'
+  });
+
   list.sort((a, b) => a.name.localeCompare(b.name, 'cs'))
 
   state.data.parties = list;
@@ -459,6 +467,7 @@ function processPerson (source, party, getters) {
 getters.allCandidates = (state, getters) => () => {
   if (state.data.candidates.length > 0) return state.data.candidates;
   if (state.dynamic.callout.length === 0) return [];
+  if (getters.loaded() === false) return [];
 
   var list = [];
 
@@ -506,6 +515,8 @@ getters.allCandidates = (state, getters) => () => {
 
       obj.link = '/' + obj.region.hash + '/' + obj.hash;
 
+      obj.copyright = cand.copyright;
+
       if (cand.leader) {
         obj.leader.link = obj.link + '/' + obj.leader.hash;
       }
@@ -528,7 +539,7 @@ getters.candidate = (state, getters) => (region, hash) => {
 }
 
 getters.loaded = (state, getters) => () => {
-  return state.dynamic.source.length === 2;
+  return state.dynamic.source.length === 2 && getters.allParties().length > 0;
 }
 
 getters.getSource = (state, getters) => (source, to) => {

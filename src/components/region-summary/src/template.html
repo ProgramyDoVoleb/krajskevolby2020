@@ -9,6 +9,7 @@
 		<template v-for="(party, index) in gov">
 			<template v-for="(person, i) in party.seats">
 				<person-about v-if="person.level === 0" :name="person.name" :party="party.reg" :nominatedBy="person.party" :link="person.wiki" />
+				<span v-if="person.level === 4" class="dimm">{{ person.name }}, odvolán 8. 6. 2020</span>
 			</template>
 		</template>
 	</p>

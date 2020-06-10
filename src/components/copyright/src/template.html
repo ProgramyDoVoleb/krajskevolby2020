@@ -1,0 +1,8 @@
+<div class="goto copyright">
+	&copy;
+	<span v-html="copy.content[0]"></span>
+	<span v-for="(vars, index) in copy.vars">
+		<outbound-link :href="vars" :title="stripURLintoDomain(vars)">{{ stripURLintoDomain(vars) }}</outbound-link><span>{{ copy.content[index + 1] }}</span>
+	</span>
+
+</div>
