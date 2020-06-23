@@ -17,7 +17,7 @@ h4 {
   }
 }
 
-em + ul {
+div + ul {
   margin-top: .5em;
 }
 
@@ -130,6 +130,12 @@ em + ul {
 
 .map-holder {
   position: relative;
+  margin-bottom: 2rem;
+}
+
+.map-element {
+  position: relative;
+  z-index: 1;
 }
 
 .map-about {
@@ -144,6 +150,7 @@ em + ul {
   pointer-events: none;
   border-radius: 4px;
   line-height: 1.2;
+  z-index: 10;
 
   h3 {
     margin: 0 0 .5em;

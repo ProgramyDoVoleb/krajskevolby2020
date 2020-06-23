@@ -10,7 +10,7 @@
             <span v-if="index3 > 0"> +</span>
             <span>{{ member.short || member.name }}</span>
           </span>.
-        </span><span v-if="party.leader">Lídrem je {{ party.leader.name }}.</span><span v-if="!party.leader">Lídr ještě nebyl vybrán.</span>
+        </span><span v-if="party.leader">Lídrem je <person-name :data="party.leader" />.</span><span v-if="!party.leader">Lídr ještě nebyl vybrán.</span>
         <span v-if="party.program">Program již byl uveřejněn.</span>
         <span v-if="party.list">
           <span v-if="party.list.length === 1">Známe jednoho dalšího kandidáta.</span>
@@ -40,7 +40,7 @@
     <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
       <div v-if="party.leader && party.leader.name">
         if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "{{ betterURL(party.leader.name) }}") meta(<br>
-      		"{{ party.leader.name }} &middot; lídr kandidátky {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+      		"<person-name :data="party.leader" /> &middot; lídr kandidátky {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
           "{{ party.leader.name }} {{ party.leader.party && party.leader.party.hash != party.hash ? '(' + (party.leader.party.short || party.leader.party.name) + ')' : '' }} vede kandidátku '<span v-if="party.coalition">koalice stran
             <span v-for="(member, index3) in party.coalition">
               <span v-if="index3 > 0"> +</span>
@@ -88,7 +88,7 @@
   <div v-for="(region, index) in $store.state.static.regions">
     <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
       <code v-if="party.leader && party.leader.name">
-        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link + '/' + betterURL(party.leader.name) }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link + '/' + party.leader.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
       </code>
     </div>
   </div>

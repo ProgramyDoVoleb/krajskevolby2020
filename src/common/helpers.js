@@ -219,7 +219,11 @@ export function processLinks (links) {
 export function personData (item, i, party, route) {
   var obj = {};
 
-  obj.name = item.name;
+  var p = processPersonName(item);
+
+  obj.name = p.name;
+  obj.nameFull = p.nameFull;
+
   obj.party = item.reg ? store.getters.party(item.reg) : undefined;
   if (item.about) {
     obj.about = {
@@ -245,4 +249,48 @@ export function personData (item, i, party, route) {
   }
 
   return obj;
+}
+
+export function processPersonName (source) {
+
+  var parts;
+  var person;
+
+  if (typeof source === 'string') {
+    person = {
+      name: source,
+      nameFull: ['', '', '', '']
+    }
+
+    parts = source.split(' ');
+
+    if (parts.length === 2) {
+      person.nameFull[1] = parts[0];
+      person.nameFull[2] = parts[1];
+    }
+
+  } else if (typeof source === 'object' && source.length && source.length === 4) {
+    person = {
+      name: source[1] + ' ' + source[2],
+      nameFull: source
+    }
+  } else if (typeof source === 'object' && source.name) {
+    person = source;
+
+    if (typeof source.name === 'string') {
+      person.nameFull = ['', '', '', ''];
+
+      parts = source.name.split(' ');
+
+      if (parts.length === 2) {
+        person.nameFull[1] = parts[0];
+        person.nameFull[2] = parts[1];
+      }
+    } else {
+      person.fullName = source.name;
+      person.name = source.name[1] + ' ' + source.name[2];
+    }
+  }
+
+  return person;
 }

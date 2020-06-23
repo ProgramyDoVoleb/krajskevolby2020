@@ -22,3 +22,14 @@
     height: 3rem;
   }
 }
+
+@keyframes show {
+  0% {transform: translateY(-100px)}
+  100% {transform: translateY(0)}
+}
+
+.block2 {
+  transform: translateY(-100px);
+
+  animation: show .5s .2s ease-out forwards;
+}

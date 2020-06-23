@@ -1,5 +1,6 @@
 <span class="map-element">
 	<svg :width="widthValue" :height="heightValue" x="0px" y="0px" :viewBox="viewBox"
+	:style="{width: widthValue + 'px', height: heightValue + 'px'}"
 		 style="enable-background:new 0 0 1021 587;" xml:space="preserve"
 		 :class="{zoom: zoomValue != 'CZ01', points: points && areas && points.length > 0 && areas.length === 0}">
 		 <g>

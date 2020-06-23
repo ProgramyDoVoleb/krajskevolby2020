@@ -119,6 +119,7 @@ export default {
 			}
 		},
 		resize: function () {
+			console.log(1);
 			this.widthValue = this.width || 256;
 			this.heightValue = Math.round(this.widthValue / 256 * 149);
 		},
@@ -146,13 +147,9 @@ export default {
 
 		window.addEventListener("resize", () => this.resize());
 
+		setTimeout(() => this.resize(), 10);
 		setTimeout(() => this.resize(), 100);
-		setTimeout(() => this.resize(), 250);
-		setTimeout(() => this.resize(), 500);
 		setTimeout(() => this.resize(), 1000);
-		setTimeout(() => this.resize(), 1500);
-		setTimeout(() => this.resize(), 2000);
-		setTimeout(() => this.resize(), 2500);
 	},
 	watch: {
 		points: function () {

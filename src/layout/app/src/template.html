@@ -1,6 +1,6 @@
 <div id="app">
-	<main-header name="Krajské volby 2020" />
-	<article class="block" v-if="$store.state.dynamic.parties.length > 0">
+	<main-header name="Krajské volby 2020" :data-num="loadedNum" />
+	<article class="block" :class="{loaded}" v-if="loaded">
 		<router-view></router-view>
 		<div class="content-width"></div>
 	</article>

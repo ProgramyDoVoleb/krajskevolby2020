@@ -1,4 +1,4 @@
-import {PDV, createColorByName, betterURL, processLinks} from '@/common/helpers';
+import {PDV, createColorByName, betterURL, processLinks, processPersonName} from '@/common/helpers';
 import store from './store';
 
 const getters = {
@@ -294,6 +294,7 @@ getters.allParties = (state, getters) => () => {
     obj.short = data.short || (party.short || obj.name);
     obj.color = data.color || (party.color || '#aaa');
     obj.logo = data.logo || (party.logo || undefined);
+    obj.coalition = data.coalition || party.coalition;
 
     checkAndAdd(obj);
   }
@@ -301,7 +302,7 @@ getters.allParties = (state, getters) => () => {
   state.dynamic.callout.forEach(region => {
     region.parties.forEach(cand => {
       if (cand.reg) {
-        add(cand.reg, {name: cand.name, color: cand.color, logo: cand.logo});
+        add(cand.reg, {name: cand.name, color: cand.color, logo: cand.logo, coalition: cand.coalition});
       }
 
       if (cand.coalition) {
@@ -352,7 +353,11 @@ getters.allParties = (state, getters) => () => {
 }
 
 function processName (cand, party, getters) {
+
   if (cand.name) return cand.name;
+  if (party && party.name && party.coalition) {
+    return party.name;
+  }
   if (cand.coalition) {
     var s = [];
 
@@ -414,8 +419,10 @@ function processCoalition (cand, getters) {
 }
 
 function processImage (link) {
-  if (link) {
+  if (link && link.split('fotky').length > 1) {
     return PDV(link);
+  } else if (link) {
+    return PDV('lide/fotky/' + link);
   } else {
     return undefined;
   }
@@ -439,17 +446,10 @@ function processContent (content, key) {
 function processPerson (source, party, getters) {
 
   var obj = {};
-  var person;
-
-  if (typeof source === 'string') {
-    person = {
-      name: source
-    }
-  } else {
-    person = source;
-  }
+  var person = processPersonName(source);
 
   obj.name = person.name;
+  obj.nameFull = person.nameFull;
   obj.hash = betterURL(obj.name);
 
   if (person.reg) obj.party = getters.party(person.reg);
@@ -509,6 +509,11 @@ getters.allCandidates = (state, getters) => () => {
         cand.list.forEach((person, i) => {
           obj.list.push(processPerson(person, party, getters));
         });
+      }
+
+      if (obj.name === '' || typeof obj.name === 'undefined') {
+        console.log('Neznámé');
+        return;
       }
 
       obj.hash = betterURL(obj.name);

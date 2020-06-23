@@ -108,7 +108,7 @@
                 <label>Lídr</label>
                 <div>
                   <router-link :to="party.link + '/' + betterURL(party.leader.name)" class="as-span">
-                    {{ party.leader.name }}
+                    <person-name :data="party.leader" />
                   </router-link>
                   <span v-if="party.leader.links" class="leader-links">
       							<span v-for="(link, index) in party.leader.links" class="leader-link">
@@ -125,7 +125,7 @@
                 <div>
                   <div class="columns-3">
                     <div class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
-                      {{ cand.name }}
+                      <person-name :data="cand" />
                       <div class="small" v-if="cand.party && cand.party.reg != (party ? party.reg : -1)">
                         <party-link :data="cand.party" :breakpoint="1000" />
                       </div>
@@ -161,7 +161,7 @@
             <li>
               <div>
                 <update-form :region="region" :party="null">
-                  <button>Přidat stranu nebo koalici</button>
+                  <button class="button-plain yellow">Přidat stranu nebo koalici</button>
                 </update-form>
               </div>
             </li>

@@ -6,7 +6,7 @@ import ProgramElement from "@/components/program-element/do";
 import TwitterFeed from "@/components/twitter/do";
 import CopyrightElement from "@/components/copyright/do";
 
-import {betterURL, beautifyDate, stripURLintoDomain, processLinks, truncate, personData} from "@/common/helpers";
+import {betterURL, beautifyDate, stripURLintoDomain, processLinks, truncate, personData, processPersonName} from "@/common/helpers";
 
 export default {
 	name: 'Person',

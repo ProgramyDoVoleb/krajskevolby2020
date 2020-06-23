@@ -10,6 +10,17 @@ export default {
       RegionMenu
     },
     computed: {
+			loaded: function () {
+				return this.$store.getters.loaded() || this.$store.state.data.candidates.length > 0;
+			},
+			loadedNum: function () {
+				if (this.loaded) {
+					var el = document.querySelector(".loading");
+					if (el) el.classList.add("loaded");
+				}
+
+				return this.$store.state.data.candidates.length;
+			}
     },
     methods: {
 			resize: function () {
@@ -23,13 +34,11 @@ export default {
     mounted: function () {
 			this.$store.dispatch('fetchRada');
 
-			this.$store.getters.getSource('obecne/strany', 'parties');
+			this.$store.getters.getSource('volby/kv/2020/strany', 'parties');
 			this.$store.getters.getSource('volby/kv/2020/list', 'callout');
 
 			window.addEventListener('resize', () => this.resize());
-			setTimeout(() => {
-				this.resize();
-			}, 1000);
+			setTimeout(() => this.resize(), 1000);
 			this.resize();
     },
     watch: {

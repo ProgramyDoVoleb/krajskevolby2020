@@ -112,8 +112,9 @@ button, .button, .btn {
 		}
 
 		&.yellow {
-			background: #f6ecdd;
+			background: rgba(#f3ddbe, .3);
 			color: #ca7c0d;
+			font-size: .8rem;
 
 			@media (hover: hover) {
 				&:hover {

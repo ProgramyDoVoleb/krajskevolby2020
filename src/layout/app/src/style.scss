@@ -100,3 +100,25 @@ footer {
 .split-2-1 p {
   max-width: 35rem;
 }
+
+article {
+  position: relative;
+  min-height: 80rem;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+article {
+  opacity: 0;
+
+  &.loaded {
+    animation: show .2s .5s linear forwards;
+  }
+}

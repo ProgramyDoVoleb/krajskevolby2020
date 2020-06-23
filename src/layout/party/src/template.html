@@ -63,10 +63,12 @@
               </span>
             </div>
             <div class="list-info">
-              <div v-if="act.party.reg != party.reg && act.party.reg">
+              <div v-if="act.party.coalition || !act.party.reg">
+                <em>"{{ act.party.name }}"</em>
+              </div>
+              <div v-if="act.party.reg != party.reg && act.party.reg && !act.party.coalition">
                 <party-link :data="act.party" :breakpoint="1000" />
               </div>
-              <em v-if="!act.party.reg">"{{ act.party.name }}"</em>
               <ul v-if="act.party.coalition">
                 <li v-for="(px, index) in act.party.coalition">
                   <party-link :data="px" :breakpoint="1000" />
@@ -84,8 +86,8 @@
             </div>
             <div class="list-leader">
               <div v-if="act.party.leader">
-                <router-link class="as-span" :to="act.party.link + '/' + betterURL(act.party.leader.name)">
-                  {{ act.party.leader.name }}
+                <router-link class="as-span" :to="act.party.link + '/' + act.party.leader.hash">
+                  <person-name :data="act.party.leader" />
                 </router-link>
                 <div class="small" v-if="act.party.leader.party">
                   <party-link :data="act.party.leader.party" :breakpoint="1000" />

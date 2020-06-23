@@ -169,6 +169,24 @@ h1 .dimm {
       font-weight: normal;
     }
   }
+
+  &.goto-yellow {
+    background: #f6ecdd;
+
+    h3 {
+      margin: 0 0 .5em;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin: 1em 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
 }
 
 .goto + .goto {
