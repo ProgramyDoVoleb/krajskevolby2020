@@ -55,14 +55,21 @@
       <div class="party" v-for="(party, i2) in parties" :style="{'border-color': party.color}">
           <div class="party-header">
             <div class="party-header-logo">
-              <div class="logo-holder-2" v-if="party.logo">
-                <logo-item :data="party" :size="{small: 3, large: 4, breakpoint: 40}" />
-              </div>
-              <div class="logo-holder-2" v-if="!party.logo && party.coalition">
-                <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i2 + '_' + i3" :size="{small: 3, large: 4, breakpoint: 40}" />
-              </div>
-              <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
-                <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i2 + '_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
+              <div class="party-header-logo-holder">
+                <div class="logo-holder-2" v-if="party.logo">
+                  <logo-item :data="party" :size="{small: 3, large: 4, breakpoint: 40}" />
+                </div>
+                <div class="logo-holder-2" v-if="!party.logo && party.coalition">
+                  <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i2 + '_' + i3" :size="{small: 3, large: 4, breakpoint: 40}" />
+                </div>
+                <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
+                  <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i2 + '_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
+                </div>
+                <div class="logo-leader" v-if="party.leader && party.leader.photo">
+                  <router-link :to="party.leader.link">
+                    <person-photo :data="party.leader" />
+                  </router-link>
+                </div>
               </div>
             </div>
             <div class="party-header-name">

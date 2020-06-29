@@ -43,49 +43,68 @@
       <div
         class="party"
         v-for="(act, index) in activity"
-        :style="{'border-color': act.party.leader ? act.party.leader.party.color : act.party.color}"
+        :style="{'border-color': act.party.leader ? act.party.leader.party.color : act.party.color }"
         >
           <div class="flex">
             <div class="list-region">
-              <router-link :to="'/' + act.region.hash">
+              <router-link :to="'/' + act.region.hash" class="as-span segment-name">
                 {{ act.region.name }}
               </router-link>
-            </div>
-            <div class="list-activity">
-              <span v-if="act.type === 0">
-                <strong>samostatně</strong>
-              </span>
-              <span v-if="act.type === 1">
-                v koalici
-              </span>
-              <span v-if="act.type === 2">
-                podpora
-              </span>
+              <div class="small">
+                <span v-if="act.type === 0">
+                  samostatně
+                </span>
+                <span v-if="act.type === 1">
+                  v koalici
+                </span>
+                <span v-if="act.type === 2">
+                  podpora
+                </span>
+              </div>
             </div>
             <div class="list-info">
-              <div v-if="act.party.coalition || !act.party.reg">
-                <em>"{{ act.party.name }}"</em>
+              <strong><router-link :to="act.party.link">{{ act.party.name }}</router-link></strong>
+              <div class="small">
+                <template v-if="act.party.program">
+                  <router-link :to="act.party.link + '/volebni-program'" class="red">Program </router-link>
+                  &middot;
+                </template>
+                <span class="dimm">
+                  {{ (act.party.leader ? 1 : 0) + (act.party.list || []).length }} / {{ act.region.seats }}
+                </span>
+                <span v-if="act.party.links" class="dimm">
+                  &middot;
+                  <outbound-link :href="act.party.links[0].link" class="as-link dimm">{{ act.party.links[0].icon.name }}</outbound-link>
+                </span>
               </div>
-              <div v-if="act.party.reg != party.reg && act.party.reg && !act.party.coalition">
-                <party-link :data="act.party" :breakpoint="1000" />
-              </div>
-              <ul v-if="act.party.coalition">
-                <li v-for="(px, index) in act.party.coalition">
-                  <party-link :data="px" :breakpoint="1000" />
-                </li>
-              </ul>
+              <template v-if="act.party.reg != party.reg && act.party.reg && !act.party.coalition">
+                <h4>Kandidující strana</h4>
+                <ul class="linear-list">
+                  <li>
+                    <party-link :data="act.party" :breakpoint="1000" />
+                  </li>
+                </ul>
+              </template>
+              <template v-if="act.party.coalition">
+                <h4>Koalice</h4>
+                <ul class="linear-list">
+                  <li v-for="(px, index) in act.party.coalition">
+                    <party-link :data="px" :breakpoint="1000" />
+                  </li>
+                </ul>
+              </template>
               <template v-if="act.party.support">
                 <h4>Podpora</h4>
-                <ul>
+                <ul class="linear-list">
                   <li v-for="(px, index) in act.party.support">
                     <party-link :data="px" :breakpoint="1000" />
                   </li>
                 </ul>
               </template>
-              <h4><router-link :to="act.party.link">Podrobnosti &rarr;</router-link></h4>
             </div>
             <div class="list-leader">
               <div v-if="act.party.leader">
+                <h4 class="hide-40rem">Lídr kandidátky</h4>
                 <router-link class="as-span" :to="act.party.link + '/' + act.party.leader.hash">
                   <person-name :data="act.party.leader" />
                 </router-link>
@@ -93,6 +112,7 @@
                   <party-link :data="act.party.leader.party" :breakpoint="1000" />
                 </div>
               </div>
+              <div class="dimm small" v-if="!act.party.leader">neznámý lídr</div>
             </div>
           </div>
       </div>

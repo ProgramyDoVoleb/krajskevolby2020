@@ -8,12 +8,21 @@ ul {
   list-style: none;
 }
 
+.linear-list li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
 h4 {
   font-size: .8rem;
   margin: 1.5em 0 .5em 0;
 
   &:first-child {
     margin-top: 0;
+  }
+
+  &.hide-40rem {
+    margin-top: 1.5em;
   }
 }
 
@@ -96,7 +105,7 @@ div + ul {
     margin-right: 1rem;
 
     @media (min-width: 40rem) {
-      width: 10rem;
+      width: 14rem;
     }
   }
 
@@ -205,4 +214,20 @@ div + ul {
   width: 1em;
   height: 1em;
   transform: translateY(.2em);
+}
+
+.segment-name {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #888;
+  font-size: 1.2em;
+  border-color: transparent;
+
+  @media (min-width: 40rem) {
+    font-size: .9rem;
+  }
+
+  & + .small {
+    color: #888;
+  }
 }
