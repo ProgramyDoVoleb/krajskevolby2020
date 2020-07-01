@@ -58,11 +58,6 @@
           <div class="leader-placeholder" v-if="!lead || !person.about">
             <p class="dimm">Zde je prostor pro představení kandidáta. Pokud víte o osobní stránce, blogu, profilu na stránce strany nebo stránce na wikipedii, prosím, zašlete odkaz. Stačí kliknout na tlačítko níže.</p>
           </div>
-          <div class="leader-action">
-            <update-form :region="region" :party="party" :index="-1" :hints="false" notes="medailonek lídra" v-if="!lead">
-              <button class="button-plain yellow">Poslat odkaz na medialonek</button>
-            </update-form>
-          </div>
           <template v-if="person.party">
             <h4>Členství:</h4>
             <div class="leaders-party">
@@ -95,7 +90,15 @@
               </label>
               <div class="link-with-icon">
                 <outbound-link :href="link.link" :addon="false" :title="link.link">
-                  {{ link.content }}
+                  <span v-if="link.icon.type === 'fb'">Facebook</span>
+                  <span v-if="link.icon.type === 'tw'">Twitter</span>
+                  <span v-if="link.icon.type === 'yt'">Youtube</span>
+                  <span v-if="link.icon.type === 'ig'">Instagram</span>
+                  <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
+                  <span v-if="link.icon.type === 'link'">Webová stránka</span>
+                  <div class="small dimm">
+                    {{ link.content }}
+                  </div>
                 </outbound-link>
               </div>
             </li>

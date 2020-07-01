@@ -118,13 +118,141 @@
       </div>
     </div>
   </div>
-  <share-block />
+  <div class="part" v-if="party.links && party.links.globals && party.links.globals.length > 0">
+    <h2>Webové stránky a sociální sítě</h2>
+
+    <div v-if="party.links" :class="{'split-1-1': (links.facebook && !links.twitter) || (!links.facebook && links.twitter)}">
+      <div :class="{flow: links.facebook && links.twitter}">
+        <div class="flow-item" v-if="links.twitter">
+          <twitter-feed :link="links.twitter.link + '?ref_src=twsrc%5Etfw'" :name="party.name" :key="party.hash"></twitter-feed>
+        </div>
+        <div class="flow-item" v-if="links.facebook">
+          <iframe :src="'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(links.facebook.link) + '&tabs=timeline&width=' + width + '&height=500&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true'" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        </div>
+      </div>
+      <div class="stats stats-icon">
+        <ul :class="{'columns-2': (links.facebook && links.twitter) || (!links.facebook && !links.twitter)}">
+          <li v-for="(link, index) in party.links.globals">
+            <label>
+              <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
+            </label>
+            <div class="link-with-icon">
+              <outbound-link :href="link.link" :addon="false" :title="link.link">
+                <span v-if="link.icon.type === 'fb'">Facebook</span>
+                <span v-if="link.icon.type === 'tw'">Twitter</span>
+                <span v-if="link.icon.type === 'yt'">Youtube</span>
+                <span v-if="link.icon.type === 'ig'">Instagram</span>
+                <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
+                <span v-if="link.icon.type === 'link'">Webová stránka</span>
+                <div class="small dimm">
+                  {{ link.content }}
+                </div>
+              </outbound-link>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="stats stats-icon">
+      <ul class="columns-2">
+        <li v-for="(link, index) in party.links.globals">
+          <label>
+            <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
+          </label>
+          <div class="link-with-icon">
+            <outbound-link :href="link.link" :addon="false" :title="link.link">
+              <span v-if="link.icon.type === 'fb'">Facebook</span>
+              <span v-if="link.icon.type === 'tw'">Twitter</span>
+              <span v-if="link.icon.type === 'yt'">Youtube</span>
+              <span v-if="link.icon.type === 'ig'">Instagram</span>
+              <span v-if="link.icon.type === 'link'">Webová stránka</span>
+              <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
+              <div class="small dimm">
+                {{ link.content }}
+              </div>
+            </outbound-link>
+          </div>
+        </li>
+      </ul>
+    </div> -->
+  </div>
+  <!-- <div class="part">
+    <h2>Krajské organizace online</h2>
+    <div>
+      <ul class="columns-2">
+        <li v-for="(region, ix) in party.links.regional" v-if="region.links.length > 0">
+          <strong class="dimm small">
+            {{ $store.state.static.regions.find(x => x.id === region.region).name.toUpperCase() }}
+          </strong>
+          <div class="stats stats-icon">
+            <ul>
+              <li v-for="(link, index) in region.links">
+                <label>
+                  <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
+                </label>
+                <div class="link-with-icon">
+                  <outbound-link :href="link.link" :addon="false" :title="link.link">
+                    <span v-if="link.icon.type === 'fb'">Facebook</span>
+                    <span v-if="link.icon.type === 'tw'">Twitter</span>
+                    <span v-if="link.icon.type === 'yt'">Youtube</span>
+                    <span v-if="link.icon.type === 'ig'">Instagram</span>
+                    <span v-if="link.icon.type === 'link'">Webová stránka</span>
+                    <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
+                    <div class="small dimm">
+                      {{ link.content }}
+                    </div>
+                  </outbound-link>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div> -->
   <div class="part">
-    <div class="info-box center">
-      <h3>Našli jste chybu?</h3>
-      <p>Prosím, napište na <b><a mailto="info@programydovoleb.cz" class="footer-link">info@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
+    <h2>Krajské organizace online</h2>
+    <div class="stats stats-regions">
+      <ul class="columns-2">
+        <li v-for="(region, ix) in party.links.regional" v-if="region.links.length > 0">
+          <label>
+            {{ $store.state.static.regions.find(x => x.id === region.region).name.toUpperCase() }}
+          </label>
+          <div>
+            <span v-for="(link, index) in region.links">
+              <!-- <outbound-link :href="link.link" :addon="false" :title="link.link">
+                <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
+              </outbound-link> -->
+              <outbound-icon :href="link.link" :type="link.icon.type" :size="'2rem'" :title="link.link" />
+            </span>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
+  <div class="goto goto-yellow" v-if="party">
+    <h3>Pomožte doplnit tuto stránku</h3>
+    <p>Víte, kde najít chybějící informace? Dejte vědět. Stačí kliknout níže a vložit odkaz.</p>
+    <ul>
+      <li>
+        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="webové stránky">
+          <button class="button-plain yellow">Přidat další webové stránky</button>
+        </update-form>
+      </li>
+      <li>
+        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="sociální síť">
+          <button class="button-plain yellow">Přidat další sociální sítě</button>
+        </update-form>
+      </li>
+      <li>
+        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="podpora">
+          <button class="button-plain yellow">Přidat podporu od strany či hnutí</button>
+        </update-form>
+      </li>
+    </ul>
+    <p>Nebo pošlete e-mail na <outbound-link href="tip@programydovoleb.cz" title="e-mailový klient">tip@programydovoleb.cz</outbound-link> nebo na některé ze sociálních sítí.</p>
+  </div>
+  <share-block />
   <party-list v-if="dynamics" />
   <div class="goto">
     <router-link to="/">&larr; Zpět na úvodní stranu</router-link>

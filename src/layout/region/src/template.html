@@ -133,7 +133,7 @@
                   <div class="columns-3">
                     <div class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
                       <person-name :data="cand" />
-                      <div class="small" v-if="cand.party && cand.party.reg != (party ? party.reg : -1)">
+                      <div class="small" v-if="cand.party && (cand.party.reg != (party ? party.reg : -1) || !cand.party.reg)">
                         <party-link :data="cand.party" :breakpoint="1000" />
                       </div>
                     </div>

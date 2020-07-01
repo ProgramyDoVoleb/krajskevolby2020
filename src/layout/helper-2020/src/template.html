@@ -1,5 +1,18 @@
 <div class="overview">
   <h1>SEO</h1>
+  <collapsible-element label="Kraje">
+  <div v-for="(region, index) in $store.state.static.regions">
+    if ($parts[1] === "{{ region.hash }}") meta(<br>
+      "{{ region.name }} &middot; Krajské volby 2020 &middot; Programy do voleb",<br>
+      "{{ region.name }} zná již {{ $store.getters.candidatesInRegion(region.hash).length }} stran a koalic, které budou kandidovat v krajských volbách 2020:
+        <span v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          {{ party.short || party.name }}.
+        </span>
+      Seznam ještě není konečný, strany mají čas do 28. července na podání kandidátek.",<br>
+      "/social/kraje/{{ region.hash }}-2.jpg"<br>
+    );
+  </div>
+  </collapsible-element>
   <collapsible-element label="Kandidátky">
   <div v-for="(region, index) in $store.state.static.regions">
     <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
@@ -25,7 +38,7 @@
     </div>
   </div>
   </collapsible-element>
-  <collapsible-element label="Regiony">
+  <collapsible-element label="Rejstřík">
   <div v-for="(party, index) in $store.getters.allParties()">
     if ($parts[1] === "rejstrik" && $parts[2] === "{{ party.hash }}") meta(<br>
       "{{ party.short || party.name }} &middot; Krajské volby 2020",<br>

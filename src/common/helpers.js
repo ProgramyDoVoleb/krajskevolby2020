@@ -224,7 +224,8 @@ export function personData (item, i, party, route) {
   obj.name = p.name;
   obj.nameFull = p.nameFull;
 
-  obj.party = item.reg ? store.getters.party(item.reg) : undefined;
+  obj.party = (item.reg || item.phash) ? store.getters.party(item.reg || item.phash) : undefined;
+
   if (item.about) {
     obj.about = {
       full: item.about,

@@ -2,6 +2,8 @@ import LogoItem from '@/components/logo-item/do';
 import MapElement from '@/components/map/do';
 import PartyList from '@/components/party-list/do';
 import PersonAbout from "@/components/person-about/do";
+import TwitterFeed from "@/components/twitter/do";
+import {tw} from "@/components/twitter/helpers";
 
 import {betterURL} from "@/store/helpers";
 
@@ -19,7 +21,8 @@ export default {
 		LogoItem,
 		MapElement,
 		PersonAbout,
-		PartyList
+		PartyList,
+		TwitterFeed
 	},
 	methods: {
 		betterURL,
@@ -33,6 +36,7 @@ export default {
 		ga: function () {
 			this.$store.dispatch("ga", {title: this.party.name + " v krajských volbách"});
 			window.scrollTo(0, 0);
+			tw(this);
 		},
 		hovered: function (item) {
 			var link = this.$store.state.static.regions.find(x => x.nuts === item.area.nuts);
@@ -99,6 +103,16 @@ export default {
 
 			return list;
 		},
+		links: function () {
+			if (!this.party || !this.party.links || !this.party.links.globals) return undefined;
+
+			var obj = {
+				facebook: this.party.links.globals.find(x => x.icon.type === 'fb'),
+				twitter: this.party.links.globals.find(x => x.icon.type === 'tw')
+			}
+
+			return obj;
+		},
 		clickable: function () {
 			var list = [];
 
@@ -111,6 +125,9 @@ export default {
 			});
 
 			return list;
+		},
+		width: function () {
+			return (window.innerWidth > 450 ? 410 : window.innerWidth - 64)
 		}
 	},
 	mounted: function () {

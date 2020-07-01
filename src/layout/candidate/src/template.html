@@ -212,7 +212,7 @@
   </div>
   <div class="part" v-if="party && party.links && party.links.length > 0"><a name="odkazy"></a>
     <h2>
-      Odkazy
+      Webové stránky a sociální sítě
     </h2>
     <div v-if="party.links" :class="{'split-1-1': (links.facebook && !links.twitter) || (!links.facebook && links.twitter)}">
       <div :class="{flow: links.facebook && links.twitter}">
@@ -231,12 +231,46 @@
             </label>
             <div class="link-with-icon">
               <outbound-link :href="link.link" :addon="false" :title="link.link">
-                {{ link.content }}
+                <span v-if="link.icon.type === 'fb'">Facebook</span>
+                <span v-if="link.icon.type === 'tw'">Twitter</span>
+                <span v-if="link.icon.type === 'yt'">Youtube</span>
+                <span v-if="link.icon.type === 'ig'">Instagram</span>
+                <span v-if="link.icon.type === 'link'">Webová stránka</span>
+                <div class="small dimm">
+                  {{ link.content }}
+                </div>
               </outbound-link>
             </div>
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+  <div class="part" v-if="linksAdditional.length > 0">
+    <h2>Další užitečné odkazy</h2>
+    <div class="stats stats-icon">
+      <ul class="columns-2">
+        <li v-for="(item, index) in linksAdditional">
+          <label>
+            <img :src="item.link.icon.src" :alt="item.link.icon.name" class="link-icon">
+          </label>
+          <div class="link-with-icon">
+            <outbound-link :href="item.link.link" :addon="false" :title="item.link.link">
+              <!-- <span v-if="item.link.icon.type === 'fb'">Facebook</span>
+              <span v-if="item.link.icon.type === 'tw'">Twitter</span>
+              <span v-if="item.link.icon.type === 'yt'">Youtube</span>
+              <span v-if="item.link.icon.type === 'ig'">Instagram</span> -->
+              <span v-if="item.link.icon.type === 'link'">Webová stránka</span>
+              {{ item.party.short }}
+              &middot;
+              {{ region.name }}
+              <div class="small dimm">
+                {{ item.link.content }}
+              </div>
+            </outbound-link>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
   <copyright-element :data="party" v-if="party" />

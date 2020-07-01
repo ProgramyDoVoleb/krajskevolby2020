@@ -63,6 +63,34 @@ export default {
 
 			return obj;
 		},
+		linksAdditional: function () {
+			if (!this.party || !this.region) return [];
+
+			var list = [];
+
+			if (this.party.coalition) {
+				this.party.coalition.forEach(p => {
+					if (p.links && p.links.regional) {
+						var links = p.links.regional.filter(x => x.region === this.region.id);
+
+						links.forEach(linkSet => {
+							linkSet.links.forEach(link => {
+								if (!this.party.links.find(x => x.link === link.link)) list.push({
+									party: p,
+									link
+								});
+							});
+						});
+					}
+				});
+			}
+
+			if (this.party.support) {
+
+			}
+
+			return list;
+		},
 		width: function () {
 			return (window.innerWidth > 450 ? 410 : window.innerWidth - 64)
 		}

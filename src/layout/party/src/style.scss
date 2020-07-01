@@ -231,3 +231,35 @@ div + ul {
     color: #888;
   }
 }
+
+// flow
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+}
+
+.flow-item {
+  width: 100%;
+  height: 500px;
+}
+
+.flow .flow-item {
+  @media (min-width: 40rem) {
+    width: 50%;
+
+    & + .flow-item {
+      padding-left: 2rem;
+    }
+  }
+}
+
+.incidator {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  transform: translateY(.2em);
+  margin-right: .2em;
+}

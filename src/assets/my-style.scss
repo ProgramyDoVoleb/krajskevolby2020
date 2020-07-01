@@ -430,6 +430,27 @@ button, .button, .btn {
 	}
 }
 
+.stats-regions {
+	ul > li {
+		align-items: center;
+	}
+
+	label {
+		width: 10rem;
+		transform: translateY(.05em);
+	}
+
+	label + div {
+		text-align: right;
+		margin-bottom: -.15em;
+		transform: translateY(.15em);
+
+		& > span {
+			margin-left: .2em;
+		}
+	}
+}
+
 .z-1 {
 	position: relative;
 	z-index: 1;
