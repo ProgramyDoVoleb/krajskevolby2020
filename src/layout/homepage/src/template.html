@@ -1,9 +1,9 @@
 <div class="overview">
   <div class="part">
     <h1>Krajské volby 2020</h1>
-    <p class="lead">2. a 3. října se uskuteční krajské volby. Dnes jsme ve fázi, kdy se domlouvají koalice, připravují kandidátky a oznamují jejich lídři. <span v-if="$store.getters.allCandidates().length > 0">Prozatím je známo {{ getCalloutPartiesCount() }}&nbsp;kandidátek a na nich již {{ getCalloutPeopleCount() }}&nbsp;jmen.</span> Údaje se mohou často měnit, konečnou podobu a oficiální vyhlášení ČSÚ očekáváme v srpnu.</p>
+    <p class="lead">2. a 3. října se uskuteční krajské volby. Dnes jsme ve fázi, kdy se domlouvají koalice, připravují kandidátky a oznamují jejich lídři. <span v-if="$store.getters.allCandidates().length > 0">Prozatím je známo {{ getCalloutPartiesCount() }}&nbsp;kandidátek a na nich již {{ getCalloutPeopleCount() }}&nbsp;jmen.</span> Údaje se mohou často měnit, konečnou podobu a oficiální vyhlášení ČSÚ lze očekávat v půlce srpna. <br>Strany mají čas do 28. července (úterý) na podání kandidátky krajskému úřadu. <br><br>Vyberte si, který kraj vás zajímá. Barvy odkazují na stranu, jejiž je členem současný hejtman.</p>
     <div class="map-holder">
-      <map-element :width="$store.state.width" :clickable="clickableList" @select="clicked" />
+      <map-element :width="$store.state.width" :clickable="clickableList" :areas="areas" @select="clicked" />
     </div>
     <h2>Známé kandidátky podle krajů</h2>
     <div class="stats" v-if="dynamics">
@@ -65,4 +65,9 @@
     </div>
   </div>
   <share-block />
+  <div class="goto">
+    <router-link to="/velky-prehled">
+      Velký přehled ke krajským volbám
+    </router-link> &rarr;
+  </div>
 </div>

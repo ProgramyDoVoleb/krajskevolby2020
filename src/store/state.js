@@ -25,7 +25,8 @@ const state = {
   tick: 0,
   start: new Date().getTime(),
   width: 0,
-  root: 'https://data.polist.cz/'
+  root: 'https://data.polist.cz/',
+  server: 'https://data.polist.cz/'
 };
 
 export default state;

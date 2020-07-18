@@ -119,7 +119,6 @@ export default {
 			}
 		},
 		resize: function () {
-			console.log(1);
 			this.widthValue = this.width || 256;
 			this.heightValue = Math.round(this.widthValue / 256 * 149);
 		},

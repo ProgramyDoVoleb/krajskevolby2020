@@ -1,116 +1,160 @@
 <div class="overview">
   <h1>SEO</h1>
   <collapsible-element label="Kraje">
-  <div v-for="(region, index) in $store.state.static.regions">
-    if ($parts[1] === "{{ region.hash }}") meta(<br>
-      "{{ region.name }} &middot; Krajské volby 2020 &middot; Programy do voleb",<br>
-      "{{ region.name }} zná již {{ $store.getters.candidatesInRegion(region.hash).length }} stran a koalic, které budou kandidovat v krajských volbách 2020:
-        <span v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-          {{ party.short || party.name }}.
-        </span>
-      Seznam ještě není konečný, strany mají čas do 28. července na podání kandidátek.",<br>
-      "/social/kraje/{{ region.hash }}-2.jpg"<br>
-    );
-  </div>
+    <button @click="copy('.c1')">Kraje</button>
+    <div class="copy c1">
+      &lt;?php
+      <br><br>
+      $parts = explode("/", $_SERVER[REQUEST_URI]);
+      <br><br>
+      <div v-for="(region, index) in $store.state.static.regions">
+        if ($parts[1] === "{{ region.hash }}") meta(<br>
+          "{{ region.name }} &middot; Krajské volby 2020 &middot; Programy do voleb",<br>
+          "{{ region.name }} zná již {{ $store.getters.candidatesInRegion(region.hash).length }} stran a koalic, které budou kandidovat v krajských volbách 2020:
+            <span v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+              {{ party.short || party.name }}.
+            </span>
+          Seznam ještě není konečný, strany mají čas do 28. července na podání kandidátek.",<br>
+          "/social/kraje/{{ region.hash }}-2.jpg"<br>
+        );
+        <br><br>
+      </div>
+      ?&gt;
+    </div>
   </collapsible-element>
   <collapsible-element label="Kandidátky">
-  <div v-for="(region, index) in $store.state.static.regions">
-    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-      if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}") meta(<br>
-    		"{{ party.short || party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
-        "<span v-if="party.coalition">Koalice stran
-          <span v-for="(member, index3) in party.coalition">
-            <span v-if="index3 > 0"> +</span>
-            <span>{{ member.short || member.name }}</span>
-          </span>.
-        </span><span v-if="party.leader">Lídrem je <person-name :data="party.leader" />.</span><span v-if="!party.leader">Lídr ještě nebyl vybrán.</span>
-        <span v-if="party.program">Program již byl uveřejněn.</span>
-        <span v-if="party.list">
-          <span v-if="party.list.length === 1">Známe jednoho dalšího kandidáta.</span>
-          <span v-if="party.list.length > 1 && party.list.length < 5">Známe {{ party.list.length }} kandidáty.</span>
-          <span v-if="party.list.length > 4">Známe již {{ party.list.length }} kandidátů.</span>
-        </span>
-        <span v-if="!party.program">Program ještě není znám.</span>
-        Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
-        ",<br>
-    		"/social/kraje/{{ region.hash }}-2.jpg"<br>
-    	);
+    <button @click="copy('.c2')">Kopírovat</button>
+    <div class="copy c2">
+      &lt;?php
+      <br><br>
+      $parts = explode("/", $_SERVER[REQUEST_URI]);
+      <br><br>
+      <div v-for="(region, index) in $store.state.static.regions">
+        <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}") meta(<br>
+        		"{{ party.short || party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
+            "<span v-if="party.coalition">Koalice stran
+              <span v-for="(member, index3) in party.coalition">
+                <span v-if="index3 > 0"> +</span>
+                <span>{{ member.short || member.name }}</span>
+              </span>.
+            </span><span v-if="party.leader">Lídrem je <person-name :data="party.leader" />.</span><span v-if="!party.leader">Lídr ještě nebyl vybrán.</span>
+            <span v-if="party.program">Program již byl uveřejněn.</span>
+            <span v-if="party.list">
+              <span v-if="party.list.length === 1">Známe jednoho dalšího kandidáta.</span>
+              <span v-if="party.list.length > 1 && party.list.length < 5">Známe {{ party.list.length }} kandidáty.</span>
+              <span v-if="party.list.length > 4">Známe již {{ party.list.length }} kandidátů.</span>
+            </span>
+            <span v-if="!party.program">Program ještě není znám.</span>
+            Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
+            ",<br>
+        		"/social/kraje/{{ region.hash }}-2.jpg"<br>
+        	);
+        </div>
+      </div>
+      ?&gt;
     </div>
-  </div>
   </collapsible-element>
   <collapsible-element label="Rejstřík">
-  <div v-for="(party, index) in $store.getters.allParties()">
-    if ($parts[1] === "rejstrik" && $parts[2] === "{{ party.hash }}") meta(<br>
-      "{{ party.short || party.name }} &middot; Krajské volby 2020",<br>
-      "Kde kandidují samostatně, kde v koalici a kde se domluvili na podpoře? Přehledně na jednom místě. Informace ke krajskám volbám 2020 postupně doplňujeme.
-      ",<br>
-      "/social/kraje/social-kde-kandiduji-3.png"<br>
-    );
-  </div>
+    <button @click="copy('.c3')">Kopírovat</button>
+    <div class="copy c3">
+      &lt;?php
+      <br><br>
+      $parts = explode("/", $_SERVER[REQUEST_URI]);
+      <br><br>
+      <div v-for="(party, index) in $store.getters.allParties()">
+        if ($parts[1] === "rejstrik" && $parts[2] === "{{ party.hash }}") meta(<br>
+          "{{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+          "Kde kandidují samostatně, kde v koalici a kde se domluvili na podpoře? Přehledně na jednom místě. Informace ke krajskám volbám 2020 postupně doplňujeme.
+          ",<br>
+          "/social/kraje/social-kde-kandiduji-3.png"<br>
+        );
+      </div>
+      ?&gt;
+    </div>
   </collapsible-element>
   <collapsible-element label="Lídři">
-  <div v-for="(region, index) in $store.state.static.regions">
-    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-      <div v-if="party.leader && party.leader.name">
-        if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "{{ betterURL(party.leader.name) }}") meta(<br>
-      		"<person-name :data="party.leader" /> &middot; lídr kandidátky {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
-          "{{ party.leader.name }} {{ party.leader.party && party.leader.party.hash != party.hash ? '(' + (party.leader.party.short || party.leader.party.name) + ')' : '' }} vede kandidátku '<span v-if="party.coalition">koalice stran
-            <span v-for="(member, index3) in party.coalition">
-              <span v-if="index3 > 0"> +</span>
-              <span>{{ member.short || member.name }}</span>
-            </span>
-          </span><span v-if="!party.coalition">{{ party.short || party.name}}</span>' do krajských voleb 2020.
-          <span v-if="party.program">Program již byl uveřejněn.</span>
-          Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
-          ",<br>
-      		"/social/kraje/{{ region.hash }}-2.jpg"<br>
-      	);
+    <button @click="copy('.c4')">Kopírovat</button>
+    <div class="copy c4">
+      &lt;?php
+      <br><br>
+      $parts = explode("/", $_SERVER[REQUEST_URI]);
+      <br><br>
+      <div v-for="(region, index) in $store.state.static.regions">
+        <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          <div v-if="party.leader && party.leader.name">
+            if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "{{ betterURL(party.leader.name) }}") meta(<br>
+          		"<person-name :data="party.leader" /> &middot; lídr kandidátky {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+              "{{ party.leader.name }} {{ party.leader.party && party.leader.party.hash != party.hash ? '(' + (party.leader.party.short || party.leader.party.name) + ')' : '' }} vede kandidátku '<span v-if="party.coalition">koalice stran
+                <span v-for="(member, index3) in party.coalition">
+                  <span v-if="index3 > 0"> +</span>
+                  <span>{{ member.short || member.name }}</span>
+                </span>
+              </span><span v-if="!party.coalition">{{ party.short || party.name}}</span>' do krajských voleb 2020.
+              <span v-if="party.program">Program již byl uveřejněn.</span>
+              Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
+              ",<br>
+          		"/social/kraje/{{ region.hash }}-2.jpg"<br>
+          	);
+          </div>
+        </div>
       </div>
+      ?&gt;
     </div>
-  </div>
   </collapsible-element>
   <collapsible-element label="Programy">
-  <div v-for="(region, index) in $store.state.static.regions">
-    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-      <div v-if="party.program">
-        if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "volebni-program") meta(<br>
-      		"Volební program &middot; {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
-          "Projděte si program '{{ party.short || party.name}}' pro {{ region.name }} do krajských voleb 2020 a porovnejte ho s ostatními. V kraji kandiduje dalších {{ $store.getters.candidatesInRegion(region.hash).length - 1 }} stran nebo koalic.
-          Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
-          ",<br>
-      		"/social/kraje/{{ region.hash }}-2.jpg"<br>
-      	);
+    <button @click="copy('.c5')">Kopírovat</button>
+    <div class="copy c5">
+      &lt;?php
+      <br><br>
+      $parts = explode("/", $_SERVER[REQUEST_URI]);
+      <br><br>
+      <div v-for="(region, index) in $store.state.static.regions">
+        <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          <div v-if="party.program">
+            if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "volebni-program") meta(<br>
+          		"Volební program &middot; {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+              "Projděte si program '{{ party.short || party.name}}' pro {{ region.name }} do krajských voleb 2020 a porovnejte ho s ostatními. V kraji kandiduje dalších {{ $store.getters.candidatesInRegion(region.hash).length - 1 }} stran nebo koalic.
+              Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
+              ",<br>
+          		"/social/kraje/{{ region.hash }}-2.jpg"<br>
+          	);
+          </div>
+        </div>
       </div>
+      ?&gt;
     </div>
-  </div>
   </collapsible-element>
   <h2>Sitemap</h2>
   <collapsible-element label="Vše">
-  <div v-for="(region, index) in $store.state.static.regions">
-    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-      <code>
-        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
-      </code>
+    <button @click="copy('.s1')">Sitemap</button>
+    <div class="copy s1">
+      <div v-for="(region, index) in $store.state.static.regions">
+        <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          <code>
+            &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+          </code>
+        </div>
+      </div>
+      <div v-for="(party, index) in $store.getters.allParties()">
+        <code>
+          &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz/rejstrik/{{ party.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+        </code>
+      </div>
+      <div v-for="(region, index) in $store.state.static.regions">
+        <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          <code v-if="party.leader && party.leader.name">
+            &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link + '/' + party.leader.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+          </code>
+        </div>
+      </div>
+      <div v-for="(region, index) in $store.state.static.regions">
+        <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          <code v-if="party.program">
+            &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link}}/volebni-program&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
+          </code>
+        </div>
+      </div>
     </div>
-  </div>
-  <div v-for="(party, index) in $store.getters.allParties()">
-    <code>
-      &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz/rejstrik/{{ party.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
-    </code>
-  </div>
-  <div v-for="(region, index) in $store.state.static.regions">
-    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-      <code v-if="party.leader && party.leader.name">
-        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link + '/' + party.leader.hash }}&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
-      </code>
-    </div>
-  </div>
-  <div v-for="(region, index) in $store.state.static.regions">
-    <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-      <code v-if="party.program">
-        &lt;url&gt;&lt;loc&gt;https://krajskevolby2020.programydovoleb.cz{{ party.link}}/volebni-program&lt;/loc&gt;&lt;lastmod&gt;2020-06-11&lt;/lastmod&gt;&lt;changefreq&gt;weekly&lt;/changefreq&gt;&lt;/url&gt;
-      </code>
-    </div>
-  </div>
   </collapsible-element>
 </div>

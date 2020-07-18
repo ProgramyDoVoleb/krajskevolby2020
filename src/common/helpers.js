@@ -201,12 +201,17 @@ export function processLinks (links) {
     checkDomains('instagram.com', 'ig', 'Instagram');
     checkDomains('wikipedia.org', 'wiki', 'Wikipedia');
     checkDomains('hlidac-statu.cz', 'hlidac-statu', 'Hlídač státu');
+    checkDomains('polist.cz', 'polist', 'Polist.cz');
 
     if (item.icon) {
       link.icon.type = item.icon;
     }
 
     link.icon.src = '/static/icon/' + link.icon.type + '.svg';
+
+    if (link.content.length > 40) {
+      link.content = link.content.substring(0, 40) + '...';
+    }
 
     if (item.label) link.content = item.label;
 

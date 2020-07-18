@@ -1,7 +1,12 @@
 <div class="party-detail">
-  <div class="part" v-if="party">
+  <div class="part">
+    <div class="party-header-logo center" v-if="party.logo">
+      <div class="logo-holder-2">
+        <logo-item :data="party" :size="{small: 6, large: 6, breakpoint: 40}" />
+      </div>
+    </div>
     <h1>{{ party.short }}</h1>
-    <p class="lead">{{ party.name }} v krajských volbách 2020</p>
+    <p class="lead" v-html="perex"></p>
     <div class="map-holder">
       <map-element :width="$store.state.width" :areas="areas" :clickable="clickable" @select="clicked" v-on:hover="hovered" />
       <div class="map-about" v-if="hoveredItem && $store.state.width > 640" :style="{left: hoveredItem.position.x + 'px', top: hoveredItem.position.y + 'px'}" :class="{hoveredItemVisible}">
@@ -144,6 +149,7 @@
                 <span v-if="link.icon.type === 'ig'">Instagram</span>
                 <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
                 <span v-if="link.icon.type === 'link'">Webová stránka</span>
+                <span v-if="link.icon.type === 'polist'">Historie strany ve volbách &middot; Polist.cz</span>
                 <div class="small dimm">
                   {{ link.content }}
                 </div>
@@ -153,64 +159,8 @@
         </ul>
       </div>
     </div>
-    <!-- <div class="stats stats-icon">
-      <ul class="columns-2">
-        <li v-for="(link, index) in party.links.globals">
-          <label>
-            <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
-          </label>
-          <div class="link-with-icon">
-            <outbound-link :href="link.link" :addon="false" :title="link.link">
-              <span v-if="link.icon.type === 'fb'">Facebook</span>
-              <span v-if="link.icon.type === 'tw'">Twitter</span>
-              <span v-if="link.icon.type === 'yt'">Youtube</span>
-              <span v-if="link.icon.type === 'ig'">Instagram</span>
-              <span v-if="link.icon.type === 'link'">Webová stránka</span>
-              <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
-              <div class="small dimm">
-                {{ link.content }}
-              </div>
-            </outbound-link>
-          </div>
-        </li>
-      </ul>
-    </div> -->
   </div>
-  <!-- <div class="part">
-    <h2>Krajské organizace online</h2>
-    <div>
-      <ul class="columns-2">
-        <li v-for="(region, ix) in party.links.regional" v-if="region.links.length > 0">
-          <strong class="dimm small">
-            {{ $store.state.static.regions.find(x => x.id === region.region).name.toUpperCase() }}
-          </strong>
-          <div class="stats stats-icon">
-            <ul>
-              <li v-for="(link, index) in region.links">
-                <label>
-                  <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
-                </label>
-                <div class="link-with-icon">
-                  <outbound-link :href="link.link" :addon="false" :title="link.link">
-                    <span v-if="link.icon.type === 'fb'">Facebook</span>
-                    <span v-if="link.icon.type === 'tw'">Twitter</span>
-                    <span v-if="link.icon.type === 'yt'">Youtube</span>
-                    <span v-if="link.icon.type === 'ig'">Instagram</span>
-                    <span v-if="link.icon.type === 'link'">Webová stránka</span>
-                    <span v-if="link.icon.type === 'wiki'">Wikipedia</span>
-                    <div class="small dimm">
-                      {{ link.content }}
-                    </div>
-                  </outbound-link>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div> -->
-  <div class="part">
+  <div class="part" v-if="activity.length > 1">
     <h2>Krajské organizace online</h2>
     <div class="stats stats-regions">
       <ul class="columns-2">
@@ -235,17 +185,17 @@
     <p>Víte, kde najít chybějící informace? Dejte vědět. Stačí kliknout níže a vložit odkaz.</p>
     <ul>
       <li>
-        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="webové stránky">
+        <update-form :region="-1" :party="party" :index="-1" :hints="false" notes="webové stránky">
           <button class="button-plain yellow">Přidat další webové stránky</button>
         </update-form>
       </li>
       <li>
-        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="sociální síť">
+        <update-form :region="-1" :party="party" :index="-1" :hints="false" notes="sociální síť">
           <button class="button-plain yellow">Přidat další sociální sítě</button>
         </update-form>
       </li>
       <li>
-        <update-form :region="region" :party="party" :index="-1" :hints="false" notes="podpora">
+        <update-form :region="-1" :party="party" :index="-1" :hints="false" notes="podpora">
           <button class="button-plain yellow">Přidat podporu od strany či hnutí</button>
         </update-form>
       </li>

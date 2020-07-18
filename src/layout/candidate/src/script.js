@@ -68,26 +68,21 @@ export default {
 
 			var list = [];
 
-			if (this.party.coalition) {
-				this.party.coalition.forEach(p => {
-					if (p.links && p.links.regional) {
-						var links = p.links.regional.filter(x => x.region === this.region.id);
+			var party = this.$store.getters.party(this.party.hash);
 
-						links.forEach(linkSet => {
-							linkSet.links.forEach(link => {
-								if (!this.party.links.find(x => x.link === link.link)) list.push({
-									party: p,
-									link
-								});
-							});
-						});
-					}
-				});
+			if (party) {
+				this.processLinksAll([party], list);
+			}
+
+			if (this.party.coalition) {
+				this.processLinksAll(this.party.coalition, list);
 			}
 
 			if (this.party.support) {
-
+				this.processLinksAll(this.party.support, list);
 			}
+
+			list.sort((a, b) => a.link.icon.type.localeCompare(b.link.icon.type, 'cs'))
 
 			return list;
 		},
@@ -96,6 +91,22 @@ export default {
 		}
 	},
 	methods: {
+		processLinksAll: function (input, output) {
+			input.forEach(p => {
+				if (p.links && p.links.regional) {
+					var links = p.links.regional.filter(x => x.region === this.region.id);
+
+					links.forEach(linkSet => {
+						linkSet.links.forEach(link => {
+							if (!this.party.links || !this.party.links.find(x => x.link === link.link)) output.push({
+								party: p,
+								link
+							});
+						});
+					});
+				}
+			});
+		},
 		processLinks,
 		betterURL,
 		ga: function (top) {

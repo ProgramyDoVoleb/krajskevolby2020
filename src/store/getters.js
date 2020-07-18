@@ -304,6 +304,8 @@ getters.allParties = (state, getters) => () => {
 
     if (reg) {
       party = getters.getPartyByReg(reg);
+      if (!party.links) party.links = {global: []};
+      party.links.global.push('https://polist.cz/rejstrik/' + reg + '-' + party.hash);
     } else {
       party = getters.getPartyByHash(data.hash || betterURL(data.name));
     }
@@ -520,6 +522,8 @@ getters.allCandidates = (state, getters) => () => {
       };
 
       var party = getters.party(cand.reg);
+
+      if (!party && (cand.hash || cand.name)) party = getters.party(cand.hash || betterURL(cand.name));
 
       obj.name = processName(cand, party, getters);
       obj.short = processShort(cand, party);

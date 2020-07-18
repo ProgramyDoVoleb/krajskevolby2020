@@ -35,6 +35,14 @@ export default {
 	},
 	methods: {
 		processLinks,
-		betterURL
+		betterURL,
+		copy: function (q) {
+		  const el = document.createElement('textarea');
+		  el.value = document.querySelector(q).innerText;
+		  document.body.appendChild(el);
+		  el.select();
+		  document.execCommand('copy');
+		  // document.body.removeChild(el);
+		}
 	}
 };

@@ -7,6 +7,7 @@ import LayoutCandidate from '@/layout/candidate/do';
 import LayoutParty from '@/layout/party/do';
 import LayoutPerson from '@/layout/person/do';
 import LayoutProgram from '@/layout/program/do';
+import LayoutOverview from '@/layout/overview/do';
 
 import LayoutPrevious2016 from '@/layout/previous2016/do';
 import LayoutPrevious2016Region from '@/layout/previous2016/region/do';
@@ -40,6 +41,11 @@ const router = new Router({
       path: '/helper-2020',
       name: 'Helper2020',
       component: LayoutHelper
+    },
+    {
+      path: '/velky-prehled',
+      name: 'Overview',
+      component: LayoutOverview
     },
     {
       path: '/2016/:id',

@@ -1,0 +1,159 @@
+<div class="overview">
+  <div class="part">
+    <h1>Velký přehled pro Krajské volby 2020</h1>
+    <p class="center">Nejen pro představu, co všechno již víme a co je nutné ještě dohledat. Pokud cokoli z toho víte, klikněte na tlačítko, vložte odkaz, pomůžete. Tabulka se na mobily nevejde, lze ale posouvat doprava.</p>
+  </div>
+  <div class="part">
+    <div class="scrollable">
+      <table>
+        <thead class="small">
+          <tr>
+            <th>Strany</th>
+            <th>Jméno</th>
+            <th>Lídr</th>
+            <th>Fotka</th>
+            <th>Lidé</th>
+            <th>Program</th>
+            <th>Data</th>
+            <th><icon-element src="/static/icon/link.svg" :size="'1.5rem'"></icon-element></th>
+            <th><icon-element src="/static/icon/fb.svg" :size="'1.5rem'"></icon-element></th>
+            <th><icon-element src="/static/icon/tw.svg" :size="'1.5rem'"></icon-element></th>
+            <th><icon-element src="/static/icon/ig.svg" :size="'1.5rem'"></icon-element></th>
+            <th>Upravit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="(region, ir) in regions">
+            <tr>
+              <th colspan="12">{{ region.name }}</th>
+            </tr>
+            <tr v-for="(cand, index) in $store.getters.candidatesInRegion(region.hash)">
+              <td v-if="cand.coalition">
+                <template v-for="(member, im) in cand.coalition">
+                  <router-link :to="'/rejstrik/' + member.hash" class="no-link"><logo-item :data="member" :size="'1.25rem'" /></router-link>
+                </template>
+              </td>
+              <td v-if="!cand.coalition">
+                <router-link :to="'/rejstrik/' + cand.hash" class="no-link"><logo-item :data="cand" :size="'1.25rem'" /></router-link>
+              </td>
+
+              <td>
+                <router-link :to="cand.link">
+                  {{ cand.name }}
+                </router-link>
+              </td>
+
+              <!-- lídr -->
+
+              <td v-if="cand.leader" class="small">
+                {{ cand.leader.name }}
+              </td>
+              <td v-if="!cand.leader">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- fotka lídra -->
+
+              <td v-if="cand.leader && cand.leader.photo">
+                <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+              <td v-if="!cand.leader || !cand.leader.photo">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- lidé -->
+
+              <td class="small">
+                {{ (cand.list || []).length + (cand.leader ? 1 : 0) }}
+              </td>
+
+              <!-- program -->
+
+              <td v-if="cand.program">
+                <router-link :to="cand.link + '/volebni-program'" class="no-link">
+                  <icon-element src="/static/icon/icon-loupe.svg" :size="'1.25rem'" class="icon-no-background" />
+                </router-link>
+              </td>
+              <td v-if="!cand.program">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- data -->
+
+              <td v-if="cand.data">
+                <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+              <td v-if="!cand.data">
+                <icon-element src="/static/icon/icon-false.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- web -->
+
+              <td v-if="cand.links && cand.links.find(x => x.icon.type === 'link')">
+                <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+              <td v-if="!cand.links || !cand.links.find(x => x.icon.type === 'link')">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- facebook -->
+
+              <td v-if="cand.links && cand.links.find(x => x.icon.type === 'fb')">
+                <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+              <td v-if="!cand.links || !cand.links.find(x => x.icon.type === 'fb')">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- twitter -->
+
+              <td v-if="cand.links && cand.links.find(x => x.icon.type === 'tw')">
+                <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+              <td v-if="!cand.links || !cand.links.find(x => x.icon.type === 'tw')">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- instagram -->
+
+              <td v-if="cand.links && cand.links.find(x => x.icon.type === 'ig')">
+                <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+              <td v-if="!cand.links || !cand.links.find(x => x.icon.type === 'ig')">
+                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- upravit -->
+
+              <td>
+                <update-form :region="region" :party="cand" :index="-1" :hints="false">
+                  <button class="button-plain yellow">Doplnit</button>
+                </update-form>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="part center">
+    <h2>Stáhnout data</h2>
+    <a :href="generateJSON" download="krajske-volby-2020.json" class="button" @click="ge">Stáhnout JSON</a>
+  </div>
+  <div class="goto goto-yellow">
+    <h3>Chybí na stránce další strana?</h3>
+    <p>Víte, kde najít chybějící informace? Dejte vědět. Stačí kliknout níže a vložit odkaz.</p>
+    <ul>
+      <li>
+        <update-form :region="-1" :party="-1" :index="-1" :hints="false" title="Přidat stranu">
+          <button class="button-plain yellow">Poslat odkaz</button>
+        </update-form>
+      </li>
+    </ul>
+    <p>Nebo pošlete e-mail na <outbound-link href="tip@programydovoleb.cz" title="e-mailový klient" :addon="false">tip@programydovoleb.cz</outbound-link> nebo na některé ze sociálních sítí.</p>
+  </div>
+  <share-block />
+  <div class="goto">
+    <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
+  </div>
+</div>

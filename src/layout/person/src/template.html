@@ -9,20 +9,34 @@
         </div>
       </div>
       <div class="party-header-logo show-40rem">
-        <div class="logo-holder-2" v-if="party.logo">
-          <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
-        </div>
-        <div class="logo-holder-2" v-if="!party.logo && party.coalition">
-          <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 4, large: 6, breakpoint: 40}" />
-        </div>
-        <div class="logo-holder-tiny center" v-if="party.logo && party.coalition">
-          <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
-        </div>
+        <template v-if="!person.party || person.party.reg === 99">
+          <div class="logo-holder-2" v-if="party.logo">
+            <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
+          </div>
+          <div class="logo-holder-2" v-if="!party.logo && party.coalition">
+            <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 4, large: 6, breakpoint: 40}" />
+          </div>
+          <div class="logo-holder-tiny center" v-if="party.logo && party.coalition">
+            <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
+          </div>
+        </template>
+        <template v-if="person.party && person.party.reg != 99">
+          <div class="logo-holder-2">
+            <logo-item :data="person.party" :size="{small: 6, large: 10, breakpoint: 40}" />
+          </div>
+          <div class="logo-holder-tiny center" v-if="!party.logo && party.coalition">
+            <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
+          </div>
+          <div class="logo-holder-tiny center" v-if="party.logo && person.party.hash != party.hash">
+            <logo-item :data="party" :size="{small: 1.5, large: 2, breakpoint: 40}" />
+          </div>
+        </template>
       </div>
       <h1>
         <person-name :data="person" />
       </h1>
       <div class="center">
+        na kandidátce<br>
         <label-with-dot :color="party.color">
           <span>
             <router-link :to="party.link">{{ party.name }}</router-link>

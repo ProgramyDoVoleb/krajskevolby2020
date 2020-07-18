@@ -159,6 +159,24 @@ export default {
 			if (this.$store.state.dynamic.callout.length === 0) return false;
 
 			return true;
+		},
+		areas: function () {
+			var list = [];
+
+			var colors = ["#2f2f65", "#f59231", "#aaa", "#2f2f65", "#eb343f", "#BD2C65", "#f59231", "#f59231", "#f59231", "#2f2f65", "#2f2f65", "#fec92f", "#2f2f65"];
+
+			this.$store.state.static.regions.forEach((region, index) => {
+
+					var obj = {};
+
+					obj.color = colors[index];
+					obj.opacity = .66;
+					obj.nuts = region.nuts;
+
+					list.push(obj);
+			});
+
+			return list;
 		}
 	},
 	mounted: function () {

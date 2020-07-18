@@ -210,21 +210,21 @@
       <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name" class="button">Program na webu &rarr;</outbound-link>
     </p>
   </div>
-  <div class="part" v-if="party && party.links && party.links.length > 0"><a name="odkazy"></a>
+  <div class="part" v-if="party && party.links && party.links.length > 0 || linksAdditional.length > 0"><a name="odkazy"></a>
     <h2>
       Webové stránky a sociální sítě
     </h2>
-    <div v-if="party.links" :class="{'split-1-1': (links.facebook && !links.twitter) || (!links.facebook && links.twitter)}">
-      <div :class="{flow: links.facebook && links.twitter}">
-        <div class="flow-item" v-if="links.twitter">
+    <div :class="{'split-1-1': links && ((links.facebook && !links.twitter) || (!links.facebook && links.twitter))}">
+      <div :class="{flow: links && links.facebook && links.twitter}">
+        <div class="flow-item" v-if="links && links.twitter">
           <twitter-feed :link="links.twitter.link + '?ref_src=twsrc%5Etfw'" :name="party.name" :key="party.hash"></twitter-feed>
         </div>
-        <div class="flow-item" v-if="links.facebook">
+        <div class="flow-item" v-if="links && links.facebook">
           <iframe :src="'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(links.facebook.link) + '&tabs=timeline&width=' + width + '&height=500&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true'" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
         </div>
       </div>
       <div class="stats stats-icon">
-        <ul :class="{'columns-2': (links.facebook && links.twitter) || (!links.facebook && !links.twitter)}">
+        <ul :class="{'columns-2': links && ((links.facebook && links.twitter) || (!links.facebook && !links.twitter))}">
           <li v-for="(link, index) in party.links">
             <label>
               <img :src="link.icon.src" :alt="link.icon.name" class="link-icon">
@@ -242,11 +242,32 @@
               </outbound-link>
             </div>
           </li>
+          <template v-if="linksAdditional.length > 0">
+            <li v-if="links">
+              <h4>Další krajské odkazy</h4>
+            </li>
+            <li v-for="(item, index) in linksAdditional">
+              <label>
+                <img :src="item.link.icon.src" :alt="item.link.icon.name" class="link-icon">
+              </label>
+              <div class="link-with-icon">
+                <outbound-link :href="item.link.link" :addon="false" :title="item.link.link">
+                  <span v-if="item.link.icon.type === 'link'">Webová stránka</span>
+                  {{ item.party.short }}
+                  &middot;
+                  {{ region.name }}
+                  <div class="small dimm">
+                    {{ item.link.content }}
+                  </div>
+                </outbound-link>
+              </div>
+            </li>
+          </template>
         </ul>
       </div>
     </div>
   </div>
-  <div class="part" v-if="linksAdditional.length > 0">
+  <!-- <div class="part" v-if="linksAdditional.length > 0">
     <h2>Další užitečné odkazy</h2>
     <div class="stats stats-icon">
       <ul class="columns-2">
@@ -256,10 +277,6 @@
           </label>
           <div class="link-with-icon">
             <outbound-link :href="item.link.link" :addon="false" :title="item.link.link">
-              <!-- <span v-if="item.link.icon.type === 'fb'">Facebook</span>
-              <span v-if="item.link.icon.type === 'tw'">Twitter</span>
-              <span v-if="item.link.icon.type === 'yt'">Youtube</span>
-              <span v-if="item.link.icon.type === 'ig'">Instagram</span> -->
               <span v-if="item.link.icon.type === 'link'">Webová stránka</span>
               {{ item.party.short }}
               &middot;
@@ -272,7 +289,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </div> -->
   <copyright-element :data="party" v-if="party" />
   <div class="goto goto-yellow" v-if="party">
     <h3>Pomožte doplnit tuto stránku</h3>

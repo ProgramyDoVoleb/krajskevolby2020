@@ -3,6 +3,7 @@ import MapElement from '@/components/map/do';
 import PartyList from '@/components/party-list/do';
 import PersonAbout from "@/components/person-about/do";
 import TwitterFeed from "@/components/twitter/do";
+import UpdateForm from "@/components/update-form/do";
 import {tw} from "@/components/twitter/helpers";
 
 import {betterURL} from "@/store/helpers";
@@ -22,7 +23,8 @@ export default {
 		MapElement,
 		PersonAbout,
 		PartyList,
-		TwitterFeed
+		TwitterFeed,
+		UpdateForm
 	},
 	methods: {
 		betterURL,
@@ -128,6 +130,50 @@ export default {
 		},
 		width: function () {
 			return (window.innerWidth > 450 ? 410 : window.innerWidth - 64)
+		},
+		perex: function () {
+			var str = [];
+
+			if (this.party && this.activity) {
+				str.push("<em>" + this.party.name + "</em>");
+				str.push("v&nbsp;krajských volbách 2020:");
+				str.push("Kandiduje");
+
+				if (this.activity.length === 1) str.push("v&nbsp;jednom kraji,");
+				if (this.activity.length > 1 && this.activity.length < 5) str.push("ve " + this.activity.length + "&nbsp;krajích,");
+				if (this.activity.length > 4 && this.activity.length < 12) str.push("v&nbsp;" + this.activity.length + "&nbsp;krajích,");
+				if (this.activity.length > 11) str.push("ve " + this.activity.length + "&nbsp;krajích,");
+
+				var types = [0, 0, 0];
+				var leadCount = 0;
+
+				this.activity.forEach(act => {
+					types[act.type]++;
+
+					if (act.party && act.party.leader && act.party.leader.party) {
+						if (act.party.leader.party.hash === this.party.hash) leadCount++;
+					}
+				});
+
+				var typesString = [];
+
+				types.forEach((t, i) => {
+					if (t > 0 && i === 0) typesString.push(t + "&times;&nbsp;samostatně");
+					if (t > 0 && i === 1) typesString.push(t + "&times;&nbsp;v koalici");
+					if (t > 0 && i === 2) typesString.push(t + "&times;&nbsp;podporuje jinou kandidátku");
+				});
+
+				str.push(typesString.join(", ") + ".");
+
+				if (leadCount === 0) str.push("<em>" + (this.party.short || this.party.name) + "</em> nemá nikoho v&nbsp;čele krajské kandidátky.");
+				if (leadCount === 1) str.push("Jeden člen <em>" + (this.party.short || this.party.name) + "</em> je na pozici lídra krajské kandidátky.");
+				if (leadCount > 1 && leadCount < 5) str.push(leadCount + "&nbsp;členové <em>" + (this.party.short || this.party.name) + "</em> jsou lídry krajské kandidátky.");
+				if (leadCount > 4) str.push(leadCount + "&nbsp;členů <em>" + (this.party.short || this.party.name) + "</em> je lídrem krajské kandidátky.");
+			}
+
+			str.push("Níže je přehled krajů, lídrů kandidátky a&nbsp;hlavních i&nbsp;regionálních odkazů na webové stránky a&nbsp;sociální sítě.")
+
+			return str.join(" ");
 		}
 	},
 	mounted: function () {
