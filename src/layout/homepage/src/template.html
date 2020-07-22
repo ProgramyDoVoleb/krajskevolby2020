@@ -1,11 +1,11 @@
 <div class="overview">
   <div class="part">
-    <h1>Krajské volby 2020</h1>
-    <p class="lead">2. a 3. října se uskuteční krajské volby. Dnes jsme ve fázi, kdy se domlouvají koalice, připravují kandidátky a oznamují jejich lídři. <span v-if="$store.getters.allCandidates().length > 0">Prozatím je známo {{ getCalloutPartiesCount() }}&nbsp;kandidátek a na nich již {{ getCalloutPeopleCount() }}&nbsp;jmen.</span> Údaje se mohou často měnit, konečnou podobu a oficiální vyhlášení ČSÚ lze očekávat v půlce srpna. <br>Strany mají čas do 28. července (úterý) na podání kandidátky krajskému úřadu. <br><br>Vyberte si, který kraj vás zajímá. Barvy odkazují na stranu, jejiž je členem současný hejtman.</p>
+    <h1>Krajské volby, 2. a 3. října</h1>
+    <p class="lead">Na tomto webu zjistíte, kdo kandiduje ve vašem kraji, kdo je lídrem kandidátky, užitečné odkazy na volební weby a sociální sítě a také volební programy.</p>
     <div class="map-holder">
       <map-element :width="$store.state.width" :clickable="clickableList" :areas="areas" @select="clicked" />
     </div>
-    <h2>Známé kandidátky podle krajů</h2>
+    <h2>Který kraj vás zajímá?</h2>
     <div class="stats" v-if="dynamics">
       <ul class="columns-3">
         <li v-for="(region, index) in $store.state.static.regions">
@@ -19,8 +19,13 @@
     </div>
   </div>
   <div class="part">
-    <h2>Strany ve volbách</h2>
+    <h2>Strany v jednotlivých krajích</h2>
     <party-list />
+  </div>
+  <div class="part">
+    <div class="goto">
+      <router-link to="/anketa/strany">Hlasujte v anketě pro vaši stranu</router-link> &rarr;
+    </div>
   </div>
   <div class="part">
     <router-link to="/dotaznik-ke-krajskym-volbam">
@@ -28,7 +33,7 @@
     </router-link>
   </div>
   <div class="part">
-    <h1>Výsledky minulých voleb</h1>
+    <h1>Jak dopadly minulé volby</h1>
     <p class="lead">Zajímají vás výsledky krajských voleb z roku 2016, kdo vyhrál, kdo se stal zastupitelem, kdo hejtmanem a jak vypadá Rada kraje? Nebo si chcete projít programové prohlášení?</p>
     <div class="btns center">
       <router-link class="button" to="/2016">Přehled za rok 2016</router-link>

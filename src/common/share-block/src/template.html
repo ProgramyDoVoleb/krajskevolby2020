@@ -1,14 +1,14 @@
 <div class="share-block">
 	<aside>
 		<div class="goto">
-			<span class="hide-40rem">Sdílet:</span>
+			<span class="hide-40rem">{{ text || 'Sdílet:' }}</span>
 			<div class="split-1-1">
 				<div class="split-2-3">
-					<h3>Sdílejte stránku:</h3>
+					<h3>{{ text || 'Sdílejte stránku:' }}</h3>
 					<div class="icons">
-						<outbound-icon :href="'https://www.facebook.com/sharer/sharer.php?u=https://programydovoleb.cz' + $route.fullPath" type="fb" :title="'Sdílení ' + $route.fullPath" category="share" />
-						<outbound-icon :href="'http://twitter.com/share?text=' + encodeURIComponent('Užitečné informace k volbám') + '&url=' + encodeURIComponent('https://programydovoleb.cz' + $route.fullPath) + '&hashtags=volby'" type="tw" :title="'Sdílení ' + $route.fullPath" category="share" />
-						<outbound-icon :href="'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent('https://programydovoleb.cz' + $route.fullPath) + '&title=' + encodeURIComponent('Užitečné informace k volbám')" type="linkedin" :title="'Sdílení ' + $route.fullPath" category="share" />
+						<outbound-icon :href="'https://www.facebook.com/sharer/sharer.php?u=' + this.link" type="fb" :title="'Sdílení ' + this.link" category="share" />
+						<outbound-icon :href="'http://twitter.com/share?text=' + encodeURIComponent('Užitečné informace k volbám') + '&url=' + encodeURIComponent(this.link) + '&hashtags=volby'" type="tw" :title="'Sdílení ' + this.link" category="share" />
+						<outbound-icon :href="'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(this.link) + '&title=' + encodeURIComponent('Užitečné informace k volbám')" type="linkedin" :title="'Sdílení ' + this.link" category="share" />
 					</div>
 				</div>
 				<div class="split-1-1">

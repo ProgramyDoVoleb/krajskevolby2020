@@ -1,0 +1,39 @@
+.quit-item-flex {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  pointer-events: none;
+}
+
+img {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: .5em;
+  background: #fff;
+}
+
+button {
+  display: block;
+  width: 100%;
+  border-color: transparent;
+  text-align: left;
+
+  .selected > & {
+    background: rgba(#1dbb00, .1);
+
+    &.against {
+      background: rgba(#f00, .1);
+    }
+
+    &.false {
+      background: #eee;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

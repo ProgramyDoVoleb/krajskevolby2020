@@ -334,6 +334,9 @@
     <p>Nebo pošlete e-mail na <outbound-link href="tip@programydovoleb.cz" title="e-mailový klient">tip@programydovoleb.cz</outbound-link> nebo na některé ze sociálních sítí.</p>
   </div>
   <not-found v-if="!party" :region="region" :parties="parties" />
+  <div class="goto" v-if="region && party">
+    <router-link :to="'/anketa/strany?kde=' + region.hash + '&koho=' + party.hash">Hlasujte v anketě pro <em>{{ party.name }}</em></router-link> &rarr;
+  </div>
   <share-block v-if="party" />
   <div class="goto goto-dimm">
     <h4>Vybrat jinou stranu či koalici</h4>

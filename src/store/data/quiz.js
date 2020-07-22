@@ -1,10 +1,10 @@
-{
+export default {
   demographics: {
     region: null,
     age: null,
     sex: null
   },
-  party: {
+  q2: {
     questions: [
       {
         question: 'Koho byste volili?',
@@ -31,12 +31,9 @@
         answer: [],
         optional: true
       }
-    ],
-    started: null,
-    completed: null,
-    token: null
+    ]
   },
-  hejtman: {
+  q3: {
     questions: [
       {
         question: 'Koho byste si přáli za hejtmana či hejtmanku?',
@@ -53,9 +50,6 @@
         answer: null,
         optional: true
       }
-    ],
-    started: null,
-    completed: null,
-    token: null
+    ]
   }
 }

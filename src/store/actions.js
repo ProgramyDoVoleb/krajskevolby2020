@@ -122,4 +122,32 @@ actions.fetchSource = function (context, payload) {
   }
 }
 
+actions.quizToken = function (content, payload) {
+  axios.get('https://krajskevolby2020.programydovoleb.cz/lib/app/api.php?action=vote/create&t=' + antiCache).then(response => {
+    if (payload && payload.onComplete) payload.onComplete(response.data);
+  });
+}
+
+actions.quizFetch = function (content, payload) {
+  axios.get('https://krajskevolby2020.programydovoleb.cz/lib/app/api.php?action=vote/fetch&id=' + payload.id + '&quiz=' + payload.quiz + '&t=' + antiCache).then(response => {
+    if (payload && payload.onComplete) payload.onComplete(response.data);
+  });
+}
+
+actions.quizStore = function (content, payload) {
+  var json = {};
+
+  json.quiz = payload.meta.quiz;
+  json.key = payload.meta.server.key;
+  json.lock = payload.meta.check;
+  json.token = payload.meta.server.token;
+  json.values = payload.values;
+
+  axios.post('https://krajskevolby2020.programydovoleb.cz/lib/app/api.php?action=vote/store&t=' + antiCache, json).then(response => {
+    console.log(response);
+
+    if (payload && payload.onComplete) payload.onComplete(response.data);
+  })
+}
+
 export default actions;

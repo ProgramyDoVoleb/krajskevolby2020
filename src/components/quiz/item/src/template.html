@@ -1,0 +1,12 @@
+<div class="quiz-item" :class="{selected}">
+	<button class="quiz-item-button" @click="handle_click" :class="type">
+		<div class="quit-item-flex">
+			<div class="quiz-item-logo">
+				<img :src="img">
+			</div>
+			<div class="quiz-item-content">
+				<slot />
+			</div>
+		</div>
+	</button>
+</div>

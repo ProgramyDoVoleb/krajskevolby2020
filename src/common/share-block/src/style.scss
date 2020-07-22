@@ -38,3 +38,7 @@ h3 {
     display: block;
   }
 }
+
+.share-block + .share-block {
+  margin-top: -1.8rem;
+}

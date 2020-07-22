@@ -1,0 +1,9 @@
+<div class="quiz-captcha">
+	<div class="quiz-captcha-block">
+		<button class="quiz-captcha-button" :class="{'selected': captcha[index] === true, tick}" @click="handle_click(index)" v-for="(c, index) in captcha">
+			<div class="quiz-captcha-content">
+				<img :src="'/static/icon/captcha-' + buttons[index].img + '.svg'">
+			</div>
+		</button>
+	</div>
+</div>

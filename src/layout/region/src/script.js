@@ -2,6 +2,7 @@ import LogoItem from '@/components/logo-item/do';
 import MapElement from '@/components/map/do';
 import PersonAbout from "@/components/person-about/do";
 import UpdateForm from "@/components/update-form/do";
+import PartyInList from "@/components/party-in-list/do";
 
 import {betterURL, beautifyDate, stripURLintoDomain, processLinks} from "@/common/helpers";
 
@@ -17,7 +18,8 @@ export default {
 		LogoItem,
 		MapElement,
 		PersonAbout,
-		UpdateForm
+		UpdateForm,
+		PartyInList
 	},
 	computed: {
 		width: function () {

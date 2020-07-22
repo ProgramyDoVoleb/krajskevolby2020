@@ -1,0 +1,84 @@
+<div class="quiz-vote">
+	<template v-if="data">
+		<div class="part">
+			<p class="center dimm">Uloženo</p>
+			<h1>Shrnutí</h1>
+			<p class="center max-35rem">Výsledky ankety budou zveřejněné v půlce září.</p>
+			<div class="parties">
+				<party-in-list
+					:party="parties.find(x => x.hash === data.vote)"
+					:glow="true">
+				</party-in-list>
+			</div>
+		</div>
+		<div class="part" v-if="yes.length > 0">
+			<div class="columns">
+				<div v-if="yes.length > 0">
+					<h4>Koalici si umím představit s:</h4>
+					<div class="parties">
+						<quiz-item
+							v-for="(party, index) in yes"
+			        :key="'party_yes_' + index"
+							:imgDefault="'/static/icon/icon-check.svg'"
+							@click="$router.push(party.link)">
+							{{ party.name }}
+							<div class="offset" v-if="party.coalition || party.leader">
+								<div v-if="party.coalition" :key="'m_' + ix" v-for="(member, ix) in party.coalition">
+									<party-link :data="member"></party-link>
+								</div>
+								<div v-if="party.leader">Lídr: <em>{{ party.leader.name }}</em></div>
+							</div>
+						</quiz-item>
+					</div>
+				</div>
+				<div v-if="no.length > 0">
+					<h4>V koalici by neměli být:</h4>
+					<div class="parties">
+						<quiz-item
+							v-for="(party, index) in no"
+			        :key="'party_no_' + index"
+							:imgDefault="'/static/icon/icon-against.svg'"
+							@click="$router.push(party.link)">
+							{{ party.name }}
+							<div class="offset" v-if="party.coalition || party.leader">
+								<div v-if="party.coalition" :key="'m_' + ix" v-for="(member, ix) in party.coalition">
+									<party-link :data="member"></party-link>
+								</div>
+								<div v-if="party.leader">Lídr: <em>{{ party.leader.name }}</em></div>
+							</div>
+						</quiz-item>
+					</div>
+				</div>
+				<div v-if="below.length > 0">
+					<h4>Kež by se nedostali:</h4>
+					<div class="parties">
+						<quiz-item
+							v-for="(party, index) in below"
+			        :key="'party_below_' + index"
+							:imgDefault="'/static/icon/icon-false.svg'"
+							@click="$router.push(party.link)">
+							{{ party.name }}
+							<div class="offset" v-if="party.coalition || party.leader">
+								<div v-if="party.coalition" :key="'m_' + ix" v-for="(member, ix) in party.coalition">
+									<party-link :data="member"></party-link>
+								</div>
+								<div v-if="party.leader">Lídr: <em>{{ party.leader.name }}</em></div>
+							</div>
+						</quiz-item>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	<share-block path="/anketa/strany" text="Sdílet anketu:" />
+	<share-block text="Sdílet výsledek:" />
+	<div class="goto" v-if="region && rf != ''">
+		<router-link :to="'/anketa/strany?kde=' + region.hash">Chci také hlasovat</router-link> &rarr;
+	</div>
+	<div class="goto" v-if="region">
+		<router-link :to="'/' + region.hash">{{ region.name }}: Seznamte se se všemi kandidáty</router-link> &rarr;
+	</div>
+	<div class="goto">
+		&larr; <router-link :to="'/'">Úvodní stránka</router-link>
+	</div>
+</div>

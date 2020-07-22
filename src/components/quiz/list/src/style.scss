@@ -1,0 +1,22 @@
+.quiz-list {
+  @media (min-width: 45rem) {
+    columns: 2;
+    column-gap: .5rem;
+  }
+  @media (min-width: 60rem) {
+    columns: 3;
+    column-gap: 1em;
+  }
+
+  > div {
+      break-inside: avoid-column;
+      page-break-inside: avoid;
+
+      @media (min-width: 45rem) {
+        margin-bottom: .5rem;
+      }
+      @media (min-width: 60rem) {
+        margin-bottom: 1rem;
+      }
+  }
+}

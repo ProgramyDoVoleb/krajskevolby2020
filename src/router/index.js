@@ -16,6 +16,9 @@ import LayoutPrevious2016Compare from '@/layout/previous2016/compare/do';
 
 import LayoutHelper from '@/layout/helper-2020/do';
 import LayoutQ1 from '@/layout/quiz-1/do';
+import LayoutQ2Quiz from '@/layout/quiz/2/quiz/do';
+import LayoutQ2Vote from '@/layout/quiz/2/vote/do';
+import LayoutQ2All from '@/layout/quiz/2/all/do';
 
 Vue.use(Router);
 
@@ -31,6 +34,22 @@ const router = new Router({
       path: '/dotaznik-ke-krajskym-volbam',
       name: 'Q1',
       component: LayoutQ1
+    },
+    {
+      path: '/anketa/strany',
+      name: 'Q2Quiz',
+      component: LayoutQ2Quiz
+    },
+    {
+      path: '/anketa/strany/vysledky',
+      name: 'Q2All',
+      component: LayoutQ2All
+    },
+    {
+      path: '/anketa/strany/hlas/:id',
+      name: 'Q2Vote',
+      props: true,
+      component: LayoutQ2Vote
     },
     {
       path: '/2016',
