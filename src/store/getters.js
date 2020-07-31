@@ -491,13 +491,15 @@ function processPerson (source, party, getters) {
   var obj = {};
   var person = processPersonName(source);
 
+  // console.log(source, person);
+
   obj.name = person.name;
   obj.nameFull = person.nameFull;
   obj.hash = betterURL(obj.name);
 
   if (person.reg) obj.party = getters.party(person.reg);
   if (!obj.party && party && party.reg) obj.party = getters.party(party.reg);
-  if (!obj.party && person.phash) obj.party = getters.party(person.phash);
+  if (person.phash) obj.party = getters.party(person.phash);
 
   if (person.links) obj.links = processLinks(person.links);
 

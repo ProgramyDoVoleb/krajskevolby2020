@@ -1,23 +1,29 @@
 <div class="overview">
-  <div class="part center" v-if="party">
-    <div class="party-header-logo">
-      <div class="logo-holder-2" v-if="party.logo">
-        <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
+  <div class="part" v-if="party">
+    <div class="party-flex center">
+      <div class="party-flex-part part-flex-part-1">
+        <div class="party-header-logo center">
+          <div class="logo-holder-2" v-if="party.logo">
+            <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
+          </div>
+          <div class="logo-holder-2" v-if="!party.logo && party.coalition">
+            <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 4, large: 6, breakpoint: 40}" />
+          </div>
+          <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
+            <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 2, large: 3, breakpoint: 40}" />
+          </div>
+        </div>
       </div>
-      <div class="logo-holder-2" v-if="!party.logo && party.coalition">
-        <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 4, large: 6, breakpoint: 40}" />
-      </div>
-      <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
-        <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 2, large: 3, breakpoint: 40}" />
+      <div class="party-flex-part part-flex-part-2">
+        <h1 v-if="party">
+          {{ party.name }}
+          <div class="dimm small">{{ region.name }}</div>
+        </h1>
+        <div class="part quick-links" v-if="party && party.links">
+          <outbound-icon v-for="(link, index) in party.links" :key="'c_' + index" :href="link.link" :type="link.icon.type" :size="'2rem'" :title="link.content" />
+        </div>
       </div>
     </div>
-  </div>
-  <h1 v-if="party">
-    {{ party.name }}
-    <div class="dimm small">{{ region.name }}</div>
-  </h1>
-  <div class="part center quick-links" v-if="party && party.links">
-    <outbound-icon v-for="(link, index) in party.links" :key="'c_' + index" :href="link.link" :type="link.icon.type" :size="'2rem'" :title="link.content" />
   </div>
   <div class="part" v-if="party">
     <div class="party">
@@ -69,7 +75,7 @@
           <li>
             <label>Lidé</label>
             <div v-if="party.list">
-              <a href="#lide" class="page-anchor">{{ party.list.length }} kandidát<span v-if="party.list.length > 1 && party.list.length < 5">i</span><span v-if="party.list.length > 4">ů</span></a>
+              <a href="#lide" class="page-anchor">{{ (party.leader ? 1 : 0) + party.list.length }} kandidát<span v-if="party.list.length > 1 && party.list.length < 5">i</span><span v-if="party.list.length > 4">ů</span></a>
             </div>
             <div v-if="!party.list || party.list.length === 0" class="red">neznámá kandidátka</div>
           </li>
@@ -196,7 +202,7 @@
         </div>
       </div>
     </div>
-    <p class="dimm center">
+    <p class="dimm center" v-if="region.seats - 20 < party.list">
       Kandidátka a její pořadí bude kompletní až koncem července.
     </p>
   </div>
@@ -334,10 +340,22 @@
     <p>Nebo pošlete e-mail na <outbound-link href="tip@programydovoleb.cz" title="e-mailový klient">tip@programydovoleb.cz</outbound-link> nebo na některé ze sociálních sítí.</p>
   </div>
   <not-found v-if="!party" :region="region" :parties="parties" />
-  <div class="goto" v-if="region && party">
-    <router-link :to="'/anketa/strany?kde=' + region.hash + '&koho=' + party.hash">Hlasujte v anketě pro <em>{{ party.name }}</em></router-link> &rarr;
-  </div>
   <share-block v-if="party" />
+  <br>
+  <div class="part" v-if="region && party">
+    <div class="banner-split">
+      <div>
+        <router-link :to="'/anketa/strany?kde=' + region.hash">
+          <img src="/static/cta-anketa.png" alt="Dotazník" width="100%">
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/dotaznik-ke-krajskym-volbam">
+          <img src="/static/cta-dotaznik.png" alt="Dotazník" width="100%">
+        </router-link>
+      </div>
+    </div>
+  </div>
   <div class="goto goto-dimm">
     <h4>Vybrat jinou stranu či koalici</h4>
     <div class="stats">

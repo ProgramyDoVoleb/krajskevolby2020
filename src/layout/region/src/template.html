@@ -28,7 +28,8 @@
               <label>Rada</label>
               <div>
                 <span v-for="(party, index) in about.parties">
-                  <party-name-with-dot :reg="party.reg" :alwaysShort="true" />
+                  <label-with-dot color="#aaa" v-if="party.short">{{ party.short }}</label-with-dot>
+                  <party-name-with-dot v-if="!party.short" :reg="party.reg" :alwaysShort="true" />
                   <span class="dimm">&nbsp;&nbsp;&nbsp;</span>
                 </span>
               </div>
@@ -71,30 +72,30 @@
         </div>
       </div>
     </div>
-    <div class="goto">
-      <router-link :to="'/anketa/strany?kde=' + region.hash">Hlasujte v anketě pro svou stranu nebo koalici</router-link> &rarr;
-    </div>
-  </div>
-  <div class="part">
-    <div class="info-box center">
-      <h3>Něco chybí nebo je špatně?</h3>
-      <p>Prosím, napište na <b><a mailto="tip@programydovoleb.cz" class="footer-link">tip@programydovoleb.cz</a></b> nebo přes některou ze sociálních sítí.</p>
-    </div>
   </div>
   <share-block />
   <br>
   <div class="part">
-    <router-link to="/dotaznik-ke-krajskym-volbam">
-      <img src="/static/banner.png" alt="Dotazník" width="100%">
-    </router-link>
+    <div class="banner-split">
+      <div>
+        <router-link :to="'/anketa/strany?kde=' + region.hash">
+          <img src="/static/cta-anketa.png" alt="Dotazník" width="100%">
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/dotaznik-ke-krajskym-volbam">
+          <img src="/static/cta-dotaznik.png" alt="Dotazník" width="100%">
+        </router-link>
+      </div>
+    </div>
   </div>
   <div class="goto goto-dimm">
     <h4>Vybrat jiný kraj</h4>
     <div class="stats">
       <ul class="columns-3">
-        <li v-for="(region, index) in $store.state.static.regions" v-if="region.hash != id">
+        <li v-for="(region, index) in $store.state.static.regions">
           <div>
-            <router-link :to="'/' + region.hash">{{ region.name }}</router-link>
+            <router-link :to="'/' + region.hash" :class="{red: region.hash === id}">{{ region.name }}</router-link>
           </div>
           <label v-if="$store.state.dynamic.callout[index].parties.length < 5">{{ $store.state.dynamic.callout[index].parties.length }} strany</label>
           <label v-if="$store.state.dynamic.callout[index].parties.length > 4">{{ $store.state.dynamic.callout[index].parties.length }} stran</label>

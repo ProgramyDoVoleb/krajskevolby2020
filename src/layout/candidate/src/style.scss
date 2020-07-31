@@ -31,6 +31,10 @@
 .logo-holder-2 .logo-item {
   margin: 3em .25em 1em;
   display: inline-block;
+
+  @media (min-height: 50rem) {
+    margin: 2em .25em 0;
+  }
 }
 
 .logo-holder-tiny {
