@@ -263,3 +263,20 @@ div + ul {
   transform: translateY(.2em);
   margin-right: .2em;
 }
+
+.list-leader {
+  display: flex;
+  align-items: center;
+}
+
+.leader-face {
+  width: 3rem;
+  height: 3rem;
+  margin-right: .5em;
+
+  @media (min-width: 40rem) {
+    margin-left: .5rem;
+    margin-right: 0;
+    order: 2;
+  }
+}

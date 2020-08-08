@@ -1,0 +1,122 @@
+<div class="overview">
+  <div class="part center" v-if="party">
+    <div class="party-header-logo">
+      <div class="logo-holder-2" v-if="party.logo">
+        <logo-item :data="party" :size="{small: 6, large: 10, breakpoint: 40}" />
+      </div>
+      <div class="logo-holder-2" v-if="!party.logo && party.coalition">
+        <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 4, large: 6, breakpoint: 40}" />
+      </div>
+      <div class="logo-holder-tiny" v-if="party.logo && party.coalition">
+        <logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 2, large: 3, breakpoint: 40}" />
+      </div>
+    </div>
+    <h1>
+      Kandidátní listina<br>
+      {{ party.name }}
+      <div class="dimm small">{{ region.name }}</div>
+    </h1>
+  </div>
+  <div class="part">
+    <div class="scrollable">
+      <table>
+        <thead class="small">
+          <tr>
+            <th></th>
+            <th>Jméno</th>
+            <th>Strana</th>
+            <th>Povolání</th>
+            <th>Bydliště</th>
+            <th>Věk</th>
+            <th>Odkazy</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(person, ix) in list">
+            <td v-if="person.photo.split('missing').length === 1">
+              <person-face v-if="person.photo" :data="person" :size="'2.5rem'" />
+            </td>
+            <td v-if="person.photo.split('missing').length === 2" class="center">
+              <strong class="small dimm">{{ ix + 1 }}</strong>
+            </td>
+            <td>
+              <!-- <label-with-dot :color="person.party ? person.party.color : '#eee'"> -->
+                <router-link v-if="ix < 5" :to="party.link + '/' + person.hash">
+                  <person-name :data="person" />
+                </router-link>
+                <template v-if="ix > 4">
+                  <person-name :data="person" />
+                </template>
+              <!-- </label-with-dot> -->
+            </td>
+            <td :class="{hideable: !person.party}">
+              <party-link v-if="person.party" :data="person.party" :breakpoint="1000" class="small" />
+            </td>
+            <td :class="{hideable: !person.work}">
+              <span class="small">{{ person.work || '-' }}</span>
+            </td>
+            <td :class="{hideable: !person.home}">
+              <span class="small hide-40rem">&middot; bydliště</span>
+              <span class="small">{{ person.home || '-' }}</span>
+            </td>
+            <td :class="{hideable: !person.age}">
+              <label-with-dot :color="person.sex === 2 ? '#c00' : '#00c'" class="small"><span v-if="person.age">{{ person.age }} let</span></label-with-dot>
+            </td>
+            <td :class="{hideable: !person.links || person.links.length === 0}">
+    					<span v-if="person.links" class="leader-links fr">
+    						<span class="leader-links-holder">
+    							<span v-for="(link, index) in person.links" class="leader-link">
+    								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + ' ' + link.content" :type="link.icon.name" :size="'1.25em'" />
+    							</span>
+    						</span>
+    					</span>
+            </td>
+            <td>
+              <update-form :region="region" :party="party" :index="-1"  snotes="kandidata">
+                <button class="button-plain yellow">+</button>
+              </update-form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="goto goto-dimm center" v-if="party && !party.list">
+      <p class="red">Kandidátní listina zatím nebyla zveřejněna nebo o ní nevíme.</p>
+      <update-form :region="region" :party="party" :index="-1" :hints="false" notes="kandidatka">
+        <button class="button-plain yellow">Poslat odkaz na kandidátku</button>
+      </update-form>
+    </div>
+  </div>
+  <div class="part">
+    <share-block />
+  </div>
+  <div class="goto" v-if="party">
+    <router-link :to="party.link">&larr; {{ party.name }}</router-link>
+  </div>
+  <div class="goto goto-dimm">
+    <h4>Zobrazit kandidátní listinu jiné strany či koalice</h4>
+    <div class="stats">
+      <ul class="columns-2">
+        <li v-for="(party, index) in parties" v-if="party.hash != hash">
+          <div>
+            <label-with-dot :color="party.color">
+              <!-- <span> -->
+                <!-- <img :src="'/static/icon/icon-' + (party.program ? 'check' : 'against') + '.svg'" class="incidator"> -->
+                <router-link :to="party.link + '/kandidatni-listina'">
+                  <responsive-label :short="party.short" :long="party.name"></responsive-label>
+                </router-link>
+              <!-- </span> -->
+            </label-with-dot>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="goto">
+    <router-link :to="'/' + region.hash">&larr; {{ region.name }}</router-link>
+  </div>
+  <div class="goto">
+    <router-link to="/">&larr; Vybrat jiný kraj</router-link>
+  </div>
+</div>

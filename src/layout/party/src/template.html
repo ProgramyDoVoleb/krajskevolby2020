@@ -75,7 +75,7 @@
                   &middot;
                 </template>
                 <span class="dimm">
-                  {{ (act.party.leader ? 1 : 0) + (act.party.list || []).length }} / {{ act.region.seats }}
+                  {{ act.party.listCount }} / {{ act.region.seats }}
                 </span>
                 <span v-if="act.party.links" class="dimm">
                   &middot;
@@ -108,8 +108,10 @@
               </template>
             </div>
             <div class="list-leader">
-              <div v-if="act.party.leader">
-                <h4 class="hide-40rem">Lídr kandidátky</h4>
+              <div class="leader-face" v-if="act.party.leader && act.party.leader.photo">
+                <person-face :data="act.party.leader" :size="'3rem'"/>
+              </div>
+              <div class="leader-info" v-if="act.party.leader">
                 <router-link class="as-span" :to="act.party.link + '/' + act.party.leader.hash">
                   <person-name :data="act.party.leader" />
                 </router-link>

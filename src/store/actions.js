@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const actions = {};
-const antiCache = 'c=' + Math.round(new Date().getTime() / 1000000000);
+const antiCache = 'c=' + Math.round(new Date().getTime() / 1000000);
 
 actions.demo = function (context, payload) {
   axios.post('/foobar', {

@@ -7,6 +7,7 @@ import LayoutCandidate from '@/layout/candidate/do';
 import LayoutParty from '@/layout/party/do';
 import LayoutPerson from '@/layout/person/do';
 import LayoutProgram from '@/layout/program/do';
+import LayoutPeople from '@/layout/people/do';
 import LayoutOverview from '@/layout/overview/do';
 
 import LayoutPrevious2016 from '@/layout/previous2016/do';
@@ -106,6 +107,12 @@ const router = new Router({
       path: '/:id/:hash/volebni-program',
       name: 'Program',
       component: LayoutProgram,
+      props: true
+    },
+    {
+      path: '/:id/:hash/kandidatni-listina',
+      name: 'CandidateList',
+      component: LayoutPeople,
       props: true
     },
     {

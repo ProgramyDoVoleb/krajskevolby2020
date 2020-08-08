@@ -35,7 +35,7 @@ export default {
 			this.$store.dispatch('fetchRada');
 
 			this.$store.getters.getSource('volby/kv/2020/strany', 'parties');
-			this.$store.getters.getSource('volby/kv/2020/list', 'callout');
+			this.$store.getters.getSource('volby/kv/2020/list2', 'callout');
 
 			window.addEventListener('resize', () => this.resize());
 			setTimeout(() => this.resize(), 1000);

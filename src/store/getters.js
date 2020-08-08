@@ -222,6 +222,7 @@ getters.getRegionPartyList = (state, getters) => (id) => {
       item.leader = party.leader;
       item.support = getSupport(party.support);
       item.list = party.list;
+      item.listCount = party.listCount;
       item.program = party.program;
 
       if (party.logo) item.logo = party.logo;
@@ -384,7 +385,7 @@ getters.allParties = (state, getters) => () => {
     'name': 'bez politické příslušnosti',
     'short': 'BEZPP',
     'hash': 'bezpp',
-    'color': '#aaa',
+    'color': '#eee',
     'logo': '/static/empty.png'
   });
 
@@ -559,6 +560,8 @@ getters.allCandidates = (state, getters) => () => {
         });
       }
 
+      obj.listCount = cand.listCount;
+
       if (obj.name === '' || typeof obj.name === 'undefined') {
         console.log('Neznámé');
         return;
@@ -584,7 +587,7 @@ getters.allCandidates = (state, getters) => () => {
 }
 
 getters.candidatesInRegion = (state, getters) => (hash) => {
-  return getters.allCandidates().filter(x => x.region.hash === hash);
+  return getters.allCandidates().filter(x => x.region.hash === hash).sort((a, b) => a.name.localeCompare(b.name, 'cs'));
 }
 
 getters.candidate = (state, getters) => (region, hash) => {

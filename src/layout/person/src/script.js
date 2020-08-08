@@ -46,7 +46,7 @@ export default {
 			var list = [];
 
 			this.data.people.forEach((item, i) => {
-				list.push(personData(item, i, this.party, this.party.link))
+				list.push(personData(item, i, this.party, this.party.link, this.data))
 			});
 
 			return list;

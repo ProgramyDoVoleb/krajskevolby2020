@@ -221,15 +221,15 @@ export function processLinks (links) {
   return list;
 }
 
-export function personData (item, i, party, route) {
+export function personData (item, i, party, route, data) {
   var obj = {};
 
-  var p = processPersonName(item);
+  var p = processPersonName((item.nameFull || item.name) || item);
 
   obj.name = p.name;
   obj.nameFull = p.nameFull;
 
-  obj.party = (item.reg || item.phash) ? store.getters.party(item.reg || item.phash) : undefined;
+  obj.party = (item.phash || item.reg) ? store.getters.party(item.phash || item.reg) : undefined;
 
   if (item.about) {
     obj.about = {
@@ -245,13 +245,29 @@ export function personData (item, i, party, route) {
       short: truncate(item.quote)
     };
   }
-  obj.photo = item.photo ? PDV('lide/fotky/' + item.photo) : '/static/missing.jpg';
+  obj.photo = item.photo ? PDV('lide/fotky/' + item.photo) : '/static/missing.png';
   obj.hash = betterURL(obj.name);
   obj.link = route + '/' + obj.hash;
   obj.links = item.links ? processLinks(item.links) : [];
+  obj.sex = item.sex;
+  obj.age = Number(item.age);
+  obj.work = item.work;
+  obj.home = item.home;
 
-  if (party && party.leader && party.leader.links && i === 0) {
-    obj.links = party.leader.links;
+  if (data && data.list) {
+    var pp = data.list.find(x => x.nameFull[2] === obj.nameFull[2]);
+
+    if (pp && pp.links) {
+      var px = processLinks(pp.links);
+
+      px.forEach(link => {
+        if (!obj.links.find(x => x.link === link.link)) obj.links.push(link);
+      })
+    }
+
+    if (pp && pp.photo) {
+      obj.photo = PDV('lide/fotky/' + pp.photo);
+    }
   }
 
   return obj;

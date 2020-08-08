@@ -8,13 +8,8 @@
 				<div class="logo-holder-2" v-if="!party.logo && party.coalition">
 					<logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 3, large: 4, breakpoint: 40}" />
 				</div>
-				<div class="logo-holder-tiny" v-if="party.logo && party.coalition">
+				<div class="logo-holder-tiny show-40rem" v-if="party.logo && party.coalition">
 					<logo-item :data="member" v-for="(member, i3) in party.coalition" :key="'i31_' + i3" :size="{small: 1.5, large: 2, breakpoint: 40}" />
-				</div>
-				<div class="logo-leader" v-if="party.leader && party.leader.photo">
-					<router-link :to="party.leader.link">
-						<person-photo :data="party.leader" />
-					</router-link>
 				</div>
 			</div>
 		</div>
@@ -24,30 +19,20 @@
 					<router-link :to="party.link" class="is-span">
 						<responsive-label :long="party.name" :short="party.short" />
 					</router-link>
+					<span v-if="party.links" class="leader-links fr">
+						<span class="leader-links-holder">
+							<span v-for="(link, index) in party.links" class="leader-link">
+								<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + ' ' + link.content" :type="link.icon.name" :size="'1em'" />
+							</span>
+						</span>
+					</span>
 				</div>
 			</h3>
 		</div>
 	</div>
 	<div class="stats heavy">
 		<ul>
-			<li v-if="party.coalition && party.coalition.length > 0">
-				<label>Koalice</label>
-				<div class="coalition">
-					<div v-for="(coal, index) in party.coalition" class="coalition-member">
-						<party-link :data="coal" />
-					</div>
-				</div>
-			</li>
-			<li v-if="party.support">
-				<label>Podpora</label>
-				<div>
-					<div v-for="(support, ix) in party.support">
-						<party-link :data="support" />
-					</div>
-				</div>
-			</li>
 			<li v-if="party.program">
-				<label>Program</label>
 				<div v-if="party.program">
 					<router-link :to="party.link + '/volebni-program'" class="button">
 						Volební program
@@ -57,8 +42,31 @@
 					<router-link :to="'/' + region.hash + '/' + betterURL(party.originalName || party.name) + '#program'" class="button">{{ party.program.label || 'Zobrazit program'}}</router-link>
 				</div>
 			</li>
+			<li v-if="party.coalition && party.coalition.length > 0" class="al-top">
+				<label>Koalice</label>
+				<div class="coalition">
+					<div v-for="(coal, index) in party.coalition" class="coalition-member">
+						<party-link :data="coal" />
+					</div>
+				</div>
+			</li>
+			<li v-if="party.support" class="al-top">
+				<label>Podpora</label>
+				<div>
+					<div v-for="(support, ix) in party.support">
+						<party-link :data="support" />
+					</div>
+				</div>
+			</li>
 			<li v-if="party.leader">
-				<label>Lídr</label>
+				<label>
+					Lídr
+				</label>
+				<div class="faces" v-if="party.leader.photo">
+					<router-link :to="party.leader.link" :title="party.leader.name">
+						<person-face :data="party.leader" :size="'3rem'" />
+					</router-link>
+				</div>
 				<div>
 					<router-link :to="party.link + '/' + betterURL(party.leader.name)" class="as-span">
 						<person-name :data="party.leader" />
@@ -74,37 +82,30 @@
 				</div>
 			</li>
 			<li v-if="party.list && party.list.length > 0">
-				<label>Lidé</label>
-				<div>
-					<div class="columns-3">
-						<div class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
-							<person-name :data="cand" />
-							<div class="small" v-if="cand.party && (cand.party.reg != (party ? party.reg : -1) || !cand.party.reg)">
-								<party-link :data="cand.party" :breakpoint="1000" />
-							</div>
-						</div>
-						<div class="item-in-columns" v-if="party.list.length > 5">
-							<router-link :to="party.link + '#lide'">
-								<span>celý seznam</span>
+				<label>Čelo</label>
+				<div class="faces show-40rem">
+					<router-link :to="party.link + '/' + cand.hash" v-if="ix < 5 &&cand.photo" v-for="(cand, ix) in party.list" :title="cand.name" :key="'C_' + ix">
+						<person-face :data="cand" :size="'2rem'" />
+					</router-link>
+				</div>
+				<div class="list-full">
+					<div class="tiny-list">
+						<span class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
+							<label-with-dot :color="cand.party ? cand.party.color : '#eee'">
+								<router-link :to="party.link + '/' + cand.hash"  class="as-span no-link">
+									<person-name :data="cand" />
+								</router-link>
+							</label-with-dot>
+						</span>
+						<span class="item-in-columns" v-if="party.listCount > 5">
+							<router-link :to="party.link + '/kandidatni-listina'">
+								<span>{{ party.listCount }} kandidátů</span>
 								&rarr;
 							</router-link>
-						</div>
+						</span>
 					</div>
 				</div>
 			</li>
 		</ul>
-		<div class="party-footer">
-			<router-link :to="party.link" :style="{color: party.color}" class="small">
-				<strong>Více informací</strong>
-				&rarr;&nbsp;
-			</router-link>
-			<span v-if="party.links" class="leader-links">
-				<span class="leader-links-holder">
-					<span v-for="(link, index) in party.links" class="leader-link">
-						<outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + ' ' + link.content" :type="link.icon.name" :size="'1em'" />
-					</span>
-				</span>
-			</span>
-		</div>
 	</div>
 </div>

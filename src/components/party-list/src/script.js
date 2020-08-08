@@ -21,6 +21,8 @@ export default {
 				});
 			}
 
+			list.sort((a, b) => a.short.localeCompare(b.short, 'cs'))
+
 			return list;
 		},
 		listOthers: function () {

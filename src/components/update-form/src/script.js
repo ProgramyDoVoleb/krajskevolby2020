@@ -10,7 +10,7 @@ export default {
 			note: '',
 			sent: false,
 			sending: false,
-			showHints: true
+			showHints: false
 		}
 	},
 	computed: {

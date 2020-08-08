@@ -48,7 +48,7 @@ export default {
 			var list = [];
 
 			this.data.people.forEach((item, i) => {
-				list.push(personData(item, i, this.party, this.$route.fullPath))
+				list.push(personData(item, i, this.party, this.$route.fullPath, this.data))
 			});
 
 			return list;
@@ -88,6 +88,17 @@ export default {
 		},
 		width: function () {
 			return (window.innerWidth > 450 ? 410 : window.innerWidth - 64)
+		},
+		list: function () {
+			if (!this.party || !this.data || !this.data.list) return undefined;
+
+			var l = [];
+
+			this.data.list.forEach((item, i) => {
+				l.push(personData(item, i, this.party, this.$route.fullPath))
+			});
+
+			return l;
 		}
 	},
 	methods: {

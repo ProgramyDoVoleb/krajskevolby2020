@@ -1,7 +1,7 @@
 <div class="overview">
   <h1>{{ region.name }}</h1>
   <p class="lead">Ohlášené strany a koalice, lídři a kandidátky</p>
-  <div class="part">
+  <div class="part" v-if="about">
     <div class="split-1-2">
       <div class="column show-40rem">
         <map-element :highlight="region.nuts" :zoom="region.nuts" :width="500" />

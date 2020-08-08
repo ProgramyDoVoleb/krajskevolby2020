@@ -68,16 +68,16 @@
           <li>
             <label>Lídr</label>
             <div v-if="party.leader">
-              <a href="#lidr" class="page-anchor"><person-name :data="party.leader" /></a>
+              <router-link :to="party.link + '/' + party.leader.hash" class="page-anchor"><person-name :data="party.leader" /></router-link>
             </div>
             <div v-if="!party.leader" class="red">prozatím neurčen</div>
           </li>
           <li>
             <label>Lidé</label>
-            <div v-if="party.list">
-              <a href="#lide" class="page-anchor">{{ (party.leader ? 1 : 0) + party.list.length }} kandidát<span v-if="party.list.length > 1 && party.list.length < 5">i</span><span v-if="party.list.length > 4">ů</span></a>
+            <div v-if="data && data.list">
+              <router-link :to="$route.fullPath + '/kandidatni-listina'" class="page-anchor">{{ data.list.length }} kandidát<span v-if="data.list.length > 1 && data.list.length < 5">i</span><span v-if="data.list.length > 4">ů</span></router-link>
             </div>
-            <div v-if="!party.list || party.list.length === 0" class="red">neznámá kandidátka</div>
+            <div v-if="!data || !data.list || party.list.length === 0" class="red">neznámá kandidátka</div>
           </li>
           <li v-if="party.links">
             <label>Odkazy</label>
@@ -184,26 +184,20 @@
       </div>
     </div>
   </div>
-  <div class="part" v-if="party && party.list"><a name="lide"></a>
+  <div class="part" v-if="data && data.list"><a name="lide"></a>
     <h2>
       Kandidátka
     </h2>
-    <div class="columns-2-3">
-      <div class="item-in-columns" v-if="party.leader">
-        <span><person-name :data="party.leader" /></span>
-        <div v-if="party.leader.party && party.hash != party.leader.party.hash" class="small">
-          <party-link :data="party.leader.party" :breakpoint="1000" />
-        </div>
-      </div>
-      <div class="item-in-columns" v-for="(cand, ic) in party.list">
-        <person-name :data="cand" />
-        <div class="small" v-if="cand.party && cand.party.hash != party.hash">
-          <party-link :data="cand.party" :breakpoint="1000" />
-        </div>
+    <p class="center dimm">Na kandidátce je {{ data.list.length }} lidí.</p>
+    <div class="columns-5">
+      <div class="item-in-columns" v-for="(cand, ic) in list">
+        <label-with-dot :color="cand.party && cand.party.reg === party.reg ? '#fff' : (cand.party ? cand.party.color : '#eee')">
+          <person-name :data="cand" />
+        </label-with-dot>
       </div>
     </div>
-    <p class="dimm center" v-if="region.seats - 20 < party.list">
-      Kandidátka a její pořadí bude kompletní až koncem července.
+    <p class="center">
+      <router-link :to="$route.fullPath + '/kandidatni-listina'" class="button button-primary">Kandidátka podrobně</router-link>
     </p>
   </div>
   <div class="part" v-if="party && party.program"><a name="program"></a>
