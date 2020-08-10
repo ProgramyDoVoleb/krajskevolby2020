@@ -381,3 +381,9 @@ thead th {
     }
   }
 }
+
+.hide-40rem {
+  @media (min-width: 40rem) {
+    display: none !important;
+  }
+}

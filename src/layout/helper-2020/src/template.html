@@ -1,4 +1,25 @@
 <div class="overview">
+  <h1>Emaily</h1>
+  <collapsible-element label="Preflight">
+    <button @click="copy('.c0')">Kopírovat</button>
+    <div class="copy c0">
+      {"list": [<br>
+      <span v-for="(region, index) in $store.state.static.regions">
+        <span v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
+          {<br>
+            "name": "{{ party.name }}",<br>
+            "data": "{{ party.data.split('/data/').join('/odpovedi/') }}",<br>
+            "email": "",<br>
+            "send": 0,<br>
+            "hash": "{{ hashMe(party.data) }}",<br>
+            "link": "{{ party.link }}"
+          }<span v-if="index2 < $store.getters.candidatesInRegion(region.hash).length - 1">,</span><br>
+        </span><span v-if="index < $store.state.static.regions.length - 1">,</span>
+      </span>
+        ]
+      }
+    </div>
+  </collapsible-element>
   <h1>SEO</h1>
   <collapsible-element label="Kraje">
     <button @click="copy('.c1')">Kraje</button>
