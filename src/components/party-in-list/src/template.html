@@ -32,15 +32,20 @@
 	</div>
 	<div class="stats heavy">
 		<ul>
-			<li v-if="party.program">
-				<div v-if="party.program">
-					<router-link :to="party.link + '/volebni-program'" class="button">
+			<li v-if="party.program || party.answers">
+				<div>
+					<router-link :to="party.link + '/volebni-program'" class="button" v-if="party.program">
 						Volební program
 					</router-link>
+					<router-link :to="party.link + '/ctyri-otazky'" class="button button-plain button-with-icon" v-if="party.answers">
+						<span class="show-40rem">Odpovědi</span>
+						&nbsp;
+						<img src="/static/icon/answers.svg">
+					</router-link>
 				</div>
-				<div v-if="party.program.local">
+				<!-- <div v-if="party.program.local">
 					<router-link :to="'/' + region.hash + '/' + betterURL(party.originalName || party.name) + '#program'" class="button">{{ party.program.label || 'Zobrazit program'}}</router-link>
-				</div>
+				</div> -->
 			</li>
 			<li v-if="party.coalition && party.coalition.length > 0" class="al-top">
 				<label>Koalice</label>

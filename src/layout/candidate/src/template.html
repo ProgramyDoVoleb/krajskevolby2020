@@ -77,7 +77,7 @@
             <div v-if="data && data.list">
               <router-link :to="$route.fullPath + '/kandidatni-listina'" class="page-anchor">{{ data.list.length }} kandidát<span v-if="data.list.length > 1 && data.list.length < 5">i</span><span v-if="data.list.length > 4">ů</span></router-link>
             </div>
-            <div v-if="!data || !data.list || party.list.length === 0" class="red">neznámá kandidátka</div>
+            <div v-if="!data || !data.list || (party.list.length === 0 && !party.leader)" class="red">neznámá kandidátka</div>
           </li>
           <li v-if="party.links">
             <label>Odkazy</label>
@@ -85,6 +85,13 @@
               <a href="#odkazy" class="page-anchor">{{ party.links.length }} odkaz<span v-if="party.links.length > 1 && party.links.length < 5">y</span><span v-if="party.links.length > 4">ů</span></a>
             </div>
             <div v-if="party.links.length === 0" class="red">chybí</div>
+          </li>
+          <li>
+            <label>Čtyři otázky</label>
+            <div>
+              <router-link :to="party.link + '/ctyri-otazky'" v-if="party.answers" class="link-answers"><span class="is-link">Odpovědi</span><img src="/static/icon/answers.svg" alt=""></router-link>
+              <span class="dimm" v-if="!party.answers">Zatím bez odpovědí</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -208,6 +215,16 @@
     <p class="center">
       <router-link :to="party.link + '/volebni-program'" class="button button-primary">Celý program</router-link>
       <outbound-link :href="party.program.source || party.program" :title="'Program ' + party.name" class="button">Program na webu &rarr;</outbound-link>
+    </p>
+  </div>
+  <div class="part" v-if="party && party.answers && questions && answers">
+    <h2>Čtyři otázky<router-link :to="party.link + '/ctyri-otazky'" class="link-answers">&nbsp;<img src="/static/icon/answers.svg"></router-link></h2>
+    <p class="center dimm max-35rem"><em>Čtyři otázky</em> jsou zaslány všem stranám kandidujícím v krajských volbách. Díky tomu si můžete srovnat odpovědi na totožné otázky, na jednom místě.</p>
+    <collapsible-element v-for="(question, index) in questions" :label="question" :key="'a_' + index" v-if="answers.answers[index] != ''">
+      <div v-html="answers.answers[index]"></div>
+    </collapsible-element>
+    <p class="center">
+      <router-link :to="party.link + '/ctyri-otazky'" class="button button-primary">Zobrazit vše</router-link>
     </p>
   </div>
   <div class="part" v-if="party && party.links && party.links.length > 0 || linksAdditional.length > 0"><a name="odkazy"></a>

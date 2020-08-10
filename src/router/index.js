@@ -8,6 +8,7 @@ import LayoutParty from '@/layout/party/do';
 import LayoutPerson from '@/layout/person/do';
 import LayoutProgram from '@/layout/program/do';
 import LayoutPeople from '@/layout/people/do';
+import LayoutAnswers from '@/layout/answers/do';
 import LayoutOverview from '@/layout/overview/do';
 
 import LayoutPrevious2016 from '@/layout/previous2016/do';
@@ -107,6 +108,12 @@ const router = new Router({
       path: '/:id/:hash/volebni-program',
       name: 'Program',
       component: LayoutProgram,
+      props: true
+    },
+    {
+      path: '/:id/:hash/ctyri-otazky',
+      name: 'Answers',
+      component: LayoutAnswers,
       props: true
     },
     {

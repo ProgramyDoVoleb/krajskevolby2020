@@ -49,6 +49,33 @@ export default {
 				list.push(personData(item, i, this.party, this.party.link, this.data))
 			});
 
+			if (this.answers) {
+
+				if (list.length === 0) {
+					list.push(personData(this.answers.leader, i, this.party, this.$route.fullPath, this.data))
+				} else {
+			    var about = {
+			      full: this.answers.leader.about,
+			      mid: truncate(this.answers.leader.about, 40),
+			      short: truncate(this.answers.leader.about)
+			    };
+
+			    var quote = {
+			      full: this.answers.leader.quote,
+			      mid: truncate(this.answers.leader.quote, 40),
+			      short: truncate(this.answers.leader.quote)
+			    };
+
+					if (!list[0].about || list[0].about.full != about.full) {
+						list[0].about = about;
+					}
+
+					if (!list[0].quote || list[0].quote.full != quote.full) {
+						list[0].quote = quote;
+					}
+				}
+			}
+
 			return list;
 		},
 		person: function () {
@@ -83,6 +110,9 @@ export default {
 		},
 		width: function () {
 			return (window.innerWidth > 450 ? 378 : window.innerWidth - (16 * 4))
+		},
+		answers: function () {
+			return this.$store.getters.getSource(this.party.answersLink);
 		}
 	},
 	methods: {

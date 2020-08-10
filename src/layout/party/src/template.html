@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="list-info">
-              <strong><router-link :to="act.party.link">{{ act.party.name }}</router-link></strong>
+              <strong><router-link :to="act.party.link">{{ act.party.name }}</router-link></strong><span v-if="act.party.answers"><router-link :to="act.party.link + '/ctyri-otazky'" class="link-answers">&nbsp;<img src="/static/icon/answers.svg"></router-link></span>
               <div class="small">
                 <template v-if="act.party.program">
                   <router-link :to="act.party.link + '/volebni-program'" class="red">Program </router-link>

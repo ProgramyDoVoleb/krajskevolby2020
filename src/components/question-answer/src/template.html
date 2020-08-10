@@ -1,0 +1,25 @@
+<div class="question-answer">
+	<div class="qa-item">
+		<div class="qa-icon">
+			<div class="qa-image">
+				<img src="/static/icon/logo-programy.svg">
+			</div>
+		</div>
+		<div class="qa-content strong">
+			<div v-html="question"></div>
+		</div>
+	</div>
+	<div class="qa-item">
+		<div class="qa-icon">
+			<div class="qa-image" v-if="party.logo">
+				<img :src="$store.state.root + party.logo">
+			</div>
+			<div class="qa-image" v-if="!party.logo">
+				<img src="/static/icon/answers.svg">
+			</div>
+		</div>
+		<div class="qa-content">
+			<div v-html="answer"></div>
+		</div>
+	</div>
+</div>

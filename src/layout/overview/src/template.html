@@ -10,7 +10,7 @@
           <tr>
             <th>Strany</th>
             <th>Jméno</th>
-            <th>Lídr</th>
+            <!-- <th>Lídr</th> -->
             <th>Fotka</th>
             <th>Lidé</th>
             <th>Program</th>
@@ -19,37 +19,33 @@
             <th><icon-element src="/static/icon/fb.svg" :size="'1.5rem'"></icon-element></th>
             <th><icon-element src="/static/icon/tw.svg" :size="'1.5rem'"></icon-element></th>
             <th><icon-element src="/static/icon/ig.svg" :size="'1.5rem'"></icon-element></th>
+            <th><icon-element src="/static/icon/answers.svg" :size="'1.5rem'"></icon-element></th>
             <th>Upravit</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="(region, ir) in regions">
             <tr>
-              <th colspan="12">{{ region.name }}</th>
+              <th colspan="13">{{ region.name }}</th>
             </tr>
             <tr v-for="(cand, index) in $store.getters.candidatesInRegion(region.hash)">
               <td v-if="cand.coalition">
                 <template v-for="(member, im) in cand.coalition">
-                  <router-link :to="'/rejstrik/' + member.hash" class="no-link"><logo-item :data="member" :size="'1.25rem'" /></router-link>
+                  <router-link :to="'/rejstrik/' + member.hash" class="no-link"><logo-item :data="member" :size="'1rem'" /></router-link>
                 </template>
               </td>
               <td v-if="!cand.coalition">
-                <router-link :to="'/rejstrik/' + cand.hash" class="no-link"><logo-item :data="cand" :size="'1.25rem'" /></router-link>
+                <router-link :to="'/rejstrik/' + cand.hash" class="no-link"><logo-item :data="cand" :size="'2.5rem'" /></router-link>
               </td>
 
               <td>
                 <router-link :to="cand.link">
                   {{ cand.name }}
                 </router-link>
-              </td>
-
-              <!-- lídr -->
-
-              <td v-if="cand.leader" class="small">
-                {{ cand.leader.name }}
-              </td>
-              <td v-if="!cand.leader">
-                <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+                <br>
+                <router-link v-if="cand.leader" :to="cand.leader.link" class="small as-span">
+                  {{ cand.leader.name }}
+                </router-link>
               </td>
 
               <!-- fotka lídra -->
@@ -121,6 +117,17 @@
               </td>
               <td v-if="!cand.links || !cand.links.find(x => x.icon.type === 'ig')">
                 <icon-element src="/static/icon/icon-against.svg" :size="'1.25rem'" class="icon-no-background" />
+              </td>
+
+              <!-- instagram -->
+
+              <td v-if="cand.answers">
+                <router-link :to="cand.link + '/ctyri-otazky'" class="no-link q">
+                  <icon-element src="/static/icon/answers.svg" :size="'1.25rem'" class="icon-no-background" />
+                </router-link>
+              </td>
+              <td v-if="!cand.answers">
+                <icon-element src="/static/icon/icon-false.svg" :size="'1.25rem'" class="icon-no-background" />
               </td>
 
               <!-- upravit -->

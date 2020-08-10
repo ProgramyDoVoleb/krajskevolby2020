@@ -138,6 +138,24 @@ button, .button, .btn {
 		outline: none;
 	}
 
+  &.button-with-icon {
+		position: relative;
+		min-width: 2.6rem;
+
+		img {
+			position: absolute;
+			width: 1.5rem;
+			height: 1.5rem;
+			top: .5rem;
+			left: .5rem;
+
+			@media (min-width: 40rem) {
+				top: -.5em;
+				right: -.5rem;
+				left: auto;
+			}
+		}
+	}
 }
 
 .no-link {
@@ -152,6 +170,22 @@ button, .button, .btn {
 .dark-links a,
 .as-span {
 	color: #000;
+}
+
+.link-answers {
+	border: none;
+
+	display: inline-block;
+	position: relative;
+	padding-right: 1.1em;
+
+	img {
+		position: absolute;
+		top: -.25em;
+		right: 0em;
+		width: 1em;
+		height: 1em;
+	}
 }
 
 .btns-switch {

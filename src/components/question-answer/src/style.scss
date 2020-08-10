@@ -1,0 +1,31 @@
+.qa-item {
+  display: flex;
+  align-items: baseline;
+}
+
+.qa-icon {
+  width: 2rem;
+  height: 1.4em;
+  margin-right: 1rem;
+}
+
+.qa-image img {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #eee;
+  border-radius: 50%;
+}
+
+.qa-item + .qa-item {
+  margin-top: .5rem;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.question-answer {
+  margin: auto;
+  max-width: 42rem;
+}

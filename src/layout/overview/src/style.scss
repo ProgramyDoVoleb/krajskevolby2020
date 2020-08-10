@@ -9,7 +9,7 @@ tr+tr td {
 td {
   vertical-align: middle;
   padding: .5em .25em;
-  min-width: 2.5rem;
+  min-width: 2rem;
 }
 
 td:nth-child(2) {
@@ -64,4 +64,9 @@ tbody th {
 
 .no-link {
   border: none;
+}
+
+.q {
+  display: inline-block;
+  transform: translateY(.1em);
 }
