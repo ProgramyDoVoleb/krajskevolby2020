@@ -6,27 +6,25 @@
   <div class="part">
     <div class="scrollable">
       <table>
-        <thead class="small">
-          <tr>
-            <th>Strany</th>
-            <th>Jméno</th>
-            <!-- <th>Lídr</th> -->
-            <th>Fotka</th>
-            <th>Lidé</th>
-            <th>Program</th>
-            <th>Data</th>
-            <th><icon-element src="/static/icon/link.svg" :size="'1.5rem'"></icon-element></th>
-            <th><icon-element src="/static/icon/fb.svg" :size="'1.5rem'"></icon-element></th>
-            <th><icon-element src="/static/icon/tw.svg" :size="'1.5rem'"></icon-element></th>
-            <th><icon-element src="/static/icon/ig.svg" :size="'1.5rem'"></icon-element></th>
-            <th><icon-element src="/static/icon/answers.svg" :size="'1.5rem'"></icon-element></th>
-            <th>Upravit</th>
-          </tr>
-        </thead>
         <tbody>
           <template v-for="(region, ir) in regions">
             <tr>
               <th colspan="13">{{ region.name }}</th>
+            </tr>
+            <tr class="small inject">
+              <th>Strany</th>
+              <th>Jméno</th>
+              <!-- <th>Lídr</th> -->
+              <th>Fotka</th>
+              <th>Lidé</th>
+              <th>Program</th>
+              <th>Data</th>
+              <th><icon-element src="/static/icon/link.svg" :size="'1.5rem'"></icon-element></th>
+              <th><icon-element src="/static/icon/fb.svg" :size="'1.5rem'"></icon-element></th>
+              <th><icon-element src="/static/icon/tw.svg" :size="'1.5rem'"></icon-element></th>
+              <th><icon-element src="/static/icon/ig.svg" :size="'1.5rem'"></icon-element></th>
+              <th><icon-element src="/static/icon/answers.svg" :size="'1.5rem'"></icon-element></th>
+              <th>Upravit</th>
             </tr>
             <tr v-for="(cand, index) in $store.getters.candidatesInRegion(region.hash)">
               <td v-if="cand.coalition">
