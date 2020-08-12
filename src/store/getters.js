@@ -598,7 +598,7 @@ getters.candidate = (state, getters) => (region, hash) => {
 }
 
 getters.loaded = (state, getters) => () => {
-  return state.dynamic.source.length === 2 && getters.allParties().length > 0;
+  return state.dynamic.source.length > 1 && getters.allParties().length > 0;
 }
 
 getters.getSource = (state, getters) => (source, to) => {

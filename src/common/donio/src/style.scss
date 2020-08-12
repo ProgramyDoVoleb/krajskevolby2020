@@ -1,0 +1,40 @@
+
+
+.donio {
+  background: #fff2e1;
+  color: #141412;
+  padding: 2rem;
+
+	h3 {
+		margin: 0 0 1em;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	p + p {
+		margin-top: 1em;
+	}
+
+	a {
+		color: #e66d45;
+		font-weight: bold;
+	}
+
+	.button.button-primary {
+		border-radius: 0;
+		background: #e66d45;
+		border: none;
+		text-transform: uppercase;
+		letter-spacing: 2.5px;
+		font-size: 12px;
+		color: #fff2e1;
+
+		&:hover {
+			background: darken(#e66d45, 10%);
+			color: #fff;
+			cursor: pointer;
+		}
+	}
+}

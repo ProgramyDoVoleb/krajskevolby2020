@@ -17,7 +17,7 @@
       <div class="dimm small">{{ region.name }}</div>
     </h1>
   </div>
-  <div class="part" v-if="party.answers">
+  <div class="part" v-if="party.answers && answers">
     <ol>
       <li v-for="(question, i) in questions">
         <question-answer :party="party" :question="question" :answer="answers.answers[i]" />
@@ -33,11 +33,68 @@
       <p>Zkontrolujte prosím nejprve svoji SPAM složku. Pokud v ní nejsou otázky, zřejmě budou v další rozesílce, emaily budou odcházet postupně do 17. srpna. Pokud náhodou na vás nemám e-mail (lze ověřit <router-link to="/velky-prehled">zde</router-link>), stačí napsat na <outbound-link href="mailto:stepan.rysavy@programydovoleb.cz">stepan.rysavy@programydovoleb.cz</outbound-link>, optimálně ze stranické adresy, nebo přes sociální sítě, a při nejbližší příležitosti vám příjde odkaz s otázkami.</p>
     </div>
   </div>
+  <div class="part" v-if="party && party.leader"><a name="lidr"></a>
+    <h2>
+      Lídr kandidátky
+    </h2>
+    <div class="leader-layout">
+      <div class="leaders-photo show-60rem">
+        <router-link :to="party.leader.link" class="image-as-link">
+          <person-photo :data="party.leader" />
+        </router-link>
+      </div>
+      <div class="leaders-content">
+        <div class="leader-layout">
+          <div class="leaders-photo hide-60rem">
+            <router-link :to="party.leader.link" class="image-as-link">
+              <person-photo :data="party.leader" />
+            </router-link>
+          </div>
+          <div class="leaders-content">
+            <div class="leaders-name">
+              <router-link :to="party.leader.link">
+                <person-name :data="party.leader" />
+              </router-link>
+            </div>
+            <div class="leaders-party small">
+              <party-link :data="party.leader.party" :breakpoint="1000" />
+            </div>
+          </div>
+        </div>
+        <div class="leader-copy" v-if="lead">
+          <p v-if="lead[0].quote">
+            <em v-html="lead[0].quote.short"></em>
+            <router-link :to="party.leader.link">více&nbsp;&rarr;</router-link>
+          </p>
+          <p v-if="lead[0].about" >
+            <span v-html="lead[0].about.mid"></span>
+            <router-link :to="party.leader.link">více&nbsp;&rarr;</router-link>
+          </p>
+        </div>
+        <div class="leader-placeholder" v-if="!lead || !lead[0] || (!lead[0].quote && !lead[0].about)">
+          <p class="dimm">Zde je prostor pro představení kandidáta. Pokud víte o osobní stránce, blogu, profilu na stránce strany nebo stránce na wikipedii, prosím, zašlete odkaz. Stačí kliknout na tlačítko níže.</p>
+        </div>
+        <div class="leaders-links" v-if="party.leader.links">
+          <span v-if="party.leader.links" class="leader-links">
+            <span v-for="(link, index) in party.leader.links" class="leader-link">
+              <outbound-icon :href="link.link" :img="link.icon.src" :title="link.icon.name.toUpperCase() + ' ' + link.content" :type="link.icon.name" :size="'1em'" />
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="part">
     <share-block />
   </div>
   <div class="goto" v-if="party">
-    <router-link :to="party.link">&larr; {{ party.name }}</router-link>
+    <router-link :to="party.link + '/volebni-program'">Volební program</router-link> &rarr;
+  </div>
+  <div class="goto" v-if="party">
+    <router-link :to="party.link + '/kandidatni-listina'">Kandidátní listina</router-link> &rarr;
+  </div>
+  <div class="goto" v-if="party">
+    &larr; <router-link :to="party.link">{{ party.name }}</router-link>
   </div>
   <div class="goto goto-dimm">
     <h4>Zobrazit odpovědi jiných stran či koalic</h4>

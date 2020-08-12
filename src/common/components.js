@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 import CollapsibleElement from './collapsible-element/do';
+import Donio from './donio/do';
 import IconElement from './icon-element/do';
 import LabelWithDot from './label-with-dot/do';
 import LogoItem from './logo-item/do';
@@ -19,6 +20,7 @@ import ResponsiveLabel from './responsive-label/do';
 import ShareBlock from './share-block/do';
 
 Vue.component('collapsible-element', CollapsibleElement);
+Vue.component('donio-element', Donio);
 Vue.component('icon-element', IconElement);
 Vue.component('label-with-dot', LabelWithDot);
 Vue.component('logo-item', LogoItem);

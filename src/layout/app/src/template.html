@@ -2,6 +2,8 @@
 	<main-header name="Krajské volby 2020" :data-num="loadedNum" />
 	<article class="block" :class="{loaded}" v-if="loaded">
 		<router-view></router-view>
+	  <br>
+	  <donio-element v-if="$route.fullPath.split('/anketa/').length === 1"></donio-element>
 		<div class="content-width"></div>
 	</article>
 	<main-footer>
