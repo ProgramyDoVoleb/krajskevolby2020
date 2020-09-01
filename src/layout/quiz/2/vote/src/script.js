@@ -27,7 +27,8 @@ export default {
 
 			if (this.data.coal_yes) {
 				this.data.coal_yes.split(',').forEach(item => {
-					list.push(this.parties.find(x => x.hash === item))
+					var p = this.parties.find(x => x.hash === item)
+					if (p) list.push(p)
 				});
 			}
 
@@ -38,7 +39,8 @@ export default {
 
 			if (this.data.coal_no) {
 				this.data.coal_no.split(',').forEach(item => {
-					list.push(this.parties.find(x => x.hash === item))
+					var p = this.parties.find(x => x.hash === item)
+					if (p) list.push(p)
 				});
 			}
 
@@ -49,7 +51,8 @@ export default {
 
 			if (this.data.below5) {
 				this.data.below5.split(',').forEach(item => {
-					list.push(this.parties.find(x => x.hash === item))
+					var p = this.parties.find(x => x.hash === item)
+					if (p) list.push(p)
 				});
 			}
 

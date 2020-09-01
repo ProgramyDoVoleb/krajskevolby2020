@@ -18,7 +18,7 @@
               <th>Fotka</th>
               <th>Lidé</th>
               <th>Program</th>
-              <th>Data</th>
+              <!-- <th>Data</th> -->
               <th><icon-element src="/static/icon/link.svg" :size="'1.5rem'"></icon-element></th>
               <th><icon-element src="/static/icon/fb.svg" :size="'1.5rem'"></icon-element></th>
               <th><icon-element src="/static/icon/tw.svg" :size="'1.5rem'"></icon-element></th>
@@ -74,12 +74,12 @@
 
               <!-- data -->
 
-              <td v-if="cand.data">
+              <!-- <td v-if="cand.data">
                 <icon-element src="/static/icon/icon-check.svg" :size="'1.25rem'" class="icon-no-background" />
               </td>
               <td v-if="!cand.data">
                 <icon-element src="/static/icon/icon-false.svg" :size="'1.25rem'" class="icon-no-background" />
-              </td>
+              </td> -->
 
               <!-- web -->
 
@@ -145,7 +145,7 @@
     <h2>Stáhnout data</h2>
     <a :href="generateJSON" download="krajske-volby-2020.json" class="button" @click="ge">Stáhnout JSON</a>
   </div>
-  <div class="goto goto-yellow">
+  <!-- <div class="goto goto-yellow">
     <h3>Chybí na stránce další strana?</h3>
     <p>Víte, kde najít chybějící informace? Dejte vědět. Stačí kliknout níže a vložit odkaz.</p>
     <ul>
@@ -156,7 +156,7 @@
       </li>
     </ul>
     <p>Nebo pošlete e-mail na <outbound-link href="tip@programydovoleb.cz" title="e-mailový klient" :addon="false">tip@programydovoleb.cz</outbound-link> nebo na některé ze sociálních sítí.</p>
-  </div>
+  </div> -->
   <share-block />
   <div class="goto">
     <router-link to="/">&larr; Zpět na úvodní stranu</router-link>

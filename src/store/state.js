@@ -12,7 +12,8 @@ const state = {
       results: results2016,
       coalition: []
     },
-    quiz
+    quiz,
+    topics: ['stav silnic', 'kvalita veřejné dopravy', 'dopravní spojení', 'dostupnost zdravotnictví', 'koronavirus', 'životní prostředí', 'sucho', 'dostupnost bydlení', 'vylidňování venkova', 'vyloučené lokality', 'podpora turismu', 'dostupnost škol a školek', 'nedostatek práce', 'chybí zajímaví zaměstnavatelé', 'nezaměstnanost', 'kriminalita', 'pocit bezpečnosti', 'korupce', 'vyřešit kauzy vedení kraje', 'konec těžby uhlí', 'kůrovec', 'odliv mozků', 'kultura', 'množství obchodů a služeb', 'digitalizace krajské správy', 'aktivity pro seniory', 'využití EU fondů'],
   },
   data: {
     candidates: [],

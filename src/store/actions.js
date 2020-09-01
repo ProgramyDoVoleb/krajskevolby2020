@@ -100,6 +100,8 @@ actions.fetchParties = function (context, payload) {
 }
 
 actions.fetchSource = function (context, payload) {
+  if (typeof payload.source === 'undefined') return;
+
   var lookup = context.state.dynamic.source.find(item => item.source === payload.source);
 
   if (lookup) {
@@ -134,6 +136,12 @@ actions.quizFetch = function (content, payload) {
   });
 }
 
+actions.quizFetchResults = function (content, payload) {
+  axios.get('https://krajskevolby2020.programydovoleb.cz/lib/app/api.php?action=vote/results&id=' + payload.id + '&quiz=' + payload.quiz + '&t=' + antiCache).then(response => {
+    if (payload && payload.onComplete) payload.onComplete(response.data);
+  });
+}
+
 actions.quizStore = function (content, payload) {
   var json = {};
 
@@ -144,7 +152,7 @@ actions.quizStore = function (content, payload) {
   json.values = payload.values;
 
   axios.post('https://krajskevolby2020.programydovoleb.cz/lib/app/api.php?action=vote/store&t=' + antiCache, json).then(response => {
-    console.log(response);
+    // console.log(response);
 
     if (payload && payload.onComplete) payload.onComplete(response.data);
   })

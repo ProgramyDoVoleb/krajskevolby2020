@@ -14,12 +14,16 @@
 			<div class="qa-image" v-if="party.logo">
 				<img :src="$store.state.root + party.logo">
 			</div>
-			<div class="qa-image" v-if="!party.logo">
+			<div class="qa-image" v-if="!party.logo && party.leader && party.leader.photo">
+				<img :src="party.leader.photo">
+			</div>
+			<div class="qa-image" v-if="!party.logo && (!party.leader || !party.leader.photo)">
 				<img src="/static/icon/answers.svg">
 			</div>
 		</div>
 		<div class="qa-content">
-			<div v-html="answer"></div>
+			<div v-html="answer" v-if="answer.length > 0"></div>
+			<div v-if="answer.length === 0"><em class="dimm">Bez odpovědi</em></div>
 		</div>
 	</div>
 </div>

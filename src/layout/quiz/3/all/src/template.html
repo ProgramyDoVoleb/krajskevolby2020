@@ -1,0 +1,98 @@
+<div class="quiz-results">
+	<h1>Výsledky ankety<br><div class="small dimm" v-if="region">{{ region.name }}</div></h1>
+	<div class="part" v-if="partyResults_sortByVotes">
+		<results-graph :data="graphData" />
+		<br>
+		<collapsible-element :label="'Kompletní výsledky: ' + partyResults_sortByVotes[0].votesTotal + ' hlasů'">
+			<table>
+				<thead>
+					<tr>
+						<th>Strana</th>
+						<th>Hlasů</th>
+						<th>Procent</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(res, index) in partyResults_sortByVotes">
+						<td><party-link :data="res.party" /></td>
+						<td class="text-right">{{ res.votes }}&times;</td>
+						<td class="text-right">{{ res.votesPCT }} %</td>
+					</tr>
+				</tbody>
+			</table>
+		</collapsible-element>
+		<h2>Hlavní krajská témata</h2>
+		<div class="columns-2">
+			<div class="columns-item">
+				<strong>Co lidi zajímá:</strong>
+				<br><br>
+				<div class="topics-short">
+					<div class="topic-2" v-for="(res, index) in topicResults_yes">
+						<div class="topic-content">
+							<div class="topic-count small dimm">{{ res.votes[0] }} &times;</div>
+							<div class="topic-name">{{ res.name }}</div>
+							<div class="topic-graph">
+								<div class="topic-yes">
+									<div class="topic-bar" :style="{width: (res.votes[0] / res.votesTotal * 800) + '%'}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="columns-item">
+				<strong>Co naopak není téma:</strong>
+				<br><br>
+				<div class="topics-short">
+					<div class="topic-2" v-for="(res, index) in topicResults_no">
+						<div class="topic-content">
+							<div class="topic-count small dimm">{{ res.votes[1] }} &times;</div>
+							<div class="topic-name">{{ res.name }}</div>
+							<div class="topic-graph">
+								<div class="topic-no">
+									<div class="topic-bar" :style="{width: (res.votes[1] / res.votesTotal * 800) + '%'}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<collapsible-element label="Všechna témata">
+			<table>
+				<thead>
+					<tr>
+						<th>Téma</th>
+						<th>Důležité</th>
+						<th>Nedůležité</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(res, index) in topicResults">
+						<td>{{ res.name }}</td>
+						<td class="text-right">{{ res.votes[0] }} &times;</td>
+						<td class="text-right">{{ res.votes[1] }} &times;</td>
+					</tr>
+				</tbody>
+			</table>
+		</collapsible-element>
+	</div>
+	<div class="goto small dimm">
+		<strong>Upozornění:</strong> Výsledky vychází z internetové ankety, ve které není ověřována pravost údajů, ani autentičnost volby a výběru témat, ani neověřuje platnost proti emailu nebo občanskému průkazu, ani není cílem naplnit kvóty demografických skupin. Anketa ukazuje spíše schopnost strany aktivovat své fanoušky a z toho také plyne výběr témat. Při hodnocení výsledků i relevantnosti ankety to berte v potaz.
+	</div>
+	<share-block />
+	<template v-if="region">
+		<share-block :path="'/anketa/volby?kde=' + region.hash" text="Sdílet anketu:" />
+		<div class="goto" v-if="region">
+			<router-link :to="'/anketa/volby?kde=' + region.hash">Chci také hlasovat</router-link> &rarr;
+		</div>
+	</template>
+	<div class="goto" v-if="region">
+		<router-link :to="'/' + region.hash">{{ region.name }}: Přehled všech stran a koalic</router-link> &rarr;
+	</div>
+	<div class="goto">
+		&larr; <router-link :to="'/'">Vše ke krajským volbám</router-link>
+	</div>
+	<br>
+	<donio-element />
+</div>

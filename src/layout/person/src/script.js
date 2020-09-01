@@ -41,13 +41,42 @@ export default {
 			return this.$store.getters.getSource(this.party.data);
 		},
 		lead: function () {
-			if (!this.party || !this.data || !this.data.people) return undefined;
+			if (!this.party || !this.data || !this.data.list || !this.data.people) return undefined;
 
 			var list = [];
 
-			this.data.people.forEach((item, i) => {
-				list.push(personData(item, i, this.party, this.party.link, this.data))
-			});
+			for (var i = 0; i < 5; i++) {
+				if (i < this.data.list.length) {
+					var r = this.$route.fullPath.split('/');
+					r.pop();
+
+					var pp = personData(this.data.list[i], i, this.party, r.join('/'), this.data);
+
+					var lookup = this.data.people.find(x => x.name === pp.name);
+
+					if (lookup) {
+				    var about = {
+				      full: lookup.about,
+				      mid: truncate(lookup.about, 40),
+				      short: truncate(lookup.about)
+				    };
+
+				    var quote = {
+				      full: lookup.quote,
+				      mid: truncate(lookup.quote, 40),
+				      short: truncate(lookup.quote)
+				    };
+
+						pp.about = about.full ? about : {full: this.data.list[i].work, mid: this.data.list[i].work, short: this.data.list[i].work};
+						pp.quote = quote;
+					} else {
+						pp.about = {full: this.data.list[i].work, mid: this.data.list[i].work, short: this.data.list[i].work};
+						pp.quote = {full: undefined, mid: undefined, short: undefined};
+					}
+
+					list.push(pp);
+				}
+			}
 
 			if (this.answers) {
 
@@ -79,20 +108,14 @@ export default {
 			return list;
 		},
 		person: function () {
-			if (!this.lead) {
-				if (this.party) {
-					return this.party.leader;
-				} else {
-					return undefined;
-				}
-			}
+			if (!this.lead) return undefined;
 
 			var p;
 
 			this.lead.forEach((item, i) => {
 				if (item.hash === this.personHash) {
 					p = item;
-					if (i === 0) p.links = this.party.leader.links;
+					// if (i === 0) p.links = this.party.leader.links;
 				}
 			});
 

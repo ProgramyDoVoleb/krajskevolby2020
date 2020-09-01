@@ -1,0 +1,14 @@
+<div class="party-graph-horizontal">
+	<div class="party-graph">
+		<div class="party-logo" :style="'background: ' + party.color">
+			<img :src="party.logo ? $store.state.root + party.logo : '/static/empty.png'" class="logo" :class="{hidden: !party.logo}">
+		</div>
+		<div class="party-name" :style="'background: ' + party.color">
+			<router-link :to="party.link" :title="party.name">{{ party.name }}</router-link>
+		</div>
+		<div class="party-bar" :style="'background: ' + party.color + '; width:' + (results.pct * 1.5) + '%'">
+			<span :style="'color: ' + party.color">{{ results.pct }} %, <span class="dimm">{{ results.votes }} hlasů</span></span>
+		</div>
+		<div class="party-blank"></div>
+	</div>
+</div>

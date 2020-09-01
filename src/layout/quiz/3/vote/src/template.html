@@ -1,0 +1,56 @@
+<div class="quiz-vote">
+	<template v-if="data">
+		<div class="part">
+			<p class="center dimm">Hlas v anketě</p>
+			<h1>Shrnutí</h1>
+			<div class="parties">
+				<party-in-list
+					:party="parties.find(x => x.reg === data.vote)"
+					:glow="true">
+				</party-in-list>
+			</div>
+		</div>
+		<div class="part" v-if="yes.length > 0">
+			<div class="columns-2">
+				<div v-if="yes.length > 0">
+					<h4>Která krajská témata považuji za důležitá:</h4>
+					<div class="parties">
+						<quiz-item
+							v-for="(topic, index) in yes"
+			        :key="'topic_yes_' + index"
+							:imgDefault="'/static/icon/icon-check.svg'">
+							{{ $store.state.static.topics[topic] }}
+						</quiz-item>
+					</div>
+				</div>
+				<div v-if="no.length > 0">
+					<h4>Tahle témata naopak důležitá nejsou:</h4>
+					<div class="parties">
+						<quiz-item
+							v-for="(topic, index) in no"
+			        :key="'topic_no_' + index"
+							:imgDefault="'/static/icon/icon-against.svg'">
+							{{ $store.state.static.topics[topic] }}
+						</quiz-item>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	<div class="goto" v-if="region">
+		<router-link :to="'/anketa/volby/vysledky/' + region.hash">Výsledky hlasování</router-link> &rarr;
+	</div>
+	<share-block path="/anketa/volby" text="Sdílet anketu:" />
+	<share-block text="Sdílet výsledek:" />
+	<div class="goto" v-if="region && rf != ''">
+		<router-link :to="'/anketa/volby?kde=' + region.hash">Chci také hlasovat</router-link> &rarr;
+	</div>
+	<div class="goto" v-if="region">
+		<router-link :to="'/' + region.hash">{{ region.name }}: Seznamte se se všemi kandidáty</router-link> &rarr;
+	</div>
+	<div class="goto">
+		&larr; <router-link :to="'/'">Vše ke krajským volbám</router-link>
+	</div>
+	<br>
+	<donio-element />
+</div>

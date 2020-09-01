@@ -1,0 +1,153 @@
+<div class="layout-quiz">
+	<section v-if="view === 1">
+		<div class="part">
+			<p class="center dimm">Anketa</p>
+			<h1>Volby a témata</h1>
+			<p class="center max-35rem">Koho budete volit a jaká témata vás ve volbách zajímají? Anketa je anonymní, není potřeba vyplňovat e-mail ani jiné kontaktní údaje.</p>
+		</div>
+		<div class="part">
+			<h2>Vyberte kraj</h2>
+			<quiz-list>
+				<quiz-item
+					v-for="(region, index) in $store.state.static.regions"
+					:key="'region_' + index"
+					:selected="demographics.region === region"
+					@click="demographics.region = region">
+					{{ region.name }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm" v-if="demographics.region">
+				<button class="button-primary" @click="handle_view">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 2">
+		<div class="part">
+			<p class="center dimm">1. otázka ze 3</p>
+			<h1>Koho byste volili?</h1>
+			<p class="center max-35rem">Kdyby volby byly dnes, kterou ze stran byste volili?</p>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(party, index) in parties"
+					:key="'party_' + index"
+					:selected="questions[0].answer === party"
+					:imgDefault="party.logo ? $store.state.root + party.logo : '/static/icon/icon-none.svg'"
+					:imgSelected="'/static/icon/icon-check.svg'"
+					@click="questions[0].answer = party">
+					{{ party.name }}
+					<div class="offset" v-if="party.coalition || party.leader">
+						<div v-if="party.coalition" :key="'m_' + ix" v-for="(member, ix) in party.coalition">
+							<party-link :data="member"></party-link>
+						</div>
+						<div v-if="party.leader">Lídr: <em>{{ party.leader.name }}</em></div>
+					</div>
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[0].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 3">
+		<div class="part">
+			<p class="center dimm">2. otázka ze 3</p>
+			<h1>Důležitá krajská témata</h1>
+			<p class="center max-35rem">Která krajská témata jsou pro Vás důležitá? Vybrat můžete až 3 témata.</p>
+		</div>
+		<div class="part">
+			<quiz-list class="columns-3-6">
+				<quiz-item
+					v-for="(topic, index) in topics"
+					:key="'topic1_' + index"
+					:disabled="questions[1].answer.length > 2"
+					:selected="!!questions[1].answer.find(x => x === topic)"
+					@click="handle_multiple(questions[1].answer, topic)">
+					{{ topic }}
+				</quiz-item>
+			</quiz-list>
+
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="questions[1].answer.length === 0">Potvrdit</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 4">
+		<div class="part">
+			<p class="center dimm">Poslední otázka</p>
+			<h1>Co mě nezajímá?</h1>
+			<p class="center max-35rem">Naopak, která krajská témata pro Vás nejsou vůbec důležitá? Vyberte alespoň jedno téma, můžete vybrat až 3.</p>
+		</div>
+		<div class="part">
+			<quiz-list class="columns-3-6">
+				<quiz-item
+					v-for="(topic, index) in topics"
+					:key="'topic2_' + index"
+					v-if="!questions[1].answer.find(x => x === topic)"
+					:disabled="questions[2].answer.length > 2"
+					:selected="!!questions[2].answer.find(x => x === topic)"
+					:imgSelected="'/static/icon/icon-against.svg'"
+					:type="'against'"
+					@click="handle_multiple(questions[2].answer, topic)">
+					{{ topic }}
+				</quiz-item>
+			</quiz-list>
+
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="questions[2].answer.length === 0">Potvrdit</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 5">
+		<div class="part">
+			<p class="center dimm">Nepovinná otázka</p>
+			<h1>Pro statistiku</h1>
+			<p class="center max-35rem">Vyberte své pohlaví a věk. Pokud nechcete odpovídat, můžete otázku přeskočit.</p>
+		</div>
+		<div class="part">
+			<div class="quiz-select">
+				<div class="columns-2">
+					<div class="column-item">
+						<quiz-item
+							v-for="(opt, index) in demographics.sex.options"
+							:key="'opt1_' + index"
+							:selected="demographics.sex.selected === opt.val"
+							@click="demographics.sex.selected = opt.val">
+							{{ opt.copy }}
+						</quiz-item>
+					</div>
+					<div class="column-item">
+						<quiz-item
+							v-for="(opt, index) in demographics.age.options"
+							:key="'opt1_' + index"
+							:selected="demographics.age.selected === opt.val"
+							@click="demographics.age.selected = opt.val">
+							{{ opt.copy }}
+						</quiz-item>
+					</div>
+				</div>
+			</div>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view">Potvrdit</button>
+				<button class="button-lined" @click="handle_view">Přeskočit</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 6">
+		<div class="part">
+			<p class="center dimm">Ověření</p>
+			<h1>Označte kolečka.</h1>
+			<p class="center max-35rem">Poslední krok, který slouží k ověření vašeho hlasu. Označte všechna kolečka. Je možné, že neuvidíte ani jedno.</p>
+		</div>
+		<div class="part">
+			<quiz-captcha v-if="server" @change="quizCaptcha" :captcha="captcha" :tick="tick" :question="server.question" />
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="quizStore">ODESLAT</button>
+			</div>
+		</div>
+	</section>
+	<div class="goto" v-if="demographics.region">
+		<router-link :to="'/' + demographics.region.hash" target="_blank">Potřebujete více informací o stranách?</router-link> &rarr;
+	</div>
+</div>

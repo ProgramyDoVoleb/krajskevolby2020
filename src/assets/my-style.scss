@@ -617,3 +617,24 @@ button, .button, .btn {
 		}
 	}
 }
+
+.smap-card-list {
+	list-style: none;
+	padding: 0;
+	margin: .5em 0;
+}
+
+.smap-card-no {
+	display: inline-block;
+	text-align: right;
+	width: 1rem;
+	margin-right: .5em;
+}
+
+.smap-card-h4 {
+	margin: 0;
+}
+
+.text-right {
+	text-align: right;
+}

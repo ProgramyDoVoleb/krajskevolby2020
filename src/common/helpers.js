@@ -23,6 +23,9 @@ export function stripURLintoDomain (url) {
 };
 
 export function truncate (str, count) {
+
+  if (!str) return undefined;
+
   var limit = count || 20;
   var words = str.split(' ');
   var add = str.length > limit ? '...' : '';
@@ -245,6 +248,7 @@ export function personData (item, i, party, route, data) {
       short: truncate(item.quote)
     };
   }
+
   obj.photo = item.photo ? PDV('lide/fotky/' + item.photo) : '/static/missing.png';
   obj.hash = betterURL(obj.name);
   obj.link = route + '/' + obj.hash;
@@ -253,9 +257,13 @@ export function personData (item, i, party, route, data) {
   obj.age = Number(item.age);
   obj.work = item.work;
   obj.home = item.home;
+  obj.homeID = item.homeMeta.num;
+  obj.homeGPS = item.homeMeta.gps;
+  obj.member = item.reg;
+  obj.nominee = item.nominee;
 
   if (data && data.list) {
-    var pp = data.list.find(x => x.nameFull[2] === obj.nameFull[2]);
+    var pp = data.list.find(x => x.nameFull[2] === obj.nameFull[2] && x.nameFull[1] === obj.nameFull[1]);
 
     if (pp && pp.links) {
       var px = processLinks(pp.links);

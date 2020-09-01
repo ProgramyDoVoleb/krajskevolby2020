@@ -18,9 +18,16 @@ import LayoutPrevious2016Compare from '@/layout/previous2016/compare/do';
 
 import LayoutHelper from '@/layout/helper-2020/do';
 import LayoutQ1 from '@/layout/quiz-1/do';
+
 import LayoutQ2Quiz from '@/layout/quiz/2/quiz/do';
 import LayoutQ2Vote from '@/layout/quiz/2/vote/do';
 import LayoutQ2All from '@/layout/quiz/2/all/do';
+
+import LayoutQ3Quiz from '@/layout/quiz/3/quiz/do';
+import LayoutQ3Vote from '@/layout/quiz/3/vote/do';
+import LayoutQ3All from '@/layout/quiz/3/all/do';
+
+import LayoutQ4 from '@/layout/quiz/4/all/do';
 
 Vue.use(Router);
 
@@ -52,6 +59,28 @@ const router = new Router({
       name: 'Q2Vote',
       props: true,
       component: LayoutQ2Vote
+    },
+    {
+      path: '/anketa/volby',
+      name: 'Q3Quiz',
+      component: LayoutQ3Quiz
+    },
+    {
+      path: '/anketa/volby/vysledky/:id',
+      props: true,
+      name: 'Q3All',
+      component: LayoutQ3All
+    },
+    {
+      path: '/anketa/volby/hlas/:id',
+      name: 'Q3Vote',
+      props: true,
+      component: LayoutQ3Vote
+    },
+    {
+      path: '/anketa/jste-pripraveni-na-krajske-volby',
+      name: 'Q4',
+      component: LayoutQ4
     },
     {
       path: '/2016',

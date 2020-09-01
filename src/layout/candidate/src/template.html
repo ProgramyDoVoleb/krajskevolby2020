@@ -97,7 +97,7 @@
       </div>
     </div>
   </div>
-  <div class="part" v-if="party && party.leader"><a name="lidr"></a>
+  <div class="part" v-if="party && party.leader && lead && lead[0] && (lead[0].about.full || lead[0].quote.full)"><a name="lidr"></a>
     <h2>
       Lídr kandidátky
     </h2>
@@ -149,9 +149,8 @@
     </div>
   </div>
   <div class="part" v-if="lead && lead.length > 1">
-    <h2>Čelo kandidátky</h2>
     <div class="leaders">
-      <div class="leaders-person" v-for="(other, index) in lead.slice(1, 5)">
+      <div class="leaders-person" v-for="(other, index) in lead.slice(1, 5)" v-if="other.about.full || other.quote.full">
         <div class="leaders-layout">
           <div class="leaders-photo">
             <router-link :to="other.link" class="image-as-link">
@@ -177,8 +176,8 @@
           </div>
         </div>
         <div class="leaders-copy">
-          <em v-if="other.quote" v-html="other.quote.short"></em>
-          <span v-if="!other.quote && other.about" v-html="other.about.short"></span>
+          <em v-if="other.quote.short" v-html="other.quote.short"></em>
+          <span v-if="!other.quote.short && other.about.short" v-html="other.about.short"></span>
           <router-link :to="other.link">více&nbsp;&rarr;</router-link>
         </div>
         <div class="leaders-links show-60rem" v-if="other.links">
@@ -220,7 +219,8 @@
   <div class="part" v-if="party && party.answers && questions && answers">
     <h2>Čtyři otázky<router-link :to="party.link + '/ctyri-otazky'" class="link-answers">&nbsp;<img src="/static/icon/answers.svg"></router-link></h2>
     <p class="center dimm max-35rem"><em>Čtyři otázky</em> jsou zaslány všem stranám kandidujícím v krajských volbách. Díky tomu si můžete srovnat odpovědi na totožné otázky, na jednom místě.</p>
-    <collapsible-element v-for="(question, index) in questions" :label="question" :key="'a_' + index" v-if="answers.answers[index] != ''">
+    <collapsible-element v-for="(question, index) in questions" :label="q[index]" :key="'a_' + index" v-if="answers.answers[index] != ''">
+      <h4>{{ question }}</h4>
       <div v-html="answers.answers[index]"></div>
     </collapsible-element>
     <p class="center">
@@ -357,12 +357,12 @@
     <div class="banner-split">
       <div>
         <router-link :to="'/anketa/strany?kde=' + region.hash">
-          <img src="/static/cta-anketa.png" alt="Dotazník" width="100%">
+          <img src="/static/cta-anketa.png?v=1" alt="Dotazník" width="100%">
         </router-link>
       </div>
       <div>
-        <router-link to="/dotaznik-ke-krajskym-volbam">
-          <img src="/static/cta-dotaznik.png" alt="Dotazník" width="100%">
+        <router-link :to="'/anketa/volby?kde=' + region.hash">
+          <img src="/static/cta-volby.png?v=1" alt="Anketa" width="100%">
         </router-link>
       </div>
     </div>

@@ -17,7 +17,7 @@
 			<h3>
 				<div class="party-name-holder">
 					<router-link :to="party.link" class="is-span">
-						<responsive-label :long="party.name" :short="party.short" />
+						<responsive-label :long="party.name" :short="party.name" />
 					</router-link>
 					<span v-if="party.links" class="leader-links fr">
 						<span class="leader-links-holder">
@@ -98,7 +98,8 @@
 						<span class="item-in-columns" v-for="(cand, ic) in party.list" v-if="ic < 5">
 							<label-with-dot :color="cand.party ? cand.party.color : '#eee'">
 								<router-link :to="party.link + '/' + cand.hash"  class="as-span no-link">
-									<person-name :data="cand" />
+									<person-name :data="cand" :short="true" class="show-40rem" />
+									<person-name :data="cand" class="hide-40rem" />
 								</router-link>
 							</label-with-dot>
 						</span>

@@ -31,11 +31,11 @@
       <div v-for="(region, index) in $store.state.static.regions">
         if ($parts[1] === "{{ region.hash }}") meta(<br>
           "{{ region.name }} &middot; Krajské volby 2020 &middot; Programy do voleb",<br>
-          "{{ region.name }} zná již {{ $store.getters.candidatesInRegion(region.hash).length }} stran a koalic, které budou kandidovat v krajských volbách 2020:
+          "{{ region.name }} zná již všech {{ $store.getters.candidatesInRegion(region.hash).length }} stran a koalic, které budou kandidovat v krajských volbách 2020:
             <span v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
-              {{ party.short || party.name }}.
+              {{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }},
             </span>
-          Konečné množství kandidujících stran bude známé v půlce srpna.",<br>
+          další strany již nemohou přihlášku podat. Lze maximálně odstoupit. Volby proběhnout 2. a 3. října ve všech krajích kromě Prahy.",<br>
           "/social/kraje/{{ region.hash }}-2.jpg"<br>
         );
         <br><br>
@@ -53,7 +53,7 @@
       <div v-for="(region, index) in $store.state.static.regions">
         <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
           if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "ctyri-otazky") meta(<br>
-        		"Čtyři otázky pro: {{ party.short || party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
+        		"Čtyři otázky pro: {{ party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
             "Vize pro kraj, sucho, stav silnic a co by pomohlo krajským zastupitelům lépe spravovat kraj. Čtyři otázky, díky kterým si můžete porovnat všechny strany v kraji. <span v-if="party.leader">Lídrem je <person-name :data="party.leader" />.</span><span v-if="!party.leader">Lídr ještě nebyl vybrán.</span>
             <span v-if="party.listCount > 1">
               Celkem {{ party.listCount > 4 ? "je" : "jsou" }} z kandidátní listiny znám{{ party.listCount > 4 ? "o" : "i" }} {{ party.listCount }} kandidát{{ party.listCount > 4 ? "ů" : "i" }}.
@@ -75,7 +75,7 @@
       <div v-for="(region, index) in $store.state.static.regions">
         <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
           if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}") meta(<br>
-        		"{{ party.short || party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
+        		"{{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
             "<span v-if="party.coalition">Koalice stran
               <span v-for="(member, index3) in party.coalition">
                 <span v-if="index3 > 0"> +</span>
@@ -108,8 +108,8 @@
       <br><br>
       <div v-for="(party, index) in $store.getters.allParties()">
         if ($parts[1] === "rejstrik" && $parts[2] === "{{ party.hash }}") meta(<br>
-          "{{ party.name + (party.short ? ' (' + party.short + ')' : '') }} &middot; Krajské volby 2020",<br>
-          "Kde kandidují samostatně, kde v koalici a kde se domluvili na podpoře? Přehledně na jednom místě. Informace ke krajskám volbám 2020 postupně doplňujeme.
+          "{{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }} &middot; Krajské volby 2020",<br>
+          "Kde kandidují samostatně, kde v koalici a kde se domluvili na podpoře? Přehledně na jednom místě. Krajské volby budou 2. a 3. října 2020.
           ",<br>
           "/social/kraje/social-kde-kandiduji-3.png"<br>
         );
@@ -129,13 +129,13 @@
           <div v-if="party.leader">
             <div v-for="(m, im) in [party.leader]">
               if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "{{ betterURL(m.nameFull[1] + ' ' + m.nameFull[2]) }}") meta(<br>
-            		"<person-name :data="m" /> &middot; {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+            		"<person-name :data="m" /> &middot; {{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }} &middot; Krajské volby 2020",<br>
                 "<person-name :data="m" /> vede kandidátku <span v-if="party.coalition && !party.name">koalice stran
                   <span v-for="(member, index3) in party.coalition">
                     <span v-if="index3 > 0"> +</span>
                     <span>{{ member.short || member.name }}</span>
                   </span>
-                </span><span v-if="!party.coalition || (party.coalition && party.name)">{{ party.short || party.name}}</span> do krajských voleb 2020.
+                </span><span v-if="!party.coalition || (party.coalition && party.name)">{{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }}</span> do krajských voleb 2020.
                 ",<br>
             		"/social/kraje/{{ region.hash }}-2.jpg"<br>
             	);
@@ -144,13 +144,13 @@
           <div v-if="party.list">
             <div v-for="(m, im) in party.list">
               if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "{{ betterURL(m.nameFull[1] + ' ' + m.nameFull[2]) }}") meta(<br>
-            		"<person-name :data="m" /> &middot; {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
+            		"<person-name :data="m" /> &middot; {{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }} &middot; Krajské volby 2020",<br>
                 "<person-name :data="m" /> {{ (m.party ? '(' + (m.party.short || m.party.name) + ')' : '') }} je na {{ im + 2 }}. místě na kandidátní listině <span v-if="party.coalition && !party.name">koalice stran
                   <span v-for="(member, index3) in party.coalition">
                     <span v-if="index3 > 0"> +</span>
                     <span>{{ member.short || member.name }}</span>
                   </span>
-                </span><span v-if="!party.coalition || (party.coalition && party.name)">{{ party.short || party.name}}</span> do krajských voleb 2020.
+                </span><span v-if="!party.coalition || (party.coalition && party.name)">{{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }}</span> do krajských voleb 2020.
                 ",<br>
             		"/social/kraje/{{ region.hash }}-2.jpg"<br>
             	);
@@ -172,8 +172,8 @@
         <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
           <div v-if="party.program">
             if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "volebni-program") meta(<br>
-          		"Volební program &middot; {{ party.short || party.name }} &middot; Krajské volby 2020",<br>
-              "Projděte si program '{{ party.short || party.name}}' pro {{ region.name }} do krajských voleb 2020 a porovnejte ho s ostatními. V kraji kandiduje dalších {{ $store.getters.candidatesInRegion(region.hash).length - 1 }} stran nebo koalic.
+          		"Volební program &middot; {{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }} &middot; Krajské volby 2020",<br>
+              "Projděte si volební program '{{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }}' pro {{ region.name }} do krajských voleb 2020 a porovnejte ho s ostatními. V kraji kandiduje dalších {{ $store.getters.candidatesInRegion(region.hash).length - 1 }} stran nebo koalic.
               Informace ke krajskám volbám 2020 pro {{ region.name }} postupně doplňujeme.
               ",<br>
           		"/social/kraje/{{ region.hash }}-2.jpg"<br>
@@ -194,7 +194,7 @@
       <div v-for="(region, index) in $store.state.static.regions">
         <div v-for="(party, index2) in $store.getters.candidatesInRegion(region.hash)">
           if ($parts[1] === "{{ region.hash }}" && $parts[2] === "{{ party.hash }}" && $parts[3] === "kandidatni-listina") meta(<br>
-        		"Kandidátní listina &middot; {{ party.short || party.name }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
+        		"Kandidátní listina &middot; {{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }} &middot; {{ region.name }} &middot; Krajské volby 2020",<br>
             "<span v-if="party.coalition">Koalice stran
               <span v-for="(member, index3) in party.coalition">
                 <span v-if="index3 > 0"> +</span>
@@ -206,9 +206,8 @@
               <span v-for="(m, ix) in party.list">
                 {{ m.name }},
               </span>
-              celkem {{ party.listCount > 4 ? "je" : "jsou" }} z kandidátní listiny znám{{ party.listCount > 4 ? "o" : "i" }} {{ party.listCount }} kandidát{{ party.listCount > 4 ? "ů" : "i" }}.
+              celkem {{ party.listCount > 4 ? "je" : "jsou" }} na kandidátní listině '{{ party.name }}{{ party.short ? ' (' + party.short + ')' : '' }}' {{ party.listCount }} kandidát{{ party.listCount > 4 ? "ů" : "i" }}.
             </span>
-            Kandidátka by měl zveřejnit ČSÚ v půlce srpna.
             ",<br>
         		"/social/kraje/{{ region.hash }}-2.jpg"<br>
         	);

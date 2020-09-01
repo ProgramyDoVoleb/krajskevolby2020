@@ -41,13 +41,39 @@ export default {
 			return this.$store.getters.getSource(this.party.data);
 		},
 		lead: function () {
-			if (!this.party || !this.data || !this.data.people) return undefined;
+			if (!this.party || !this.data || !this.data.list || !this.data.people) return undefined;
 
 			var list = [];
 
-			this.data.people.forEach((item, i) => {
-				list.push(personData(item, i, this.party, this.$route.fullPath, this.data))
-			});
+			for (var i = 0; i < 5; i++) {
+				if (i < this.data.list.length) {
+					var pp = personData(this.data.list[i], i, this.party, this.$route.fullPath, this.data);
+
+					var lookup = this.data.people.find(x => x.name === pp.name);
+
+					if (lookup) {
+				    var about = {
+				      full: lookup.about,
+				      mid: truncate(lookup.about, 40),
+				      short: truncate(lookup.about)
+				    };
+
+				    var quote = {
+				      full: lookup.quote,
+				      mid: truncate(lookup.quote, 40),
+				      short: truncate(lookup.quote)
+				    };
+
+						pp.about = about;
+						pp.quote = quote;
+					} else {
+						pp.about = {full: undefined, mid: undefined, short: undefined};
+						pp.quote = {full: undefined, mid: undefined, short: undefined};
+					}
+
+					list.push(pp);
+				}
+			}
 
 			if (this.answers) {
 

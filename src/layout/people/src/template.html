@@ -16,6 +16,17 @@
       {{ party.name }}
       <div class="dimm small">{{ region.name }}</div>
     </h1>
+    <div class="superstats" v-if="stats.length > 0">
+      <div class="flex-6">
+        <div class="flex-item" v-for="(stat, i) in stats">
+          <div class="superstats-item">
+            <div class="superstats-big">{{ stat.big }}<span v-if="stat.pct" class="small dimm">%</span></div>
+            <div class="superstats-label">{{ stat.label }}</div>
+            <div class="superstats-small dimm small">{{ stat.small }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="part">
     <div class="scrollable">
@@ -86,6 +97,12 @@
       <update-form :region="region" :party="party" :index="-1" :hints="false" notes="kandidatka">
         <button class="button-plain yellow">Poslat odkaz na kandidátku</button>
       </update-form>
+    </div>
+  </div>
+  <div class="part" v-if="party && party.list">
+    <h2>Kandidáti v kraji</h2>
+    <div class="map-holder" :class="{hidden: party.list.length === 1}">
+      <div id="mapa"></div>
     </div>
   </div>
   <div class="part">

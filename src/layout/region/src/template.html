@@ -51,14 +51,14 @@
   </div>
   <div class="part">
     <h2>Kdo se chystá do voleb?</h2>
-    <p class="center dimm">Tento seznam je průběžně doplňován.</p>
+    <p class="center dimm">Seznam je kompletní.</p>
     <div class="parties">
       <party-in-list
         v-for="(party, i2) in parties"
         :key="'party_' + i2"
         :party="party"
       ></party-in-list>
-      <div class="party">
+      <!-- <div class="party">
         <div class="stats">
           <ul>
             <li>
@@ -70,7 +70,7 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <share-block />
@@ -79,15 +79,18 @@
     <div class="banner-split">
       <div>
         <router-link :to="'/anketa/strany?kde=' + region.hash">
-          <img src="/static/cta-anketa.png" alt="Dotazník" width="100%">
+          <img src="/static/cta-anketa.png?v=1" alt="Dotazník" width="100%">
         </router-link>
       </div>
       <div>
-        <router-link to="/dotaznik-ke-krajskym-volbam">
-          <img src="/static/cta-dotaznik.png" alt="Dotazník" width="100%">
+        <router-link :to="'/anketa/volby?kde=' + region.hash">
+          <img src="/static/cta-volby.png?v=1" alt="Anketa" width="100%">
         </router-link>
       </div>
     </div>
+  </div>
+  <div class="goto" v-if="region">
+    <router-link :to="'/anketa/volby/vysledky/' + region.hash">Výsledky volební ankety</router-link> &rarr;
   </div>
   <div class="goto goto-dimm">
     <h4>Vybrat jiný kraj</h4>
@@ -105,5 +108,20 @@
   </div>
   <div class="goto">
     <router-link to="/">&larr; Zpět na úvodní stranu</router-link>
+  </div>
+  <div class="part">
+    <br>
+    <div class="banner-split">
+      <div>
+        <router-link to="/anketa/jste-pripraveni-na-krajske-volby">
+          <img src="/static/cta-kviz.png?v=1" alt="Kvíz" width="100%">
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/dotaznik-ke-krajskym-volbam">
+          <img src="/static/cta-dotaznik.png?v=2" alt="Dotazník" width="100%">
+        </router-link>
+      </div>
+    </div>
   </div>
 </div>

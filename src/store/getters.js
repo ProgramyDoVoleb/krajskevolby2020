@@ -540,7 +540,7 @@ getters.allCandidates = (state, getters) => () => {
 
       if (cand.links) obj.links = processLinks(cand.links);
       if (cand.program) obj.program = cand.program;
-      if (cand.motto) obj.program = cand.motto;
+      if (cand.motto) obj.motto = cand.motto;
       if (cand.data) obj.data = 'volby/kv/2020/data/' + cand.data;
       if (cand.answers) obj.answersLink = 'volby/kv/2020/odpovedi/' + cand.data;
       if (cand.answers) obj.answers = true;

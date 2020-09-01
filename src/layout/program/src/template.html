@@ -24,10 +24,10 @@
         <button class="button-plain yellow">Poslat odkaz na program</button>
       </update-form>
     </div>
-    <div class="goto goto-dimm center" v-if="party && party.program && (!data || !data.program)">
-      <p class="red">Program již existuje na stránkách "{{ party.name }}". Brzy se objeví ve standardizované podobě i zde.</p>
+    <div class="goto goto-yellow center" v-if="party && data && ((data.program && data.program.source && !data.program.parts) || (party.program && data.program && !data.program.parts))">
+      <p>Program je momentálně dostupný pouze na stránkách "{{ party.name }}". Ale brzy se objeví i zde.</p>
     </div>
-    <div v-if="party && party.program && data && data.program">
+    <div v-if="party && data && data.program && data.program.parts">
       <program-view :data="data.program" :showIndex="true" :party="party" />
     </div>
     <div v-if="party && !party.program" class="center">

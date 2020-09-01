@@ -1,0 +1,167 @@
+.logo-item {
+  display: inline-block;
+  position: relative;
+}
+
+.logo-outer {
+  display: inline-block;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+}
+
+.logo-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-coalition {
+  display: flex;
+  transform: rotate(15deg);
+
+  > span {
+    flex: 1;
+    height: 1.5rem;
+  }
+}
+
+.topic {
+}
+
+.topic-content {
+  padding: 1em 0;
+  border-radius: 1rem;
+  background: #fafafa;
+}
+
+.topic-graph {
+  display: flex;
+
+  > * {
+    flex: 0 0 50%;
+    position: relative;
+  }
+}
+
+.topic-yes,
+.topic-no {
+  height: 1.5rem;
+}
+
+.topic-bar {
+  position: absolute;
+  height: 1.5rem;
+  top: 0;
+  bottom: 0;
+}
+
+.topic-no {
+  text-align: right;
+}
+
+.topic-yes .topic-bar {
+  background: #0C0;
+  left: 0;
+  border-top-right-radius: .5em;
+  border-bottom-right-radius: .5em;
+}
+
+.topic-no .topic-bar {
+  background: #C00;
+  right: 0;
+  border-top-left-radius: .5em;
+  border-bottom-left-radius: .5em;
+}
+
+.topic span {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  color: rgba(0, 0, 0, .7);
+  padding: 0 .5em;
+}
+
+.topic-name {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  font-size: 11px;
+  padding-bottom: .5em;
+}
+
+.topics-short {
+  border-radius: 1rem;
+  background: #fafafa;
+  padding: 1rem 0 1rem 1rem;
+}
+
+.topics-short .topic-content {
+  background: none;
+  display: flex;
+  align-items: center;
+  padding: .25em 0 .25em 1rem;
+
+  .topic-name {
+    text-align: left;
+    width: 55%;
+  }
+
+  .topic-graph {
+    text-align: left;
+    width: 35%;
+  }
+
+  .topic-count {
+    width: 10%;
+  }
+
+  .topic-name {
+    padding-bottom: 0;
+  }
+
+  .topic-graph > * {
+    flex: 0 0 100%;
+    position: relative;
+  }
+
+  .topic-yes .topic-bar {
+    background: #0C0;
+    left: auto;
+    right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: .5em;
+    border-bottom-left-radius: .5em;
+  }
+
+  .topic-no {
+    text-align: left;
+  }
+
+  .topic-yes,
+  .topic-no,
+  .topic-bar {
+    height: 1rem;
+  }
+}
+
+table {
+  width: 100%;
+
+  th {
+    text-align: left;
+
+    + th {
+      text-align: right;
+    }
+  }
+
+  tr td {
+    border-top: 1px solid #eee;
+  }
+}

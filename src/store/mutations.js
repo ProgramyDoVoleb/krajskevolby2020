@@ -26,7 +26,7 @@ mutations.fetchSource = function (state, payload) {
   var lookup = state.dynamic.source.find(s => s.source === payload.source);
 
   if (lookup) {
-    console.log(lookup.source, 'already in store');
+    // console.log(lookup.source, 'already in store');
   } else {
     state.dynamic.source.push({
       source: payload.source,

@@ -1,0 +1,465 @@
+<div class="layout-quiz">
+	<section v-if="view === 1">
+		<div class="part">
+			<p class="center dimm">Jste připraveni?</p>
+			<h1>Volební kvíz</h1>
+			<p class="center max-35rem">Vyzkoušejte si unikátní volební kvíz, jak jste připraveni na krajské volby. Čeká vás 12 náhodně vylosovaných otázek týkajících se voleb, stran a kandidátů.</p>
+		</div>
+		<div class="part">
+			<h2>Vyberte kraj</h2>
+			<quiz-list>
+				<quiz-item
+					v-for="(region, index) in $store.state.static.regions"
+					:key="'region_' + index"
+					:selected="demographics.region === region"
+					@click="demographics.region = region">
+					{{ region.name }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm" v-if="demographics.region">
+				<button class="button-primary" @click="handle_view" :disabled="!demographics.region">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 2">
+		<div class="part">
+			<p class="center dimm">Na rozehřátí</p>
+			<h1>{{ questions[0].question }}</h1>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[0].options"
+					:key="'opt_' + index"
+					:selected="questions[0].answer === opt"
+					@click="questions[0].answer = opt">
+					{{ opt }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 3">
+		<div class="part">
+			<p class="center dimm">2. otázka</p>
+			<h1>{{ questions[1].question }}</h1>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[1].options"
+					:key="'opt1_' + index"
+					:selected="questions[1].answer === opt"
+					@click="questions[1].answer = opt">
+					{{ opt }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 4">
+		<div class="part">
+			<p class="center dimm">3. otázka</p>
+			<h1>{{ questions[2].question }}</h1>
+			<p class="center dimm">Vybrat můžete více možností.</p>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[2].options"
+					:key="'opt2_' + index"
+					:selected="!!questions[2].answer.find(x => x === opt)"
+					@click="handle_multiple(questions[2].answer, opt)">
+					{{ opt }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="questions[view - 2].answer.length === 0">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 5">
+		<div class="part">
+			<p class="center dimm">4. otázka</p>
+			<h1>{{ questions[3].question }}</h1>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[3].options"
+					:key="'opt3_' + index"
+					:selected="questions[3].answer === opt"
+					@click="questions[3].answer = opt">
+					{{ opt }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 6">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}</h1>
+			<div class="goto center">
+				<em>{{ questions[view - 2].correct.motto }}</em>
+			</div>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[view - 2].options"
+					:key="'opt' + (view - 2) + '_' + index"
+					:selected="questions[view - 2].answer === opt"
+					:imgDefault="opt.logo ? $store.state.root + opt.logo : '/static/icon/icon-none.svg'"
+					@click="questions[view - 2].answer = opt">
+					{{ opt.name }}
+					<div class="offset" v-if="opt.coalition || opt.leader">
+						<div v-if="opt.coalition" :key="'m_' + ix" v-for="(member, ix) in opt.coalition">
+							<party-link :data="member"></party-link>
+						</div>
+						<div v-if="opt.leader">Lídr: <em>{{ opt.leader.name }}</em></div>
+					</div>
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 7">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}</h1>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[view - 2].options"
+					:key="'opt' + (view - 2) + '_' + index"
+					:selected="questions[view - 2].answer === opt"
+					@click="questions[view - 2].answer = opt">
+					{{ opt.leader.name }}
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 8">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}</h1>
+		</div>
+		<div class="part">
+			<quiz-list>
+				<quiz-item
+					v-for="(opt, index) in questions[view - 2].options"
+					:key="'opt' + (view - 2) + '_' + index"
+					:selected="questions[view - 2].answer === opt"
+					:imgDefault="opt.logo ? $store.state.root + opt.logo : '/static/icon/icon-none.svg'"
+					@click="questions[view - 2].answer = opt">
+					{{ opt.name }}
+					<div class="offset" v-if="opt.coalition || opt.leader">
+						<div v-if="opt.coalition" :key="'m_' + ix" v-for="(member, ix) in opt.coalition">
+							<party-link :data="member"></party-link>
+						</div>
+					</div>
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 9">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}</h1>
+		</div>
+		<div class="part">
+			<div class="photo-split">
+				<div class="column-item">
+					<person-photo :data="questions[view - 2].correct.person" class="photo" />
+				</div>
+				<div class="column-item">
+					<quiz-list class="columns-x2">
+						<quiz-item
+							v-for="(opt, index) in questions[view - 2].options"
+							:key="'opt' + (view - 2) + '_' + index"
+							:selected="questions[view - 2].answer === opt"
+							:imgDefault="opt.party.logo ? $store.state.root + opt.party.logo : '/static/icon/icon-none.svg'"
+							@click="questions[view - 2].answer = opt">
+							{{ opt.person.name }}
+							<br>
+							<em>{{ opt.party.name }}</em>
+							<div class="offset" v-if="opt.party.coalition">
+								<div v-if="opt.party.coalition" :key="'m_' + ix" v-for="(member, ix) in opt.party.coalition">
+									<party-link :data="member"></party-link>
+								</div>
+							</div>
+						</quiz-item>
+					</quiz-list>
+				</div>
+			</div>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 10">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}?</h1>
+		</div>
+		<div class="part">
+			<quiz-list class="columns-3-6">
+				<quiz-item
+					v-for="(opt, index) in questions[view - 2].options"
+					:key="'opt' + (view - 2) + '_' + index"
+					:selected="questions[view - 2].answer === opt"
+					@click="questions[view - 2].answer = opt">
+					<person-photo class="photo" :data="opt.person" />
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 11">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}</h1>
+		</div>
+		<div class="part">
+			<div class="photo-split">
+				<div class="column-item">
+					<person-photo :data="questions[view - 2].correct.person" class="photo" />
+				</div>
+				<div class="column-item">
+					<quiz-list class="columns-x2">
+						<quiz-item
+							v-for="(opt, index) in questions[view - 2].options"
+							:key="'opt' + (view - 2) + '_' + index"
+							:selected="questions[view - 2].answer === opt"
+							:imgDefault="opt.party.logo ? $store.state.root + opt.party.logo : '/static/icon/icon-none.svg'"
+							@click="questions[view - 2].answer = opt">
+							{{ opt.person.name }}
+							<br>
+							<em>{{ opt.party.name }}</em>
+							<div class="offset" v-if="opt.party.coalition">
+								<div v-if="opt.party.coalition" :key="'m_' + ix" v-for="(member, ix) in opt.party.coalition">
+									<party-link :data="member"></party-link>
+								</div>
+							</div>
+						</quiz-item>
+					</quiz-list>
+				</div>
+			</div>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 12">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}</h1>
+		</div>
+		<div class="part">
+			<div class="photo-split">
+				<div class="column-item">
+					<logo-item :data="questions[view - 2].correct" :size="{small: 10, large: 10, breakpoint: 40}" />
+				</div>
+				<div class="column-item">
+					<quiz-list class="columns-x2">
+						<quiz-item
+							v-for="(opt, index) in questions[view - 2].options"
+							:key="'opt' + (view - 2) + '_' + index"
+							:selected="questions[view - 2].answer === opt"
+							@click="questions[view - 2].answer = opt">
+							<em>{{ opt.name }}</em>
+							<div class="offset" v-if="opt.coalition || opt.leader">
+								<div v-if="opt.coalition" :key="'m_' + ix" v-for="(member, ix) in opt.coalition">
+									<party-link :data="member"></party-link>
+								</div>
+								<div v-if="opt.leader">Lídr: <em>{{ opt.leader.name }}</em></div>
+							</div>
+						</quiz-item>
+					</quiz-list>
+				</div>
+			</div>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 13">
+		<div class="part">
+			<p class="center dimm">{{ view - 1}}. otázka</p>
+			<h1>{{ questions[view - 2].question }}?</h1>
+		</div>
+		<div class="part">
+			<quiz-list class="columns-3-6">
+				<quiz-item
+					v-for="(opt, index) in questions[view - 2].options"
+					:key="'opt' + (view - 2) + '_' + index"
+					:selected="questions[view - 2].answer === opt"
+					@click="questions[view - 2].answer = opt">
+					<logo-item :data="opt" :size="{small: 6, large: 10, breakpoint: 40}" />
+				</quiz-item>
+			</quiz-list>
+			<div class="quiz-confirm">
+				<button class="button-primary" @click="handle_view" :disabled="!questions[view - 2].answer">Pokračovat</button>
+			</div>
+		</div>
+	</section>
+	<section v-if="view === 14">
+		<div class="part">
+			<p class="center dimm">Tak jak to šlo?</p>
+			<h1>Vyhodnocení</h1>
+		</div>
+		<div class="part" v-if="results">
+			<div class="photo-split">
+				<div>
+					<div class="result-box">
+						<div class="result-box-content">
+							<span class="main">{{ results.count }}</span><span class="small">/12</span>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="result-list">
+						<div class="result-item" v-for="(item, i) in results.list">
+							<div class="result-question">
+								<h4>
+									<icon-element :src="'/static/icon/icon-' + (item.correct ? 'check' : 'against') + '.svg'" :size="{small: 1.5, large: 1.5, breakpoint: 40}" class="db" />
+									{{ item.q.question }}
+									<div v-if="i === 4">
+										<em>{{item.q.correct.motto}}</em>
+									</div>
+								</h4>
+							</div>
+							<div class="result-answer" v-if="[0, 1, 3].indexOf(i) > -1">
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct }}
+								</div>
+							</div>
+							<div class="result-answer" v-if="i === 2">
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.join(', ') }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.join(', ') }}
+								</div>
+							</div>
+							<div class="result-answer" v-if="i === 4">
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.name }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.name }}
+								</div>
+							</div>
+							<div class="result-answer" v-if="i === 5">
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.leader.name }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.leader.name }}
+								</div>
+							</div>
+							<div class="result-answer result-answer-high" v-if="i === 6">
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.name }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.name }}
+								</div>
+							</div>
+							<div class="result-answer result-answer-high" v-if="i === 7">
+								<person-photo :data="item.q.correct.person" class="photo-small float-left" />
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.person.name }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.person.name }}
+								</div>
+							</div>
+							<div class="result-answer result-answer-high" v-if="i === 8">
+								<div class="flex-linear">
+									<person-photo :data="item.q.answer.person" class="photo-small" v-if="item.correct === false" />
+									<span v-if="item.correct === false">&rarr;</span>
+									<person-photo :data="item.q.correct.person" class="photo-small" />
+								</div>
+							</div>
+							<div class="result-answer result-answer-high" v-if="i === 9">
+								<person-photo :data="item.q.correct.person" class="photo-small float-left" />
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.person.name }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.person.name }}
+								</div>
+							</div>
+							<div class="result-answer result-answer-high" v-if="i === 10">
+								<logo-item :data="item.q.correct" :size="{small: 3, large: 3, breakpoint: 40}" class="photo-small float-left" />
+								<div class="red" v-if="item.correct === false">
+									<strong>Vaše odpověď: </strong>
+									{{ item.q.answer.name }}
+								</div>
+								<div>
+									<strong v-if="item.correct === false">Správná odpověď: </strong>
+									{{ item.q.correct.name }}
+								</div>
+							</div>
+							<div class="result-answer result-answer-high" v-if="i === 11">
+								<div class="flex-linear">
+									<logo-item :data="item.q.answer" :size="{small: 3, large: 3, breakpoint: 40}" class="photo-small" v-if="item.correct === false" />
+									<span v-if="item.correct === false">&rarr;</span>
+									<logo-item :data="item.q.correct" :size="{small: 3, large: 3, breakpoint: 40}" class="photo-small" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="part center">
+			<button class="button-primary" @click="handle_reset">Zkusit kvíz ještě jednou</button>
+		</div>
+		<div class="part">
+			<share-block text="Sdílet výsledky:" :path="$route.fullPath + '?vysledek=' + results.count" />
+			<share-block text="Sdílet kvíz:" />
+			<div class="goto">
+				<router-link :to="'/' + demographics.region.hash">{{ demographics.region.name }} přehledně</router-link> &rarr;
+			</div>
+			<br>
+			<donio-element />
+		</div>
+	</section>
+</div>

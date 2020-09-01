@@ -1,0 +1,191 @@
+.count {
+  display: inline !important;
+  color: #fc0;
+  font-size: .75em;
+  font-weight: 700;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: block;
+  margin-right: .5rem;
+  background: #fff;
+}
+
+h4 span {
+  font-weight: 400;
+  font-size: .92rem;
+}
+
+.bold {
+  border: none;
+  color: #000;
+}
+
+.party {
+	display: flex;
+	flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  left: -1rem;
+}
+
+.party + .party {
+  margin-top: 2px;
+}
+
+.party:not(.below) + .below {
+  margin-top: 2rem;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    width: 100%;
+    border-top: 1px dotted #aaa;
+  }
+}
+
+.party:not(.nocash) + .nocash {
+  margin-top: 2rem;
+
+  &:before {
+    content: "Méně než 1 %: ";
+    color: #444;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+}
+
+.below {
+  .party-logo,
+  .party-name,
+  .party-bar {
+    background: #eee !important;
+  }
+
+  a,
+  span {
+    color: #aaa !important;
+  }
+}
+
+.nocash {
+  display: inline-block;
+  position: static;
+  padding: 0 0 0 .5rem;
+  white-space: nowrap;
+  font-size: 11px;
+
+  .party-graph {
+    display: inline-block;
+  }
+
+  .party-logo {
+    display: none;
+  }
+
+  .party-name {
+    display: inline;
+    position: static;
+    background: none !important;
+
+    a {
+      position: static;
+      font-weight: normal;
+      font-size: 11px;
+      border-bottom: 1px solid #eee;
+    }
+  }
+
+  .party-bar {
+    display: inline;
+    background: none !important;
+
+    span {
+      position: static;
+      font-size: 11px;
+      font-weight: normal;
+    }
+  }
+}
+
+.party-blank {
+  flex: 1;
+}
+
+.party-logo {
+  padding: 2px;
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+
+.party-graph {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 1px 0;
+}
+
+.party-name {
+  width: 5rem;
+  height: 48px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+
+  a {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    white-space: nowrap;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
+
+    &:hover {
+      border-color: #fff;
+    }
+  }
+}
+
+.party-bar {
+  position: relative;
+  height: 48px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+  transition: width .25s ease-in-out;
+
+  span {
+    position: absolute;
+    white-space: nowrap;
+    font-size: .7rem;
+    font-weight: bold;
+    left: 100%;
+    top: 50%;
+    transform: translate(.5rem, -50%);
+    z-index: 2
+  }
+}
+
+.party-sum {
+  width: 10rem;
+  text-align: right;
+  display: none;
+
+  @media (min-width: 30rem) {
+    display: block;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}

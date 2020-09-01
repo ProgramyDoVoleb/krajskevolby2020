@@ -33,7 +33,7 @@
         </template>
       </div>
       <h1>
-        <person-name :data="person" />
+        <person-name :data="person" :full="true" />
       </h1>
       <div class="center">
         na kandidátce<br>
@@ -49,7 +49,7 @@
         </router-link>
       </div>
     </div>
-    <div class="part">
+    <div class="part" v-if="person">
       <div class="leader-layout">
         <div class="leaders-photo">
           <router-link :to="person.link" class="image-as-link">
@@ -72,13 +72,37 @@
           <div class="leader-placeholder" v-if="!lead || !person.about">
             <p class="dimm">Zde je prostor pro představení kandidáta. Pokud víte o osobní stránce, blogu, profilu na stránce strany nebo stránce na wikipedii, prosím, zašlete odkaz. Stačí kliknout na tlačítko níže.</p>
           </div>
-          <template v-if="person.party">
-            <h4>Členství:</h4>
-            <div class="leaders-party">
-              <party-link :data="person.party" />
-            </div>
-          </template>
         </div>
+      </div>
+    </div>
+    <div class="part" v-if="person">
+      <div class="stats">
+        <ul class="columns-2">
+          <li>
+            <label>Členství</label>
+            <div><party-link :data="person.party" /></div>
+          </li>
+          <li>
+            <label>Nominace</label>
+            <div><party-link :data="$store.getters.party(person.nominee)" /></div>
+          </li>
+          <li>
+            <label>Povolání</label>
+            <div>{{ person.work }}</div>
+          </li>
+          <li>
+            <label>Bydliště</label>
+            <div>
+              <outbound-link :href="'https://polist.cz/obec/' + person.homeID">{{ person.home }}</outbound-link>
+            </div>
+          </li>
+          <li>
+            <label>Věk</label>
+            <div>
+              {{ person.age }} let
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="part" v-if="person && person.links && person.links.length > 0"><a name="odkazy"></a>
@@ -149,8 +173,8 @@
             </div>
           </div>
           <div class="leaders-copy">
-            <em v-if="other.quote" v-html="other.quote.short"></em>
-            <span v-if="!other.quote && other.about" v-html="other.about.short"></span>
+            <em v-if="other.quote.short" v-html="other.quote.short"></em>
+            <span v-if="!other.quote.short && other.about.short" v-html="other.about.short"></span>
             <router-link :to="other.link">více&nbsp;&rarr;</router-link>
           </div>
           <div class="leaders-links show-60rem" v-if="other.links">
@@ -165,7 +189,7 @@
     </div>
     <copyright-element :data="party" />
   </div>
-  <div class="goto goto-yellow">
+  <div class="goto goto-yellow" v-if="person">
     <h3>Pomožte doplnit tuto stránku</h3>
     <p>Víte, kde najít chybějící informace? Dejte vědět. Stačí kliknout níže a vložit odkaz.</p>
     <ul>

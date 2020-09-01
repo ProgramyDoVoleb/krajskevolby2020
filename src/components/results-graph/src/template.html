@@ -4,7 +4,7 @@
 			<div class="graph-item">
 				<div class="graph-space" :class="{compare: item.ptc2 != undefined}">
 					<div class="graph-bar graph-bar-primary" :style="{height: data.coef * item.ptc + '%', background: item.color, 'transition-delay': (index * .05) + 's'}">
-						<div class="graph-bar-value">{{ item.ptc }}</div>
+						<div class="graph-bar-value">{{ Math.round(item.ptc * 100) / 100 }}</div>
 					</div>
 					<div class="graph-bar graph-bar-secondary" :style="{height: data.coef * item.ptc2 + '%', background: item.color, 'transition-delay': (index * .05 + .02) + 's'}" v-if="item.ptc2 != undefined">
 						<div class="graph-bar-value">{{ item.ptc2 }}</div>
@@ -12,12 +12,17 @@
 				</div>
 				<div class="graph-icons" :class="{multiple: item.logo.length > 1}" v-if="item.logo">
 					<div class="graph-icon" v-for="(logo, indexLogo) in item.logo">
-						<logo-item :reg="logo" :size="item.logo.length > 1 ? 1.4 : 3" class="min-40rem"  />
-						<logo-item :reg="logo" :size="1.4" class="max-40rem" />
+						<logo-item :reg="logo" v-if="item.reg" :size="item.logo.length > 1 ? 1.4 : 3" class="min-40rem"  />
+						<logo-item :reg="logo" :size="1.4" class="max-40rem" v-if="item.reg" />
+						<logo-item :data="{logo: logo}" :size="3" class="min-40rem" v-if="!item.reg" />
+						<logo-item :data="{logo: logo}" :size="1.4" class="max-40rem" v-if="!item.reg" />
 					</div>
 				</div>
-				<div class="graph-name">
+				<div class="graph-name" v-if="!item.party">
 					{{ item.short }}
+				</div>
+				<div class="graph-name" v-if="item.party">
+					<router-link :to="item.party.link">{{ item.party.short }}</router-link>
 				</div>
 			</div>
 		</li>

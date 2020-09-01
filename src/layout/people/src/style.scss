@@ -387,3 +387,50 @@ thead th {
     display: none !important;
   }
 }
+
+#mapa {
+  margin-top: 2rem;
+  width: 100%;
+  height: 50vh;
+  background: #f7f7f7;
+}
+
+.flex-6 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  width: 33.3%;
+
+  @media (min-width: 50rem) {
+    width: 16.6%;
+  }
+}
+
+.superstats {
+  margin: 1rem -1rem 0;
+  padding: 1rem;
+  background: #fafafa;
+}
+
+.superstats-item {
+  text-align: center;
+}
+
+.superstats-big {
+  font-size: 2.5rem;
+  font-family: 'Inria Serif', serif;
+
+  .small {
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: -1.3rem;
+  }
+}
+
+.superstats-label {
+  font-size: .7rem;
+  text-transform: uppercase;
+}

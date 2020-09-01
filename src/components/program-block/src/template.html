@@ -1,14 +1,14 @@
 <div class="program-block">
 	<a :name="'cast' + index"></a>
-	<span v-if="typeof data === 'string'">{{ data }}</span>
+	<span v-if="typeof data === 'string'" v-html="data"></span>
 	<div v-if="typeof data === 'object'">
 		<h2 v-if="data.headline && depth === 2 && !avoidHeadline">
 			<a :name="'cast' + index"></a>
-			{{ data.headline }}
+			<span v-html="data.headline"></span>
 		</h2>
-		<h3 v-if="data.headline && depth === 3">{{ data.headline }}</h3>
-		<h4 v-if="data.headline && depth === 4">{{ data.headline }}</h4>
-		<p v-if="data.copy">{{ data.copy }}</p>
+		<h3 v-if="data.headline && depth === 3" v-html="data.headline"></h3>
+		<h4 v-if="data.headline && depth === 4" v-html="data.headline"></h4>
+		<p v-if="data.copy" v-html="data.copy"></p>
 		<ul v-if="data.list">
 			<li v-for="(item, pl2) in data.list">
 				<program-block :data="item" :depth="depth + 1" />
@@ -17,5 +17,6 @@
 		<div class="program-block-parts" v-if="data.parts">
 			<program-block v-for="(part, pi) in data.parts" :depth="depth + 1" :data="part" :key="'parts_' + pi" />
 		</div>
+		<p v-if="false">Block</p>
 	</div>
 </div>
