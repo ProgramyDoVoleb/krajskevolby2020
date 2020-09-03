@@ -4,7 +4,7 @@
 			<div class="graph-item">
 				<div class="graph-space" :class="{compare: item.ptc2 != undefined}">
 					<div class="graph-bar graph-bar-primary" :style="{height: data.coef * item.ptc + '%', background: item.color, 'transition-delay': (index * .05) + 's'}">
-						<div class="graph-bar-value">{{ Math.round(item.ptc * 100) / 100 }}</div>
+						<div class="graph-bar-value">{{ Math.round(item.ptc * 100) / 100 }} <em class="min-40rem">%</em></div>
 					</div>
 					<div class="graph-bar graph-bar-secondary" :style="{height: data.coef * item.ptc2 + '%', background: item.color, 'transition-delay': (index * .05 + .02) + 's'}" v-if="item.ptc2 != undefined">
 						<div class="graph-bar-value">{{ item.ptc2 }}</div>

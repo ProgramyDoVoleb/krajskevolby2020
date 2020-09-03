@@ -1,9 +1,9 @@
 <div class="quiz-results">
-	<h1>Výsledky ankety<br><div class="small dimm" v-if="region">{{ region.name }}</div></h1>
+	<h1>Aktuální výsledky<br><div class="small dimm" v-if="region">{{ region.name }}</div></h1>
 	<div class="part" v-if="partyResults_sortByVotes">
 		<results-graph :data="graphData" />
 		<br>
-		<collapsible-element :label="'Kompletní výsledky: ' + partyResults_sortByVotes[0].votesTotal + ' hlasů'">
+		<collapsible-element :label="'Všechny výsledky: ' + partyResults_sortByVotes[0].votesTotal + ' hlasů'">
 			<table>
 				<thead>
 					<tr>

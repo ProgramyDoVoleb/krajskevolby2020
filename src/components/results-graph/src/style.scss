@@ -107,6 +107,8 @@ li {
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;
+  white-space: nowrap;
+  // width: 3rem;
 }
 
 li:not(.below) + .below,
@@ -117,4 +119,10 @@ li:not(.below) + li:last-child {
 .below .graph-bar {
   opacity: .2;
   filter: grayscale(.5);
+}
+
+em {
+  @media (min-width: 40rem) {
+    display: inline !important;
+  }
 }
